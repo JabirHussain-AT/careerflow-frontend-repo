@@ -1,0 +1,4 @@
+export interface CompanyModalProps {
+    isModalOpen: boolean;
+    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  }
