@@ -4,12 +4,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import validationSchema from "../../../validation/jobAddingValidation"; // Replace with the correct path
 import Dropdown from "@/components/common/Dropdown";
-import { FaPlus, FaTrash } from "react-icons/fa";
-import { BsDot } from "react-icons/bs";
+import { FaPlus, FaTrash , FaArrowLeft } from "react-icons/fa";
+import { BsDot  } from "react-icons/bs";
 import DatePicker from "react-datepicker";
+import {  addingJob } from '../../../redux/actions/companyActions'
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { IUserSelector } from "@/interface/IUserSlice";
 
 const CompanyJobsForm: React.FC = () => {
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { user  } = useSelector((state: IUserSelector) => state.user);
   const [selectedJobType, setSelectedJobType] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
@@ -117,17 +124,27 @@ const CompanyJobsForm: React.FC = () => {
 
   //
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = async (values: any) => {
     setRequirmentError(true);
     values.requirements = requirements;
+    values.companyId = user?._id 
+    values.companyEmails = user?.email
     console.log("Form data:", values);
+    const res = await dispatch(addingJob(values))
+    if(res.payload.success ){
+        console.log('------------')
+        console.log('success the adding job front end')
+        console.log('------------')
+    }
   };
 
   return (
     <div className="w-full">
+      <div>
       <h2 className="text-md font-mono px-5 py-3 font-bold underline">
         Post A Job
       </h2>
+      </div>
       <div className="w-full text-black">
         <div className="lg:w-5/6 mx-auto">
           <Formik
@@ -325,7 +342,7 @@ const CompanyJobsForm: React.FC = () => {
                   <label htmlFor="requirements">
                     Skills <br />
                     <div className="w-full flex justify-start flex-wrap">
-                      {requirements?.length > 0 && (
+                      {skills?.length > 0 && (
                         <div className="bg-yellow-50 rounded-md font-serif">
                           {skills.map((elem, index) => (
                             <div className=" flex" key={index}>

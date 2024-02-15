@@ -5,7 +5,7 @@ export interface UserState {
   }
 
  export interface UserData {
-    id: number;
+    _id: any;
     username: string;
     email: string;
     approved ?: boolean | null
