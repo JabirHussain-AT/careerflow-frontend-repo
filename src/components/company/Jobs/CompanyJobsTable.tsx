@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import JobDetailsModal from "../../../components/company/Jobs/JobDetailsModal";
-import { fetchComJobs } from "@/redux/actions/companyActions";
+import { FaArrowLeft } from "react-icons/fa";
+import {
+  fetchComJobs,
+  changeStatusOfJob,
+} from "@/redux/actions/companyActions";
 import { useSelector } from "react-redux";
 import { IUserSelector } from "@/interface/IUserSlice";
 import { format } from "date-fns";
 import CompanyEditForm from "./CompanyEditForm";
+import AlertBox from "../../common/AlertBox";
+import { useNavigate } from "react-router-dom";
 
 interface CompanyJobsTableProps {
   Ijobs?: {
@@ -30,21 +36,41 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
 
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [jobs, setJobs] = useState<any[]>([]);
+
   const [selectedJob, setSelectedJob] = useState<{
     _id: string;
+    status: boolean;
     jobTitle: string;
     createdAt: string;
     category: string;
+    companyId: string;
+    jobDescription: string;
+    jobExpiry: string;
+    jobType: string;
+    requirements: string[];
+    salary: string;
+    skills: string[];
+    updatedAt: string;
     vacancy: number;
+    __v: number;
     noOfApplications: number;
   } | null>(null);
+
   const [editingJob, setEditingJob] = useState<{
     _id: string;
+    requirements: string[];
+    skills: string[];
+    jobExpiry: any;
+    status: boolean;
+    jobDescription: string;
+    createdAt: string;
+    jobType: string;
     jobTitle: string;
     category: string;
     vacancy: number;
   } | null>(null);
-  const [dropdownJobId, setDropdownJobId] = useState<string | null >(null);
+  const [dropdownJobId, setDropdownJobId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,27 +83,39 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
     };
 
     fetchData();
-  }, []);
+  }, [editingJob]);
 
   const handleMoreDetails = (jobId: string) => {
     setDropdownJobId(jobId);
     setDropdownOpen(!dropdownOpen); // Toggle the dropdown state
   };
 
-  const handleDropdownOptionClick = (option: string) => {
+  const handleDropdownOptionClick = async (option: string) => {
     setDropdownJobId(null);
-    if (option === "Details") {
-      const job = jobs.find((j) => j._id === dropdownJobId);
-      if (job) {
-        setSelectedJob(job);
+
+    try {
+      if (option === "Details") {
+        const job = jobs.find((j) => j._id === dropdownJobId);
+        if (job) {
+          setSelectedJob(job);
+        }
+      } else if (option === "Edit") {
+        handleEditJob(dropdownJobId);
+      } else if (option === "Block" || option === "Unblock") {
+        // Call the action to update the status
+        await changeStatusOfJob(dropdownJobId!, option === "Unblock");
+
+        // If the status update is successful, update the local state
+        setJobs((prevJobs) =>
+          prevJobs.map((job) =>
+            job._id === dropdownJobId
+              ? { ...job, status: option === "Unblock" }
+              : job
+          )
+        );
       }
-    } else if (option === "Edit") {
-      // Handle Edit option as needed
-      handleEditJob(dropdownJobId );
-    } else if (option === "Block") {
-      // Handle Block option as needed
-    } else if (option === "Unblock") {
-      // Handle Unblock option as needed
+    } catch (error) {
+      console.error("Error handling dropdown option click:", error);
     }
   };
 
@@ -88,9 +126,14 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
     }
   };
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = (values: any) => {
+    const updated = jobs.filter((job) => {
+      return job._id === values.jobId ? values : job;
+    });
+
+    setJobs(updated);
+
     if (editingJob) {
-      // Perform any validation or other checks if needed
       onEditJob && onEditJob(editingJob._id, editingJob);
       setEditingJob(null);
     }
@@ -102,12 +145,13 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
   };
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto h-screen">
       <table className="text-sm min-w-full  bg-white border  border-gray-300">
         <thead>
           <tr>
             <th className="py-2 px-4 border-b">Job Title</th>
             <th className="py-2 px-4 border-b">Posted Date</th>
+            <th className="py-2 px-4 border-b">Status</th>
             <th className="py-2 px-4 border-b">Category</th>
             <th className="py-2 px-4 border-b">Vacancy</th>
             <th className="py-2 px-4 border-b">No Of Applications</th>
@@ -121,6 +165,17 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
               <td className="py-2 px-4 border-b">
                 {format(new Date(job.createdAt), "dd - MM - yyyy, hh:mm a")}
               </td>
+              <td className=" py-2 px-4 border-b">
+                <span
+                  className={`border-2 px-3 text-center rounded-md font-semibold font-mono ${
+                    job.status === true
+                      ? "border-green-300 hover:border-green-600 text-green-500"
+                      : "border-red-300 hover:border-red-600 text-red-500"
+                  }`}
+                >
+                  {job.status ? "Live " : " Blocked "}
+                </span>
+              </td>
               <td className="py-2 px-4 border-b">{job.category}</td>
               <td className="py-2 px-4 border-b">{job.vacancy}</td>
               <td className="py-2 px-4 border-b">{job.applicants.length}</td>
@@ -129,49 +184,83 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
                   <button
                     className={`${
                       job?.applicants.length > 0
-                        ? "hover:bg-blue-700  text-white  bg-blue-500"
+                        ? "hover:bg-blue-700 text-white bg-blue-500"
                         : "disabled bg-gray-300 text-black"
                     } px-3 py-2 rounded-md m-1`}
-                    // onClick={() => onViewApplicants(job._id)}
+
+                    onClick={() => {
+                      if (job?.applicants.length > 0) {
+                        navigate(`/company/job/viewApplicants/${job._id}`);
+                      }
+                    }}
+                    
                   >
                     {job?.applicants.length > 0
                       ? "View Applicants"
-                      : " No applicants"}
+                      : "No applicants"}
                   </button>
+
                   <button
                     className="bg-transparent px-4 py-2 hover:border-blue-500 hover:border m-2 border-black rounded-md font-sans border"
                     onClick={() => handleMoreDetails(job._id)}
                   >
                     More
                   </button>
-                  {dropdownOpen && dropdownJobId !== null && dropdownJobId  === job._id && (
-                    <div className="absolute -right-2 left-0 top-8 bg-white border  border-gray-300 p-2 rounded-md z-10">
-                      <div
-                        className="cursor-pointer hover:bg-gray-200 py-1 px-2"
-                        onClick={() => handleDropdownOptionClick("Details")}
-                      >
-                        Details
+                  {dropdownOpen &&
+                    dropdownJobId !== null &&
+                    dropdownJobId === job._id && (
+                      <div className="relative -right-2 left-0 top- z-10 font-semibold bg-white border  border-gray-300 p-2 rounded-md ">
+                        <div
+                          className="cursor-pointer hover:bg-gray-200 py-1 px-2"
+                          onClick={() => handleDropdownOptionClick("Details")}
+                        >
+                          Details
+                        </div>
+                        <div
+                          className="cursor-pointer hover:bg-gray-200 py-1 px-2"
+                          onClick={() => handleDropdownOptionClick("Edit")}
+                        >
+                          Edit
+                        </div>
+                        {job.status ? (
+                          <AlertBox
+                            button={
+                              <div
+                                className="cursor-pointer text-red-500 hover:bg-gray-200 py-1 px-2"
+                                // onClick={() =>
+                                //   handleDropdownOptionClick("Block")
+                                // }
+                              >
+                                Block
+                              </div>
+                            }
+                            ques="Are you sure you want to block this job?"
+                            onConfirm={() => handleDropdownOptionClick("Block")}
+                            onCancel={() => {}}
+                            option={false} // Add this line to enable the reason input field
+                            placeholder="Enter reason for blocking..."
+                          />
+                        ) : (
+                          <AlertBox
+                            button={
+                              <div
+                                className="cursor-pointer text-green-500 hover:bg-gray-200 py-1 px-2"
+                                // onClick={() =>
+                                //   handleDropdownOptionClick("Unblock")
+                                // }
+                              >
+                                Unblock
+                              </div>
+                            }
+                            ques="Are you sure you want to unblock this job?"
+                            onConfirm={() =>
+                              handleDropdownOptionClick("Unblock")
+                            }
+                            onCancel={() => {}}
+                          />
+                        )}{" "}
                       </div>
-                      <div
-                        className="cursor-pointer hover:bg-gray-200 py-1 px-2"
-                        onClick={() => handleDropdownOptionClick("Edit")}
-                      >
-                        Edit
-                      </div>
-                      <div
-                        className="cursor-pointer hover:bg-gray-200 py-1 px-2"
-                        onClick={() => handleDropdownOptionClick("Block")}
-                      >
-                        Block
-                      </div>
-                      <div
-                        className="cursor-pointer hover:bg-gray-200 py-1 px-2"
-                        onClick={() => handleDropdownOptionClick("Unblock")}
-                      >
-                        Unblock
-                      </div>
-                    </div>
-                  )}
+                    )}
                 </div>
               </td>
             </tr>
@@ -185,23 +274,31 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
 
       {/* Edit Job Section */}
       {editingJob && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+        <div className=" absolute top-20 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-md">
             {/* Edit Job Form */}
-            < CompanyEditForm Values={selectedJob} />
+
+            {/* <CompanyEditForm Values={editingJob} /> */}
+            <CompanyEditForm
+              Values={editingJob}
+              onClose={closeModal}
+              onSave={(values: any) => handleSaveEdit(values)}
+            />
+
             {/* Save and Cancel buttons */}
             <div className="mt-4">
-              <button
+              {/* <button
                 className="bg-blue-500 hover:bg-blue-700 px-3 py-2 rounded-md mr-2 text-white"
                 onClick={handleSaveEdit}
               >
                 Save
-              </button>
+              </button> */}
               <button
-                className="bg-gray-500 hover:bg-gray-700 px-3 py-2 rounded-md text-white"
+                className=" flex justify-center items-center gap-2 bg-gray-500 text-sm hover:bg-gray-700 px-3 py-2 rounded-md text-white"
                 onClick={closeModal}
               >
-                Cancel
+                <FaArrowLeft />
+                Back to Jobs
               </button>
             </div>
           </div>

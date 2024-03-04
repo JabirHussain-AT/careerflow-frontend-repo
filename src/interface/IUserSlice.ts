@@ -6,12 +6,24 @@ export interface UserState {
 
  export interface UserData {
     _id: any;
-    username: string;
+    userName: string;
     email: string;
     approved ?: boolean | null
     stage ?: string | null
     role?: string | null 
     status ?: string | null
+    phoneNumber ?: string
+    socialMediaLinks : any
+    position : string 
+    profilePic ?: string | null
+    location : string  
+    updatedAt ?: any 
+    dob  ?:any 
+    resume ?: string 
+    education ?: string [] | any
+    experiance ?: any
+    skills ?: string | any
+    about ?: string 
   }
 
 export interface IUserSelector {

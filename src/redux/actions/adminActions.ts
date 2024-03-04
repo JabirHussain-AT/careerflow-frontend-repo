@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { AuthCompanyBaseUrl } from "../../config/constants";
+import { AuthCompanyBaseUrl ,AuthBaseAdminUrl } from "../../config/constants";
 import { ApiError, config, handleError } from "../../config/configuration";
-import { IApproveCompanyAccount } from '../../interface/ICompanyApprovelModal'
+import { IApproveCompanyAccount , ICategory } from '../../interface/ICompanyApprovelModal'
 
 // fetching companies
 export const fetchCompanies = async () => {
@@ -24,3 +24,37 @@ export const approveCompanyAccount = createAsyncThunk('compnay/approveStatus' , 
        return handleError(axiosError, rejectWithValue);
   }
 })
+
+
+export const fetchUsers = async () => {
+  try {
+    const { data } = await axios.get(`${AuthBaseAdminUrl}/fetchUsers`, config);
+    return data;
+  } catch (err: any) {
+    console.log(err,'err in the fetchUsers catch')
+  }
+};
+
+
+
+export const fetchCategories = async () => {
+  try {
+    const { data } = await axios.get(`${AuthCompanyBaseUrl}/fetchCategories`, config);
+    return data;
+  } catch (err: any) {
+    console.log(err,'err in the fetchUsers catch')
+  }
+};
+
+
+
+export const addCategories = createAsyncThunk('compnay/addCategories' , async ( category : ICategory ,{rejectWithValue})=>{
+  try{
+       
+       const {data} = await axios.post(`${AuthCompanyBaseUrl}/add-Category`, category ,config)
+       return data 
+  }catch(err : any){
+   const axiosError = err as AxiosError<ApiError>;
+       return handleError(axiosError, rejectWithValue);
+  }
+} )

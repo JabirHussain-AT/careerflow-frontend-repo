@@ -14,8 +14,9 @@ import {
 import { isUserExist, userSignUp } from "../../../redux/actions/userActions";
 import { IUserSelector } from "../../../interface/IUserSlice";
 import { jwtDecode } from "jwt-decode";
-import { useLocation, useNavigate ,Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { companySignUp } from "../../../redux/actions/companyActions";
+import DialogueBox from "../../common/DialogueBox";
 
 const SignUpCard: React.FC<{
   text: string;
@@ -26,7 +27,10 @@ const SignUpCard: React.FC<{
   const { error } = useSelector((state: IUserSelector) => state.user);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [userValues , setUserValues ] = useState<any>({})
   const [stepFirst, setStepFirst] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [dialogInputValue, setDialogInputValue] = useState("");
   const [userTempData, setUserTempData] = useState<SignUpFormValues>({
     userName: "",
     email: "",
@@ -56,7 +60,7 @@ const SignUpCard: React.FC<{
       } else {
         let temp = { email: values.email };
         userExist = await dispatch(isUserExist(temp));
-        console.log(userExist, "yiuuyuiuu");
+
       }
       if (userExist?.payload?.sucess) {
         userData = await dispatch(companySignUp(values));
@@ -75,6 +79,30 @@ const SignUpCard: React.FC<{
       setUserTempData(values);
     },
   });
+  
+
+
+
+
+  const handleDialogClose = () => {
+    setIsOpen(false);
+  };
+
+  const handleDialogSubmit = async (inputValue: string) => {
+    const updatedUserValues = {
+      ...userValues,
+      userName: inputValue
+    };
+  
+    setUserValues(updatedUserValues);
+    console.log("Submitted Input Value:", inputValue);
+  
+    const userData = await dispatch(companySignUp(updatedUserValues));
+    if(userData) navigate('/company/UpdateForm')
+    setDialogInputValue(inputValue);
+  };
+
+
 
   const googleSignIn = async (response: string | any, status: boolean) => {
     if (status) {
@@ -92,14 +120,19 @@ const SignUpCard: React.FC<{
 
         if (!pathLocater) {
           userData = dispatch(userSignUp(userValues));
-          console.log();
+
         } else {
-          
-        let temp = { email: userValues.email};
-        let  userExist = await dispatch(isUserExist(temp));
-        if (userExist?.payload?.sucess) {
-          userData = dispatch(companySignUp(userValues));
-        }
+          let temp = { email: userValues.email };
+
+          let userExist = await dispatch(isUserExist(temp));
+          if (userExist?.payload?.sucess) {
+            setIsOpen(true);
+            // userValues.userName =  dialogInputValue;
+            // const nonEmptyValue = await waitForDialogInputValue();
+            // userData = dispatch(companySignUp(userValues));
+            setUserValues(userValues)
+
+          }
         }
       } catch (error) {
         console.error("Error processing Google Sign In:", error);
@@ -107,12 +140,21 @@ const SignUpCard: React.FC<{
     }
   };
 
+
+
   return (
     <>
       {stepFirst ? (
         <OtpPage userData={userTempData} />
       ) : (
         <div className=" bg-white w-4/5 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          {isOpen && (
+            <DialogueBox
+              isOpen={isOpen}
+              onClose={handleDialogClose}
+              onSubmit={handleDialogSubmit}
+            />
+          )}
           <div className="p-6 space-y-4 md:space-y-6  sm:p-8">
             <h1 className=" text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               {props.text}

@@ -52,10 +52,11 @@ const AdminApprovel = () => {
     }
   };
 
-  const handleReject = async (companyId: string , reason?:string) => {
+  const handleReject = async (companyId: string , reason?:string , email ?: string) => {
     console.log(`Reject company with ID ${companyId}`);
     const res = await dispatch(
       approveCompanyAccount({
+        email : email,
         status: false,
         companyId: companyId,
         reason : reason
@@ -170,7 +171,7 @@ const AdminApprovel = () => {
                             />
                           }
                           ques={"Are you sure ?"}
-                          onConfirm={(reason) => handleReject(company._id, reason)}
+                          onConfirm={(reason) => handleReject(company._id, reason , company.email)}
                           option={true}
                           placeholder={'Reason for the rejection'}
                         />

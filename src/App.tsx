@@ -14,9 +14,25 @@ import AdminApproval from "./pages/admin/AdminApprovel"
 import Sidebar from "./components/admin/Sidebar";
 import CompanySidebar from "./components/company/Sidebar/CompanySidebar";
 import CompanyJobs from "./pages/company/Home/CompanyJobs";
-import CompanyJobsForm from "./pages/company/Home/CompanyJobs";
+// import CompanyJobsForm from "./pages/company/Home/CompanyJobs";
+import ShowJobs from './pages/user/ShowJobs'
 import AddJobs from "./pages/company/Home/AddJobs";
 import { EditJobs } from "./pages/company/Home/EditJobs";
+import Profile from "./pages/user/Profile/Profile";
+import AdminUsers from "./pages/admin/AdminUsers";
+import JobDetialPage from "./pages/user/JobDetialPage";
+import AdminCategories from "./pages/admin/AdminCategories";
+import ViewProfile from "./pages/user/Profile/ViewProfile";
+import UserDashboard from "./pages/user/Profile/UserDashboard";
+import BrowseJob from "./pages/user/BrowseJob";
+import MyApplications from "./pages/user/Profile/MyApplications";
+import ViewJobApplicants from "./pages/company/Job/ViewJobApplicants";
+import ViewJobApplicantProfile from "./pages/company/Job/ViewJobApplicantProfile";
+import ApplicantDetialProfile from "./components/company/Jobs/ApplicantDetialProfile";
+import ApplicantDetialsResume from "./components/company/Jobs/ApplicantDetialsResume";
+import ApplicantDetialsHiring from "./components/company/Jobs/ApplicantDetialsHiring";
+import ApplicantDetialsInteriewSchedule from "./components/company/Jobs/ApplicantDetialsInteriewSchedule";
+
 
 interface ProtectedRouteProps {
   element: ReactNode;
@@ -68,20 +84,39 @@ function App() {
             
             <Route path= 'company' element={<>{companyProtectedRoute({element:< CompanySidebar />})}</>}>
               <Route path="dashboard" element={<>{companyProtectedRoute({element:< CompanyDashBoard />})}</>}/>
-              <Route path="jobs" element={<>{companyProtectedRoute({element:< CompanyJobs />})}</>}/>
-              <Route path="add-jobs" element={<>{companyProtectedRoute({element:< AddJobs />})}</>}/>
-              <Route path="edit-job/:jobId" element={<>{companyProtectedRoute({element:< EditJobs />})}</>}/>
+              <Route path="jobs" element={<>{companyProtectedRoute({element:< CompanyJobs />})}</>} />  
+                <Route path="add-jobs" element={<>{companyProtectedRoute({element:< AddJobs />})}</>}/>
+                <Route path="edit-job/:jobId" element={<>{companyProtectedRoute({element:< EditJobs />})}</>}/>
+                <Route path="job/viewApplicants/:jobId" element={<>{companyProtectedRoute({element: <ViewJobApplicants />})}</>} />
+                <Route path="jobApplicant/viewProfile/:jobId/:userId" element={<>{companyProtectedRoute({element: <ViewJobApplicantProfile  />})}</>} >
+                       <Route path='profile' element={< ApplicantDetialProfile />} />
+                       <Route path='resume' element={< ApplicantDetialsResume />} />
+                       <Route path='hiring-stage' element={< ApplicantDetialsHiring />} />
+                       <Route path='interview-schedule' element={< ApplicantDetialsInteriewSchedule />} />
+                </Route>
             </Route>
             
             {/* User Routes */}
             <Route path='/' element={<>{userProtectedRoute({ element: <Home /> })}</>} />
+            <Route path='/showJobs' element={<>{userProtectedRoute({ element: < BrowseJob /> })}</>} />
+            {/* <Route path='/showJobs' element={<>{userProtectedRoute({ element: < ShowJobs /> })}</>} /> */}
+            <Route path='/job/:id' element={<>{userProtectedRoute({ element: < JobDetialPage /> })}</>} />
+            <Route path='profile' element={<>{userProtectedRoute({ element: < Profile /> })}</>}>
+              <Route path="view" element={<>{userProtectedRoute({element:< ViewProfile />})}</>}/>
+              <Route path="dashboard" element={<>{userProtectedRoute({element:< UserDashboard />})}</>}/>
+              <Route path="my-applications" element={<>{userProtectedRoute({element:< MyApplications />})}</>}/>
+            </Route>
             <Route path='/signup' element={<>{userProtectedRoute({ element: <Signup /> })}</>} />
             <Route path='/login' element={<>{userProtectedRoute({ element: <Login /> })}</>} />
+
+
 
             {/* Admin Routes */}
             <Route path= 'admin' element={<>{adminProtectedRoute({element:<Sidebar/>})}</>}>
               <Route path="dashboard" element={<>{adminProtectedRoute({element:<AdminDashboard/>})}</>}/>
               <Route path="company-approval" element={<>{adminProtectedRoute({element:<AdminApproval/>})}</>}/>
+              <Route path="users" element={<>{adminProtectedRoute({element:< AdminUsers />})}</>}/>
+              <Route path="categories" element={<>{adminProtectedRoute({element:< AdminCategories />})}</>}/>
             </Route>
 
 

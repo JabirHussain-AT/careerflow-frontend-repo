@@ -10,11 +10,13 @@ import {
 } from "react-icons/fa";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import Logo from "../../../assets/CareerFlow-Logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/reducers/user/userSlice";
+import { IUserSelector } from "@/interface/IUserSlice";
 
 const CompanySidebar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(true);
+  const { user } = useSelector((state: IUserSelector) => state.user);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -27,6 +29,8 @@ const CompanySidebar: React.FC = () => {
       {/* <div className="w-full h-12 bg-white shadow-lg  ">
         
       </div> */}
+      <div>
+      {user?.approved && user?.approved === true ?
       <div className="flex  overflow-y-auto  ">
         <div
           className={`${
@@ -111,6 +115,14 @@ const CompanySidebar: React.FC = () => {
         <div className={`w-full ${open ? ' ' : 'ml-20'} bg-gray-100}`}>
           <Outlet />
         </div>
+      </div>
+      :
+      <div>
+         <div className={`w-full ${open ? ' ' : 'ml-20'} bg-gray-100}`}>
+          <Outlet />
+        </div>
+      </div>
+            }
       </div>
     </>
   );

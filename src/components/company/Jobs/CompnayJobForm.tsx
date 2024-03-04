@@ -4,19 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import validationSchema from "../../../validation/jobAddingValidation"; // Replace with the correct path
 import Dropdown from "@/components/common/Dropdown";
-import { FaPlus, FaTrash , FaArrowLeft } from "react-icons/fa";
-import { BsDot  } from "react-icons/bs";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import { BsDot } from "react-icons/bs";
 import DatePicker from "react-datepicker";
-import {  addingJob } from '../../../redux/actions/companyActions'
+import { addingJob } from "../../../redux/actions/companyActions";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { IUserSelector } from "@/interface/IUserSlice";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CompanyJobsForm: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
-  const { user  } = useSelector((state: IUserSelector) => state.user);
+  const { user, error, loading } = useSelector(  
+    (state: IUserSelector) => state.user
+  );
   const [selectedJobType, setSelectedJobType] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
@@ -125,25 +129,44 @@ const CompanyJobsForm: React.FC = () => {
   //
 
   const handleSubmit = async (values: any) => {
-    setRequirmentError(true);
-    values.requirements = requirements;
-    values.companyId = user?._id 
-    values.companyEmails = user?.email
-    console.log("Form data:", values);
-    const res = await dispatch(addingJob(values))
-    if(res.payload.success ){
-        console.log('------------')
-        console.log('success the adding job front end')
-        console.log('------------')
+    try {
+      setRequirmentError(true);
+
+      values.requirements = requirements;
+      values.companyId = user?._id;
+      values.companyEmails = user?.email;
+
+      console.log("Form data:", values);
+      const res = await dispatch(addingJob(values));
+
+      if (res.payload.success) {
+        console.log("------------");
+        console.log("success the adding job front end");
+        console.log("------------");
+        toast.success("Job added successfully!");
+      } else {
+        console.log("Error adding job:", res.payload.error);
+        console.log("------------");
+        console.log("------------");
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      toast.error("An unexpected error occurred. Please try again later.");
     }
   };
 
   return (
     <div className="w-full">
+      {error && (
+        <div className="bg-red-500 mx-28 z-[999] text-center mb-2 text-white text-sm py-2 px-3 rounded-md mt-3">
+          {error}
+        </div>
+      )}
+
       <div>
-      <h2 className="text-md font-mono px-5 py-3 font-bold underline">
-        Post A Job
-      </h2>
+        <h2 className="text-md font-mono px-5 py-3 font-bold underline">
+          Post A Job
+        </h2>
       </div>
       <div className="w-full text-black">
         <div className="lg:w-5/6 mx-auto">
@@ -157,7 +180,7 @@ const CompanyJobsForm: React.FC = () => {
               requirements: "",
               skills: [""],
               salary: "",
-              jobExpiry: "",
+              jobExpiry:'',
               vacancy: "",
             }}
             validationSchema={validationSchema}
@@ -398,7 +421,7 @@ const CompanyJobsForm: React.FC = () => {
                     Job Expiry <br />{" "}
                   </label>
                   <DatePicker
-                    selected={values.jobExpiry}
+                   selected={values.jobExpiry ? new Date(Date.parse(values.jobExpiry)) : null}
                     onChange={(date) => handleDateChange(date, setFieldValue)}
                     minDate={new Date()} // Restrict to future dates
                     className="bg-white w-auto py-1 px-2 rounded-md"
@@ -412,7 +435,17 @@ const CompanyJobsForm: React.FC = () => {
                 {/* ... Repeat the pattern for other fields ... */}
 
                 <div className="w-full px-2 mb-4">
-                  <Button type="submit">Submit</Button>
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className={`transition duration-300 ${
+                      loading
+                        ? "bg-gray-500 cursor-not-allowed"
+                        : "bg-blue-500 hover:bg-blue-700"
+                    } text-white duration-300 py-2 px-4 rounded-md focus:outline-none focus:shadow-outline`}
+                  >
+                    {loading ? "Submitting..." : "Submit"}
+                  </Button>
                 </div>
               </Form>
             )}
