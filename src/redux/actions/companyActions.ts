@@ -51,9 +51,9 @@ export const companyForm = createAsyncThunk(
         config
       );
 
-      console.log("======================================");
-      console.log("the data over here", data);
-      console.log("======================================");
+      // console.log("======================================");
+      // console.log("the data over here", data);
+      // console.log("======================================");
       return data;
     } catch (err: any) {
       const axiosError = err as AxiosError<ApiError>;
@@ -72,9 +72,33 @@ export const addingJob = createAsyncThunk(
         config
       );
 
-      console.log("======================================");
-      console.log("the data over here", data);
-      console.log("======================================");
+      // console.log("======================================");
+      // console.log("the data over here", data);
+      // console.log("======================================");
+      return data;
+    } catch (err: any) {
+      const axiosError = err as AxiosError<ApiError>;
+      return handleError(axiosError, rejectWithValue);
+    }
+  }
+);
+
+export const changeStatusOfJobApplication = createAsyncThunk(
+  "company/change-status/job-application",
+  async (
+    dataToSend: { applicantId: string | undefined ; jobId : string | undefined ; value: string | undefined },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { data } = await axios.post(
+        `${AuthCompanyBaseUrl}/add-job`,
+        dataToSend,
+        config
+      );
+
+      // console.log("======================================");
+      // console.log("the data over here", data);
+      // console.log("======================================");
       return data;
     } catch (err: any) {
       const axiosError = err as AxiosError<ApiError>;
@@ -92,9 +116,9 @@ export const updatingJob = createAsyncThunk(
         detials,
         config
       );
-      console.log("======================================");
-      console.log("the data over here in updating job   ", data);
-      console.log("======================================");
+      // console.log("======================================");
+      // console.log("the data over here in updating job   ", data);
+      // console.log("======================================");
       return data;
     } catch (err: any) {
       const axiosError = err as AxiosError<ApiError>;

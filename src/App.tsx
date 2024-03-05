@@ -88,7 +88,7 @@ function App() {
                 <Route path="add-jobs" element={<>{companyProtectedRoute({element:< AddJobs />})}</>}/>
                 <Route path="edit-job/:jobId" element={<>{companyProtectedRoute({element:< EditJobs />})}</>}/>
                 <Route path="job/viewApplicants/:jobId" element={<>{companyProtectedRoute({element: <ViewJobApplicants />})}</>} />
-                <Route path="jobApplicant/viewProfile/:jobId/:userId" element={<>{companyProtectedRoute({element: <ViewJobApplicantProfile  />})}</>} >
+                <Route path="jobApplicant/viewProfile/:jobId/:applicantId" element={<>{companyProtectedRoute({element: <ViewJobApplicantProfile  />})}</>} >
                        <Route path='profile' element={< ApplicantDetialProfile />} />
                        <Route path='resume' element={< ApplicantDetialsResume />} />
                        <Route path='hiring-stage' element={< ApplicantDetialsHiring />} />

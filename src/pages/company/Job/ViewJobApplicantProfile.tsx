@@ -1,12 +1,18 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+
+import React, { useState , useEffect } from "react"; 
+import {useParams } from 'react-router-dom'
 import ViewApplicantDetialSideBar from "@/components/company/Jobs/ViewApplicantDetialSideBar";
 import ApplicantDetialsSection from "@/components/company/Jobs/ApplicantDetialsSection";
+import { changeStatusOfJobApplication } from "@/redux/actions/companyActions";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 
 const ApplicantDetailsSideBar: React.FC = () => {
-  const [selectedStatus, setSelectedStatus] = useState<string>("");
-
+    
+  const [selectedStatus, setSelectedStatus] = useState<string>(""); 
+  const { jobId , applicantId  } = useParams()
+  const dispatch = useDispatch<AppDispatch>()
+  
   const statusOptions = [
     "In-Review",
     "Shortlisted",
@@ -16,6 +22,16 @@ const ApplicantDetailsSideBar: React.FC = () => {
   ];
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const valueFromInput = event.target.value 
+
+    let dataToSend = {
+      applicantId : applicantId ,
+      jobId : jobId ,
+      value : valueFromInput
+    }
+
+    const response = dispatch(changeStatusOfJobApplication(dataToSend))
+    console.log(response , 'from the viewjObapplicanProfile ')
     setSelectedStatus(event.target.value);
   };
 
@@ -45,11 +61,11 @@ const ApplicantDetailsSideBar: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex justify-around">
-          <div className="w-3/12">
+        <div className="flex justify-around ">
+          <div className="w-3/12 mb-5">
             <ViewApplicantDetialSideBar />
           </div>
-          <div className="w-8/12 mt-3">
+          <div className="w-8/12 mt-3 mb-5">
             <ApplicantDetialsSection />
           </div>
         </div>
