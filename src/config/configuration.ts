@@ -7,10 +7,11 @@ export interface ApiError {
 export const config = {
   headers: {
       "Content-Type": "application/json",
-      withCredentials: true,
-      credentials: "include"
-  }
+    },
+    withCredentials: true,
+    credentials: "include"
 };
+
 
 export const handleError = (
     error: AxiosError<ApiError>,

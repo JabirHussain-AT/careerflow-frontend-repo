@@ -56,8 +56,8 @@ const AdminUsers = () => {
     } else if (filter === "admin") {
       return user.role === filter;
     } else if (filter !== "all") {
-      return user.role === "company";
-    } else {
+      return (user.role === "company" && user?.stage === 'completed');
+    } else { 
       return true;
     }
   });
@@ -117,7 +117,7 @@ const AdminUsers = () => {
                   />
                 <td className="text-black">
                   <div className="flex justify-center mt-1">
-                    {user.status === "approved" && (
+                    { user.status === "approved" && (
                       <AlertBox
                         button={
                           <FaBan className="text-red-500 cursor-pointer mx-2" />

@@ -5,6 +5,7 @@ export interface IUserDoc{
     email?: string | null | undefined;
     jobTitle: string | null;
     phone?: string | number | null;
+    stage?:string
     socialMediaLinks  : {
         link : string ,
         socialMedia : string 

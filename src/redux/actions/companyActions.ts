@@ -10,7 +10,6 @@ export const companySignUp = createAsyncThunk(
   "compnay/SignUp",
   async (companyCredientials: IUserLoginData, { rejectWithValue }) => {
     try {
-      console.log(" IF IT IS HERE IT IS SUCCESS UNTIL HERE OKAY ");
       const { data } = await axios.post(
         `${AuthCompanyBaseUrl}/sign-up`,
         companyCredientials,
