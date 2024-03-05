@@ -8,6 +8,7 @@ import { IUserSelector } from "@/interface/IUserSlice";
 
 const ApplicantDetialProfile = () => {
   const { jobId, applicantId } = useParams();
+  const { Job } = useSelector((state: any) => state.Job);
   const { user } = useSelector((state: IUserSelector) => state.user);
   const [job, setJob] = useState<any | null>(null);
   const [applicantData, setApplicantData] = useState<any>(null);
@@ -29,7 +30,7 @@ const ApplicantDetialProfile = () => {
     };
 
     fetchData();
-  }, [jobId, user._id]);
+  }, [jobId, user._id,Job]);
 
   return (
     <div className="mt-4">

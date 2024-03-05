@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { IoMdArrowRoundBack, IoIosPhonePortrait } from 'react-icons/io';
 import { MdMessage, MdEmail } from 'react-icons/md';
 import { fetchJob, getUser } from '@/redux/actions/userActions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 
 interface ApplicantData {
@@ -17,6 +17,8 @@ interface ApplicantData {
 
 
 const ViewApplicantDetialSideBar: React.FC = () => {
+
+  const { Job } = useSelector((state: any) => state.Job);
   const [userData, setUserData] = useState<ApplicantData | null>(null);
   const [applicantData , setApplicantData ] = useState<any>({})
   const [jobData, setJobData] = useState<any | null>(null);
@@ -45,7 +47,7 @@ const ViewApplicantDetialSideBar: React.FC = () => {
     };
 
     fetchingFunction();
-  }, [jobId, applicantId]);
+  }, [jobId, applicantId,Job]);
 
  
   const getDateDifference = (appliedDate: string): number => {

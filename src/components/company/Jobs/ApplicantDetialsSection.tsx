@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 const ApplicantDetailsSection = () => {
 
   const { jobId , applicantId  } = useParams()
+  
 
   return (
     <div className='border rounded-md mt-1'>

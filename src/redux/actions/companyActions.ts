@@ -91,7 +91,7 @@ export const changeStatusOfJobApplication = createAsyncThunk(
   ) => {
     try {
       const { data } = await axios.post(
-        `${AuthCompanyBaseUrl}/add-job`,
+        `${AuthCompanyBaseUrl}/change-status/job-application`,
         dataToSend,
         config
       );

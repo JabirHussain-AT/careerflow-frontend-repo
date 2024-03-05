@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { fetchJob, getUser } from "@/redux/actions/userActions";
+import { useSelector } from "react-redux";
 
 const ApplicantDetialsHiring = () => {
+  const { Job, error } = useSelector((state: any) => state.Job);
   const { jobId, applicantId } = useParams();
-  const [job, setJob] = useState();
+  const [jobData, setJob] = useState();
   const [appliedData, setAppliedData] = useState<any>();
   const [applicant, setApplicant] = useState();
   
@@ -23,7 +25,7 @@ const ApplicantDetialsHiring = () => {
     };
   
     fetchData();
-  }, [jobId, applicantId]);
+  }, [jobId, applicantId,Job]);
   
   
   

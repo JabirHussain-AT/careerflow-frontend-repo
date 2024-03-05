@@ -1,8 +1,10 @@
  import { fetchJob, getUser } from '@/redux/actions/userActions';
 import React , { useEffect  , useState } from 'react'
+import { useSelector } from 'react-redux';
  import { useParams } from 'react-router-dom'
 
 const ApplicantDetialsResume : React.FC  = () => {
+  const { Job } = useSelector((state: any) => state.Job);
   const { jobId , applicantId  } = useParams()
   const [ job , setJob  ] = useState()
   const [ appliedData , setAppliedData  ] = useState<any>()
@@ -31,7 +33,7 @@ const ApplicantDetialsResume : React.FC  = () => {
     };
 
     fetchData();
-  }, [jobId, applicantId]);
+  }, [jobId, applicantId,Job]);
 
   return (
      <div>

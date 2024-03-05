@@ -14,11 +14,11 @@ const ApplicantDetailsSideBar: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   
   const statusOptions = [
-    "In-Review",
-    "Shortlisted",
-    "Interview",
-    "Hired",
-    "Rejected",
+    "inreview",
+    "shortlisted",
+    "interview",
+    "accepted",
+    "rejected",
   ];
 
   const handleStatusChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

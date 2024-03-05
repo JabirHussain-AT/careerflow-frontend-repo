@@ -70,7 +70,7 @@ const CompanySidebar: React.FC = () => {
               <FaAlgolia />
               {open && <span>Jobs</span>}
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to={"/company/job-applications"}
               className={({ isActive }) => {
                 return `lg:w-full py-3 px-5  text-white rounded-md hover:bg-blue-500 hover:text-white border-b-2 flex gap-2 items-center mt-2 ${
@@ -79,7 +79,7 @@ const CompanySidebar: React.FC = () => {
               }}
             >
               <FaUser /> {open && <span>Job Applications</span>}
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to={"/company/messages"}
               className={({ isActive }) => {

@@ -3,6 +3,8 @@ import LOGO from '../../../assets/googleIcon.png';
 import Modal from '../../common/ModalBox';
 
 const ApplicantInterviewSchedule = () => {
+
+  
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [interviewDateTime, setInterviewDateTime] = useState<string>("");
   const [testType, setTestType] = useState<string>("");
