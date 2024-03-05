@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { submitViewProfileUpdations } from "@/redux/actions/userActions";
 import { toast } from "react-toastify";
 import { AppDispatch } from "@/redux/store";
+import PreferredJobs from "@/components/user/Profile/PrefferedJobs";
 
 const ViewProfile: React.FC = () => {
   const [resumeVisible, setResumeVisible] = useState<boolean>(false);
@@ -159,6 +160,9 @@ const ViewProfile: React.FC = () => {
 
       {/* About Me Section */}
       <AboutMe />
+
+      {/* Preffred job section */}
+      < PreferredJobs />
 
       {/* Skills Section */}
       <Skills />

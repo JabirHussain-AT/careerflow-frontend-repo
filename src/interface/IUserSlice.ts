@@ -14,6 +14,7 @@ export interface UserState {
     status ?: string | null
     phoneNumber ?: string
     socialMediaLinks : any
+    preferredJobs ?: string[]
     position : string 
     profilePic ?: string | null
     location : string  

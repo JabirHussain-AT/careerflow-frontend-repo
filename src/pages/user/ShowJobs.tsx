@@ -31,7 +31,7 @@ const ShowJobs: React.FC = () => {
 
   const handleSearch = (query: string) => {
     // Use filter to find jobs that match the search query
-    const filtered = jobs.filter((job) =>
+    const filtered : any = jobs.filter((job) =>
       job.jobTitle!.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredJobs(filtered);
@@ -71,7 +71,7 @@ const ShowJobs: React.FC = () => {
                     </p>
                     <p className="text-gray-400 text-xs font-sans">
                       {" "}
-                      Salary: {job.salary}
+                      Salary: {job.fromSalary} - {job.toSalary}
                     </p>
                   </div>
                   <div className="flex justify-between items-center">

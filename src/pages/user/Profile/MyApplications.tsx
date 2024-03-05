@@ -48,7 +48,7 @@ const MyApplications: React.FC = () => {
   return (
     <div className="m-5 flex justify-center items-center">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {jobApplications.map((application: any) => (
+        {jobApplications?.map((application: any) => (
           <div
             key={application.id}
             className="bg-white border border-gray-300 p-6 rounded-md shadow-md transition-transform transform hover:scale-105"

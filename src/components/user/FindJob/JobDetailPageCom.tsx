@@ -94,12 +94,18 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
               <BsSave2 className="bg-gray-300 " />
             </div>
             <div className="flex">
+                {job.applicants.some((applicant :any ) => applicant.applicantId === user?._id) ? (
+                      <button className="px-6 md:px-10 ml-2 text-white text-sm md:text-base font-sans rounded bg-gray-600 hover:bg-gray-200 cursor-not-allowed" disabled>
+                        Applied
+                      </button>
+                    ) : (
               <button
                 onClick={() => handleModal()}
                 className="bg-blue-500 px-6 md:px-10 ml-2 text-white text-sm md:text-base font-sans rounded"
               >
                 Apply Now
               </button>
+                    )}
             </div>
           </div>
         </div>
@@ -115,12 +121,12 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
           </div>
           <div className="w-full md:w-1/3 flex justify-center items-center mt-4 md:mt-0">
             <div className="bg-white shadow-sm  rounded-lg flex flex-col justify-around items-baseline w-full md:w-4/5 h-3/4">
-              <div className="ml-8 my-4 ">
+              <div className="ml-8 my-4 flex items-center gap-4 pt-4">
                 <h2 className="font-semibold font-sans text-sm md:text-center">
-                  Salary
+                  Salary : 
                 </h2>
                 <p className="text-green-600 font-sans text-sm md:text-center">
-                  {job.salary}
+                  {job.fromSalary} - {job.toSalary}
                 </p>
               </div>
               <div className="my-4">

@@ -41,7 +41,7 @@ interface ProtectedRouteProps {
 function App() {
   const { user, error } = useSelector((state: IUserSelector) => state.user);
   const dispatch = useDispatch();
-  console.log('user === > ',user)
+  // console.log('user === > ',user)
 
   useEffect(() => {
     

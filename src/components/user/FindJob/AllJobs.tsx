@@ -56,18 +56,18 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
                 </div>
                 <div className="lg:w-3/12 flex items-center justify-end">
                   <div className="flex flex-col items-center">
-                    {job.applicants.some((applicant :any ) => applicant.applicantId === userId) ? (
+                    {/* {job.applicants.some((applicant :any ) => applicant.applicantId === userId) ? (
                       <button className="px-4 py-2 mt-2 bg-gray-400 text-white rounded-md cursor-not-allowed" disabled>
                         Applied
                       </button>
-                    ) : (
+                    ) : ( */}
                       <button
                         onClick={() => navigate(`/job/${job._id}`)}
                         className="px-4 py-2 mt-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
                       >
                         View Job
                       </button>
-                    )}
+                    {/* )} */}
                     <p className="text-gray-500 text-sm mt-2">
                       {job.applicants.length} applications
                     </p>

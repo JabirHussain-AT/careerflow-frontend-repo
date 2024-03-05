@@ -13,7 +13,8 @@ export interface IJob{
         }
         requirements?: any[];
         skills?: string[];
-        salary?: string | null | undefined;
+        fromSalary?: string | null | undefined;
+        toSalary?: string | null | undefined;
         status : boolean
         jobExpiry?: any | undefined;
         vacancy: string | number | null;
