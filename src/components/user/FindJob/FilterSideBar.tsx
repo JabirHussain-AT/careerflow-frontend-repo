@@ -1,5 +1,7 @@
 // FilterSidebar.tsx
-import React from "react";
+import { ICategory } from "@/interface/ICompanyApprovelModal";
+import { fetchCategories } from "@/redux/actions/adminActions";
+import React , { useEffect, useState } from "react";
 import { BiArrowToBottom } from "react-icons/bi";
 import { MdOutlineDeleteSweep } from "react-icons/md";
 import { Range } from "react-range";
@@ -33,6 +35,16 @@ const FilterSideBar: React.FC<FilterSidebarProps> = ({
   getSalaryRangeLabel,
   clearFilters,
 }) => {
+  const [ Categories  , setCategories ] = useState< ICategory[] >([])
+  useEffect(()=>{
+
+    const fetchCategoriesFun = async ( ) =>  {
+        const result = await fetchCategories()
+        setCategories(result?.data)
+    }
+    fetchCategoriesFun()
+  },[])
+
   return (
     <div className="w-1/3 bg-white m border-e-4 rounded-sm p-5 flex flex-col">
       <div className="mb-4">
@@ -84,16 +96,16 @@ const FilterSideBar: React.FC<FilterSidebarProps> = ({
         </div>
         {sectionVisibility.categories && (
           <>
-            {["Design", "Sales", "Engineering"].map((category) => (
-              <label key={category} className="flex items-center mb-2">
+            {Categories && Categories.map((category) => (
+              <label key={category._id} className="flex items-center mb-2">
                 <input
                   type="checkbox"
-                  value={category}
-                  checked={categories.includes(category)}
-                  onChange={() => handleCategoryChange(category)}
+                  value={category.category}
+                  checked={categories.includes(category.category)}
+                  onChange={() => handleCategoryChange(category.category)}
                   className="mr-2"
                 />
-                {category}
+                {category.category}
               </label>
             ))}
           </>

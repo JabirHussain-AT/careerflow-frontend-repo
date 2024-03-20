@@ -11,8 +11,8 @@ const Home: FC = () => {
     <>
       <NavBar />
       <Banner />
-      <CategorySec />
       <FeaturedJobSec />
+      <CategorySec />
       <TopCompanies />
       <Footer />
     </>

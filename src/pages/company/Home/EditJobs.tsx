@@ -4,7 +4,7 @@ import React from 'react'
 export const EditJobs : React.FC  = () => {
     
   return (
-    <div>
+    <div className='h-full'>
        < CompanyEditForm />
     </div>
   )

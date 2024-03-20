@@ -10,7 +10,7 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
   const navigate = useNavigate();
 
   return (
-    <div className="mx-5 my-5">
+    <div className="mx-5 my-5 rounded-2xl">
       <div className="w-full h-screen overflow-auto p-5">
         <div className="mb-8">
           <h1 className="font-bold text-xl font-sans mb-2 text-indigo-800">

@@ -6,6 +6,7 @@ import { logout } from "@/redux/reducers/user/userSlice";
 import { IUserSelector } from "@/interface/IUserSlice";
 import CompanyModal from "@/components/company/Home/CompanyModal";
 import CompanySidebar from "@/components/company/Sidebar/CompanySidebar";
+import CompanyDash from "@/components/company/Home/dashboard/CompanyDash";
 
 const Dashboard: React.FC = () => {
   const { user } = useSelector((state: IUserSelector) => state.user);
@@ -52,7 +53,7 @@ const Dashboard: React.FC = () => {
 
 
           ) : (
-             user?.status === 'pending' ?
+             user?.status === 'pending'  ?
 
 
              <div className="max-w-md mx-auto mt-10 bg-white p-8 border rounded shadow">
@@ -61,7 +62,7 @@ const Dashboard: React.FC = () => {
              </p>
              <div className="flex items-center">
                <svg
-                 xmlns="http://www.w3.org/2000/svg"
+                 xmlns="http://www.w3.org/20 00/svg"
                  className="h-6 w-6 text-green-500 mr-2"
                  fill="none"
                  viewBox="0 0 24 24"
@@ -74,17 +75,17 @@ const Dashboard: React.FC = () => {
                    d="M5 13l4 4L19 7"
                  />
                </svg>
-               <p className="text-green-500">Your Submission is Successful.</p>
+               <p className="text-green-500">Your Submission is Successfull.</p>
              </div>
            </div>
            
              :
-             <div className="bg-red-800 h-10 w-full">Approved  </div>
+             <div className="bg-red-800 h-10 w-full"> Approved  </div>
           )}
         </div>
       ) : (
         <div>
-         
+         <CompanyDash />
         </div>
       )}
     </>

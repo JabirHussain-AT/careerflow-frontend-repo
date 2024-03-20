@@ -44,15 +44,12 @@ export const companyForm = createAsyncThunk(
   "company/Form",
   async (userCredentials: ICompanyForm, { rejectWithValue }) => {
     try {
+      
       const { data } = await axios.post(
         `${AuthCompanyBaseUrl}/updateForm`,
         userCredentials,
         config
       );
-
-      // console.log("======================================");
-      // console.log("the data over here", data);
-      // console.log("======================================");
       return data;
     } catch (err: any) {
       const axiosError = err as AxiosError<ApiError>;
@@ -126,6 +123,9 @@ export const updatingJob = createAsyncThunk(
   }
 );
 
+
+
+
 export const fetchComJobs = async (id: string | any) => {
   try {
     const { data } = await axios.get(
@@ -157,3 +157,76 @@ export const fetchJobs = async () => {
     return data;
   } catch (err: any) {}
 };
+
+export const removeSchedule = async ({ jobId  , applicantId } : { jobId : string , applicantId : string }) => {
+  try {
+    const { data } = await axios.get(`${AuthCompanyBaseUrl}/removeSchedule/${jobId}/${applicantId}`, config);
+    return data;
+  } catch (err: any) {
+    console.log(err, ' err in the removeScheule ')
+  }
+};
+
+
+export const getTotalJobsAndApplicants = async (Id : string)=>{
+  try {
+    const { data } = await axios.get(`${AuthCompanyBaseUrl}/dashboard/get-jobs-applicants/${Id}`, config);
+    return data;
+  } catch (err: any) {
+    console.log(err,'==> error happened in the get total jobs nad applicants ')
+  }
+}
+
+
+export const getChartData = async (Id : string , filter : string)=>{
+  try {
+    const { data } = await axios.get(`${AuthCompanyBaseUrl}/dashboard/get-jobs-applicants/${filter}/${Id}`, config);
+    return data;
+  } catch (err: any) {
+    console.log(err,'==> error happened in the get total jobs nad applicants ')
+  }
+}
+
+
+export const fetchInterViewSchedule = async (jobId : any , applicantId : any)=>{
+  try {
+    const { data } = await axios.get(`${AuthCompanyBaseUrl}/job/get-interview-schedules/${jobId}/${applicantId}`, config);
+    return data;
+  } catch (err: any) {
+    console.log(err,'==> error happened in the get interveiw schedule list applicant profile ')
+  }
+}
+
+
+export const chatCompanyDetials = createAsyncThunk(
+  "company/chatUsersDetials",
+  async ( companyIdContainer : any , { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(
+        `${AuthCompanyBaseUrl}/get-chatCompanyDetials`,companyIdContainer,
+        config
+      );
+      return data;
+    } catch (err: any) {
+      const axiosError = err as AxiosError<ApiError>;
+      return handleError(axiosError, rejectWithValue);
+    }
+  }
+);
+
+
+export const scheduleInterview = createAsyncThunk(
+  "job/scheduleInterview",
+  async ( interViewData : any , { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(
+        `${AuthCompanyBaseUrl}/job/sceduleInterview`,interViewData,
+        config
+      );
+      return data;
+    } catch (err: any) {
+      const axiosError = err as AxiosError<ApiError>;
+      return handleError(axiosError, rejectWithValue);
+    }
+  }
+);

@@ -8,6 +8,7 @@ import {
   submitUserProfilePic,
   submitViewProfileUpdations,
   
+  
 } from "../../actions/userActions";
 import { IUserLoginData } from "../../../interface/IUserLogin";
 import { persistReducer } from "redux-persist";
@@ -26,6 +27,7 @@ const userSlice = createSlice({
     user: null as IUserLoginData | null,
     error: null as string | null,
     loading: false as boolean,
+    jobs  : null 
   },
   reducers: {
     makeErrorDisable: (state) => {

@@ -1,21 +1,20 @@
-// BrowseJob.tsx
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
+import { fetchJobsMain } from "@/redux/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { IUserSelector } from "@/interface/IUserSlice";
 import NavBar from "@/components/user/Home/NavBar";
 import SearchBar from "@/components/user/FindJob/SearchBar";
 import AllJobs from "@/components/user/FindJob/AllJobs";
 import BannerFindJob from "@/components/user/FindJob/BannerFindJob";
 import FilterSidebar from "@/components/user/FindJob/FilterSideBar";
-import { fetchJobsMain } from "@/redux/actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "@/redux/store";
 import Footer from "@/components/common/Footer";
 import Pagination from "@/components/common/Pagination";
-import { IUserSelector } from "@/interface/IUserSlice";
 
 const BrowseJob: React.FC = () => {
 
-  const { user, error } = useSelector((state: IUserSelector) => state.user);
+  const { user } = useSelector((state: IUserSelector) => state.user);
   const [filteredData, setFilteredData] = useState([]);
   const [employmentTypes, setEmploymentTypes] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
@@ -29,6 +28,7 @@ const BrowseJob: React.FC = () => {
   const [totalJobs , setTotalJobs ] = useState<number>(0)
   const [searchQuery, setSearchQuery] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
+
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -52,16 +52,16 @@ const BrowseJob: React.FC = () => {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, [categories, employmentTypes, salaryRange, searchQuery , page ]);
+
 
   useEffect(() => {
     const typeOfEmploymentParam = searchParams.get("typeOfEmployment");
     const categoriesParam = searchParams.get("category");
     const salaryRangeParam = searchParams.get("salaryRange");
     const searchParam = searchParams.get("search");
-    const pageParam = searchParams.get("page");
+    searchParams.get("page");
 
     if (typeOfEmploymentParam) {
       setEmploymentTypes(typeOfEmploymentParam.split(","));
@@ -102,22 +102,23 @@ const BrowseJob: React.FC = () => {
   };
 
   const handleSearch = (query: string) => {
+
     setSearchQuery(query);
-
-    console.log("Search Query in BrowseJob:", query);
-
-    // Update URL with search query
     updateURLParams({ search: query });
+
   };
 
   const toggleSectionVisibility = (section: string) => {
+
     setSectionVisibility((prevVisibility: any) => ({
       ...prevVisibility,
       [section]: !prevVisibility[section],
     }));
+
   };
 
   const handleEmploymentTypeChange = (type: string) => {
+
     setEmploymentTypes((prevTypes) => {
       const updatedTypes = prevTypes.includes(type)
         ? prevTypes.filter((t) => t !== type)
@@ -127,9 +128,11 @@ const BrowseJob: React.FC = () => {
 
       return updatedTypes;
     });
+
   };
 
   const handleCategoryChange = (category: string) => {
+
     setCategories((prevCategories) => {
       const updatedCategories = prevCategories.includes(category)
         ? prevCategories.filter((c) => c !== category)
@@ -139,16 +142,20 @@ const BrowseJob: React.FC = () => {
 
       return updatedCategories;
     });
+
   };
 
+
   const handleSalaryRangeChange = (range: string) => {
+
     setSalaryRange(range);
     updateURLParams({ salaryRange: range });
+
   };
 
   const updateURLParams = (params: Record<string, string>) => {
-    const newSearchParams = new URLSearchParams(window.location.search);
 
+    const newSearchParams = new URLSearchParams(window.location.search);
     Object.entries(params).forEach(([key, value]) => {
       if (value) {
         newSearchParams.set(key, value);
@@ -162,27 +169,34 @@ const BrowseJob: React.FC = () => {
       "",
       `${window.location.pathname}?${newSearchParams}`
     );
+
   };
 
   const handlePageChange = (newPage: number) => {
+
     setPage(newPage);
     updateURLParams({ page: newPage.toString() });
+
   };
 
   const getRangeValue = (salaryRangeLabel: string) => {
+
     switch (salaryRangeLabel) {
+      // Adjust the value based on the range distribution
       case "Below 3 LPA":
         return 0;
       case "3-10 LPA":
-        return 8; // Adjust the value based on the range distribution
+        return 8; 
       case "More than 10 LPA":
         return 15;
       default:
         return 0;
     }
+
   };
 
   const getSalaryRangeLabel = (value: number) => {
+
     if (value < 4) {
       return "Below 3 LPA";
     } else if (value < 12) {
@@ -190,6 +204,7 @@ const BrowseJob: React.FC = () => {
     } else {
       return "More than 10 LPA";
     }
+
   };
 
   return (

@@ -43,8 +43,19 @@ const PreferredJobs: React.FC = () => {
   };
 
   const handleRemoveJob = (index: number) => {
-    setPreferredJobs((prevJobs) => prevJobs.filter((_, i) => i !== index));
+    setPreferredJobs((prevJobs: any[]) => {
+      const data = prevJobs.filter((_, i: number) => i !== index);
+      let dataToSubmit = {
+        userId: user?._id,
+        preferredJobs: data, // Limit to max 5 jobs
+      };
+      dispatch(submitViewProfileUpdations(dataToSubmit));
+      return data;
+    });
   };
+  
+  
+ 
 
   const handleSubmit = () => {
     // Validate before submission
@@ -59,6 +70,7 @@ const PreferredJobs: React.FC = () => {
       preferredJobs: preferredJobs.slice(0, 5), // Limit to max 5 jobs
     };
     dispatch(submitViewProfileUpdations(dataToSubmit));
+    
     console.log("Submitted:", preferredJobs);
     handleCloseModal();
   };

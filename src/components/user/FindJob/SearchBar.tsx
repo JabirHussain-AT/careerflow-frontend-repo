@@ -20,7 +20,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         <div className="w-11/12 rounded border-2 bg-white items-center px-3 py-1 flex gap-4">
           <BsSearch />
           <input
-            className="w-full p-3 rounded-sm h-8"
+            className="w-full p-3 rounded-sm h-8 focus:outline-blue-400 focus:outline-dotted font-serif "
             placeholder="Search By: Job Title..."
             type="text"
             value={searchQuery}

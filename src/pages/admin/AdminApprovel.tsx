@@ -6,7 +6,7 @@ import {
 } from "../../redux/actions/adminActions";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
-import MoreInfoModal from "@/components/admin/companyApprovel.tsx/MoreInfoModal";
+import MoreInfoModal from "@/components/admin/companyApprovel/MoreInfoModal";
 import AlertBox from "@/components/common/AlertBox";
 
 const AdminApprovel = () => {
@@ -88,7 +88,7 @@ const AdminApprovel = () => {
   
 
   return (
-    <div className="container mx-auto mt-8 p-8">
+    <div className="container mx-auto min-h-screen mt-8 p-8">
       {/* Filter Section */}
       <div className="mb-4 flex items-center">
         <label className="mr-2">Filter:</label>
@@ -110,7 +110,7 @@ const AdminApprovel = () => {
         company={selectedCompany}
       />
       {/* Table Section */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto ">
         <table className="w-full border-collapse border border-green-500 rounded-lg overflow-hidden">
           <thead className="bg-gray-800 text-white">
             <tr>

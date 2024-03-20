@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,8 @@ import { AppDispatch } from "@/redux/store";
 import { IUserSelector } from "@/interface/IUserSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ICategory } from "@/interface/ICompanyApprovelModal";
+import { fetchCategories } from "@/redux/actions/adminActions";
 
 const CompanyJobsForm: React.FC = () => {
 
@@ -23,6 +25,7 @@ const CompanyJobsForm: React.FC = () => {
   );
   const [selectedJobType, setSelectedJobType] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [allCategories , setAllCategories ] = useState<string[]>([])
 
   const [requirements, setRequirements] = useState<string[]>([]);
   const [requirementsInput, setRequirementsInput] = useState<string>("");
@@ -36,6 +39,21 @@ const CompanyJobsForm: React.FC = () => {
     useState<boolean>(false);
   const [duplicationErrorSkills, setDuplicationErrorSkills] =
     useState<boolean>(false);
+
+    useEffect(()=>{
+      const fetchCategoriesFun = async ( ) =>  {
+        const result = await fetchCategories()
+        let temp : string[] = []
+        const updatedResult = result?.data.filter((data : ICategory)=>{
+          let category = data?.category
+          temp.push(category)
+          return category
+        })
+        console.log("🚀 ~ file: CompnayJobForm.tsx:49 ~ updatedResult ~ updatedResult:", temp)
+        setAllCategories(temp)
+    }
+    fetchCategoriesFun()
+    },[])
 
   // Job type
   const handleJobTypeChange = (
@@ -239,11 +257,23 @@ const CompanyJobsForm: React.FC = () => {
                       </div>
                     }
                     title="Select .."
-                    options={["Devoloper", "Marketing", "Accountant"]}
+                    options={allCategories}
                     onChange={(selectedOption: string) =>
                       handleCategoryChange(selectedOption, setFieldValue)
                     }
                   />
+                  {/* <Dropdown
+                    button={
+                      <div className="btn rounded-md px-5 py-2 text-sm bg-white ">
+                        {selectedCategory || "Select Category"}
+                      </div>
+                    }
+                    title="Select .."
+                    options={["Devoloper", "Marketing", "Accountant"]}
+                    onChange={(selectedOption: string) =>
+                      handleCategoryChange(selectedOption, setFieldValue)
+                    }
+                  /> */}
                   <ErrorMessage
                     name="selectedCategory"
                     component="div"

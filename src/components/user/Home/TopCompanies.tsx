@@ -4,7 +4,7 @@ import GoogleIcon from "../../../assets/googleIcon.png";
 const TopCompanies: React.FC = () => {
   return (
     <>
-      <div className="h-screen w-full bg-white">
+      <div className="h-auto pb-10 w-full bg-white">
         <div className="flex justify-between py-5 px-4  bg-white">
           <div className="">
             <h3 className="font-bold font-sans text-3xl">

@@ -168,12 +168,18 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
               <td className=" py-2 px-4 border-b">
                 <span
                   className={`border-2 px-3 text-center rounded-md font-semibold font-mono ${
-                    job.status === true
+                    job?.jobExpiry && new Date(job.jobExpiry) < new Date()
+                      ? "border-red-300 hover:border-red-600 text-red-500"
+                      : job?.status
                       ? "border-green-300 hover:border-green-600 text-green-500"
                       : "border-red-300 hover:border-red-600 text-red-500"
                   }`}
                 >
-                  {job.status ? "Live " : " Blocked "}
+                  {job?.jobExpiry && new Date(job.jobExpiry) < new Date()
+                    ? "Expired"
+                    : job?.status
+                    ? "Live"
+                    : "Blocked"}
                 </span>
               </td>
               <td className="py-2 px-4 border-b">{job.category}</td>
@@ -187,13 +193,11 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
                         ? "hover:bg-blue-700 text-white bg-blue-500"
                         : "disabled bg-gray-300 text-black"
                     } px-3 py-2 rounded-md m-1`}
-
                     onClick={() => {
                       if (job?.applicants.length > 0) {
                         navigate(`/company/job/viewApplicants/${job._id}`);
                       }
                     }}
-                    
                   >
                     {job?.applicants.length > 0
                       ? "View Applicants"
@@ -274,7 +278,7 @@ const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
 
       {/* Edit Job Section */}
       {editingJob && (
-        <div className=" absolute top-20 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+        <div className=" absolute top-0 left-0 min-h-screen h-auto w-full  flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-md">
             {/* Edit Job Form */}
 

@@ -23,8 +23,7 @@ const JobDetailsContainer: React.FC = () => {
 
   return (
     <div>
-      {job && <JobDetailPageCom job={job} />}
-      {/* Add loading or error handling if needed */}
+      { job && <JobDetailPageCom job={ job } />}
     </div>
   );
 };

@@ -194,7 +194,7 @@ const CompanyEditForm: React.FC<CompanyJobsFormProps> = ({ Values , onClose , on
   };
 
   return (
-    <div className="w-full0 ">
+    <div className="w-full mt-10 h-auto overflow-y-auto ">
       <h2 className="text-md font-mono px-5 py-3 font-bold underline">
         Edit The Job
       </h2>

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { FaCheck, FaBan, FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowAltCircleRight } from "react-icons/fa";
 import AlertBox from "@/components/common/AlertBox";
-import { fetchUsers } from "../../redux/actions/adminActions";
+import { fetchUsers, userBlockStatus } from "../../redux/actions/adminActions";
 import { IUserDoc } from "@/interface/IUserDoc";
-import MoreInfoModalUsers from "@/components/admin/compnayUsers.tsx/MoreInfoModalUsers";
+import MoreInfoModalUsers from "@/components/admin/compnayUsers/MoreInfoModalUsers";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState<IUserDoc[]>([]);
-  const [filter, setFilter] = useState("user");
+  const [filter, setFilter] = useState("user"); // Set default filter value
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    // Fetch users when component mounts
     fetchUsers()
       .then((data: { success: string; message: string; data: IUserDoc[] }) => {
         setUsers(data.data);
@@ -20,13 +24,12 @@ const AdminUsers = () => {
       });
   }, []);
 
-  const makeChange = (id: any, status: any) => {
-    setUsers((prev) =>
-      prev.map((user) => (user._id === id ? { ...user, status } : user))
+  const makeChange = (userId: string, isBlocked: boolean) => {
+    // Update users state with new isBlocked value
+    setUsers(prevUsers =>
+      prevUsers.map(user => (user._id === userId ? { ...user, isBlocked } : user))
     );
   };
-
-  // Modal settings
 
   const handleModalOpen = () => {
     setIsOpen(true);
@@ -36,35 +39,47 @@ const AdminUsers = () => {
     setIsOpen(false);
   };
 
-  //
-
-  const handleBlock = (userId: any) => {
-    console.log(`Block user with ID ${userId}`);
-    // Add your logic here to block the user
-    makeChange(userId, "blocked");
+  const handleBlock = async (userId : string) => {
+    // Optimistically update isBlocked to false
+    makeChange(userId, true);
+    try {
+      // Dispatch action to block user
+      await dispatch(userBlockStatus(userId));
+    } catch (error) {
+      // Revert changes if action fails
+      makeChange(userId, false);
+      console.error("Error blocking user:", error);
+    }
   };
 
-  const handleUnblock = (userId: any) => {
-    console.log(`Unblock user with ID ${userId}`);
-    // Add your logic here to unblock the user
-    makeChange(userId, "active");
+  const handleUnblock = async (userId : string | undefined) => {
+    // Optimistically update isBlocked to true
+    makeChange(userId!, false);
+    try {
+      // Dispatch action to unblock user
+      await dispatch(userBlockStatus(userId!));
+    } catch (error) {
+      // Revert changes if action fails
+      makeChange(userId!, true);
+      console.error("Error unblocking user:", error);
+    }
   };
 
-  const filteredUsers = users.filter((user) => {
+  const filteredUsers = users.filter(user => {
+    // Filter users based on selected role
     if (filter === "user") {
       return user.role === filter;
+    } else if (filter === "company") {
+      return user.role === filter && user.stage === 'completed';
     } else if (filter === "admin") {
       return user.role === filter;
-    } else if (filter !== "all") {
-      return (user.role === "company" && user?.stage === 'completed');
-    } else { 
+    } else {
       return true;
     }
   });
 
   return (
-    <div className="container mx-auto mt-8 p-8">
-      {/* Filter Section */}
+    <div className="container mx-auto mt-8 p-8 min-h-screen">
       <div className="mb-4 flex items-center">
         <label className="mr-2">Filter by Role:</label>
         <select
@@ -76,10 +91,8 @@ const AdminUsers = () => {
           <option value="user">User</option>
           <option value="company">Company</option>
           <option value="admin">Admin</option>
-          {/* Add more roles as needed */}
         </select>
       </div>
-      {/* Table Section */}
       <div className="overflow-x-auto">
         <table className="w-full border-collapse border border-green-500 rounded-lg overflow-hidden">
           <thead className="bg-gray-800 text-white">
@@ -109,27 +122,25 @@ const AdminUsers = () => {
                 <td className="py-2 flex justify-center mt-2 text-gray-600 cursor-pointer">
                   <FaArrowAltCircleRight onClick={handleModalOpen} />
                 </td>
-
-                  <MoreInfoModalUsers clsssName="w-screen"
-                    isOpen={isOpen}
-                    closeModal={handleModalClose}
-                    user={user}
-                  />
                 <td className="text-black">
                   <div className="flex justify-center mt-1">
-                    { user.status === "approved" && (
+                    {user.isBlocked === false && (
                       <AlertBox
                         button={
-                          <FaBan className="text-red-500 cursor-pointer mx-2" />
+                          <p className="text-red-500 cursor-pointer bg-red-200 px-2 rounded-md mx-2 font-semibold text-sm hover:bg-red-400 hover:text-red-600">
+                            Block
+                          </p>
                         }
                         ques={"Are you sure you want to block this user?"}
-                        onConfirm={() => handleBlock(user._id)}
+                        onConfirm={() => handleBlock(user._id!)}
                       />
                     )}
-                    {user.status === "rejected" && (
+                    {user.isBlocked === true && (
                       <AlertBox
                         button={
-                          <FaCheck className="text-green-500 cursor-pointer mx-2" />
+                          <p className="text-green-500 cursor-pointer bg-green-200 px-2 rounded-md mx-2 font-semibold text-sm hover:bg-green-400 hover:text-green-600">
+                            Unblock
+                          </p>
                         }
                         ques={"Are you sure you want to unblock this user?"}
                         onConfirm={() => handleUnblock(user._id)}

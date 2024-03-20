@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { IoMdArrowRoundBack, IoIosPhonePortrait } from 'react-icons/io';
+import {  IoIosPhonePortrait } from 'react-icons/io';
 import { MdMessage, MdEmail } from 'react-icons/md';
 import { fetchJob, getUser } from '@/redux/actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
+import { useNavigate } from 'react-router-dom'
+import { createNewChatRoom } from '@/redux/actions/chatActions'
+import { IUserSelector } from '@/interface/IUserSlice';
 
 interface ApplicantData {
   profilePic: string;
@@ -19,10 +22,12 @@ interface ApplicantData {
 const ViewApplicantDetialSideBar: React.FC = () => {
 
   const { Job } = useSelector((state: any) => state.Job);
+  const { user} = useSelector((state : IUserSelector) => state.user)
   const [userData, setUserData] = useState<ApplicantData | null>(null);
   const [applicantData , setApplicantData ] = useState<any>({})
   const [jobData, setJobData] = useState<any | null>(null);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
 
   const { jobId, applicantId } = useParams();
 
@@ -67,6 +72,19 @@ const ViewApplicantDetialSideBar: React.FC = () => {
     return daysDifference;
   };
 
+
+  const handleCreateRoom : Function = async  () =>{
+
+      const dataToSend = {
+        roomCreater  :user?._id  ,
+        roomJoiner : applicantId
+      }
+      const response = await dispatch(createNewChatRoom(dataToSend))
+      const chatRoomId = response?.payload?.data?._id
+      console.log(chatRoomId,'-0-------p')
+      if(chatRoomId) navigate(`/company/messages`)
+  }
+
   return (
     <div className="border rounded-md mt-4">
       <div className="flex gap-x-6 ms-5">
@@ -108,9 +126,9 @@ const ViewApplicantDetialSideBar: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex w-full gap-x-2 h-full">
-        <div className="border-2 w-5/6 rounded-md  ms-4 flex justify-center h-full py-1 ">
-          <h1 className="text-lightgreen font-bold"> Message </h1>
+      <div className="flex w-full  gap-x-2 h-full">
+        <div className="border-2 w-5/6 rounded-md cursor-pointer hover:bg-sky-700    ms-4 flex justify-center h-full py-1 ">
+          <h1 onClick={()=>handleCreateRoom()} className="text-lightgreen font-bold hover:scale-105"> Message </h1>
         </div>
         <div className="border-2 w-1/6 rounded-md  flex me-4 text-lightgreen text-xl justify-center h-full py-1.5 mb-4">
           <h1><MdMessage /></h1>

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusOfJobApplication } from '@/redux/actions/companyActions'
+import { changeStatusOfJobApplication  } from '@/redux/actions/companyActions'
 
 const jobApplicantSlice = createSlice({
 

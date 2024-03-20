@@ -27,7 +27,7 @@ const SignUpCard: React.FC<{
   const { error } = useSelector((state: IUserSelector) => state.user);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [userValues , setUserValues ] = useState<any>({})
+  const [userValues, setUserValues] = useState<any>({});
   const [stepFirst, setStepFirst] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [dialogInputValue, setDialogInputValue] = useState("");
@@ -60,7 +60,6 @@ const SignUpCard: React.FC<{
       } else {
         let temp = { email: values.email };
         userExist = await dispatch(isUserExist(temp));
-
       }
       if (userExist?.payload?.sucess) {
         userData = await dispatch(companySignUp(values));
@@ -79,10 +78,6 @@ const SignUpCard: React.FC<{
       setUserTempData(values);
     },
   });
-  
-
-
-
 
   const handleDialogClose = () => {
     setIsOpen(false);
@@ -91,18 +86,16 @@ const SignUpCard: React.FC<{
   const handleDialogSubmit = async (inputValue: string) => {
     const updatedUserValues = {
       ...userValues,
-      userName: inputValue
+      userName: inputValue,
     };
-  
+
     setUserValues(updatedUserValues);
     console.log("Submitted Input Value:", inputValue);
-  
+
     const userData = await dispatch(companySignUp(updatedUserValues));
-    if(userData) navigate('/company/UpdateForm')
+    if (userData) navigate("/company/UpdateForm");
     setDialogInputValue(inputValue);
   };
-
-
 
   const googleSignIn = async (response: string | any, status: boolean) => {
     if (status) {
@@ -120,7 +113,6 @@ const SignUpCard: React.FC<{
 
         if (!pathLocater) {
           userData = dispatch(userSignUp(userValues));
-
         } else {
           let temp = { email: userValues.email };
 
@@ -130,8 +122,7 @@ const SignUpCard: React.FC<{
             // userValues.userName =  dialogInputValue;
             // const nonEmptyValue = await waitForDialogInputValue();
             // userData = dispatch(companySignUp(userValues));
-            setUserValues(userValues)
-
+            setUserValues(userValues);
           }
         }
       } catch (error) {
@@ -139,8 +130,6 @@ const SignUpCard: React.FC<{
       }
     }
   };
-
-
 
   return (
     <>
@@ -355,6 +344,30 @@ const SignUpCard: React.FC<{
               >
                 Create an account
               </button>
+
+              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                {!location.pathname.includes("/company") ? (
+                  <>
+                    Are you a Company?{" "}
+                    <Link
+                      to="/company/signup"
+                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    >
+                      Click here
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    Are you a User?{" "}
+                    <Link
+                      to="/signup"
+                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    >
+                      Click here
+                    </Link>
+                  </>
+                )}
+              </p>
 
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}

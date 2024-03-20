@@ -74,6 +74,29 @@ export interface IApproveCompanyAccount {
 }
 
 export interface ICategory {
+  _id ?: string 
   category: string;
   logo?: string;
+}
+
+
+export interface ICompany {
+  _id: string;
+    email: string;
+    role: string;
+    userName: string;
+    approved: boolean;
+    address: string;
+    category : string ;
+    createdAt: string;
+    founded: string;
+    linkedIn: string;
+    logo: string;
+    registrationId: string;
+    stage: string;
+    status: string;
+    totalEmployees: number;
+    updatedAt: string;
+    vision: string;
+    websiteLink: string;
 }

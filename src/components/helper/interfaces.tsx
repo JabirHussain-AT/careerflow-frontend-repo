@@ -29,3 +29,10 @@ export interface userDataByGoogle {
   email: string;
   picture?: string;
  }
+
+ export interface SaveChatMessagesPayload {
+  content : string , 
+  senderId : string ,
+  recieverId : string ,
+  latestMessage :string ;
+}

@@ -1,4 +1,5 @@
 export interface IJob{
+        map(arg0: (job: IJob) => import("react/jsx-runtime").JSX.Element): import("react").ReactNode;
     
         jobType: string | null | undefined;
         category?: string | null | undefined;
@@ -10,6 +11,7 @@ export interface IJob{
         companyId : {
                 userName : string ,
                 logo : string ,
+                address ?: string ,
         }
         requirements?: any[];
         skills?: string[];

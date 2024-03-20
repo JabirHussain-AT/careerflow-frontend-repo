@@ -28,7 +28,9 @@ export interface IUserDoc{
     profileVerification?: boolean;
     dob: string | number | null;
     _id?: string;
+    isBlocked : boolean | null 
     savedJobs : string []
     status : string | boolean
     role : string
+    createdAt ?: any
 }

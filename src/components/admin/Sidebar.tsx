@@ -13,9 +13,6 @@ import { useDispatch } from "react-redux";
 import { logout } from "@/redux/reducers/user/userSlice";
 
 
-
-
-
 const Sidebar : React.FC = () => {
   const dispatch = useDispatch();
 
@@ -33,8 +30,8 @@ const Sidebar : React.FC = () => {
           <img className="w-32 p-2" src={Logo} alt="Logo" />
         </div>
       </div>
-      <div className="flex">
-        <div className="lg:w-64 h-screen bg-white shadow-lg rounded text-black lg:flex-shrink-0">
+      <div className="flex ">
+        <div className="lg:w-64 h-auto bg-white  shadow-lg rounded text-black lg:flex-shrink-0">
           <ul className="text-black font-sans px-2 font-semibold lg:flex-col lg:w-full">
             <NavLink
               to={"/admin/dashboard"}
@@ -81,9 +78,9 @@ const Sidebar : React.FC = () => {
               <FaBuilding /> Users
             </NavLink>
 
-            <li className="lg:w-full py-3 px-5 w-1/2 text-black rounded-md hover:bg-blue-500 hover:text-white border-b-2 flex gap-2 items-center mt-2">
+            {/* <li className="lg:w-full py-3 px-5 w-1/2 text-black rounded-md hover:bg-blue-500 hover:text-white border-b-2 flex gap-2 items-center mt-2">
               <FaPaypal /> Payment
-            </li>
+            </li> */}
           </ul>
           <div className="">
             <ul>

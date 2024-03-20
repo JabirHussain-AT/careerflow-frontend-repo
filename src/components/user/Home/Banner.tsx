@@ -12,13 +12,13 @@ const Banner: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-between items-center h-screen bg-green-100">
-      <div className=" px-44 mb-11">
-        <h1 className="text-5xl font-sans font-bold">
+    <div className=" h-auto md:h-screen bg-green-200 md:flex md:justify-between md:items-center ">
+      <div className="px-12 md:px-44 mb-11">
+        <h1 className="text-[40px] mb-4 md:text-[56px] font-sans font-bold">
           Find <span className="text-blue-500"> Jobs </span> That <br />{" "}
           <span className="text-blue-500"> Matches </span> <br /> Your Passion
         </h1>
-        <h6 className=" text-sm py-3 text-gray-500 font-serif">
+        <h6 className=" text-sm py-6 text-gray-500 font-serif">
           Hand-picked opportunities to work from home, remotely, freelance,{" "}
           <br />
           full-time, part-time, contract, and internships.

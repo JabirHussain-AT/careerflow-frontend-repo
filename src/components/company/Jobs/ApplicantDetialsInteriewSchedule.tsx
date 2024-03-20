@@ -1,61 +1,250 @@
-import { useState } from 'react';
-import LOGO from '../../../assets/googleIcon.png';
-import Modal from '../../common/ModalBox';
+import { useState , useEffect } from "react";
+import LOGO from "../../../assets/googleIcon.png";
+import { format,parseISO } from 'date-fns'
+import Modal from "../../common/ModalBox";
+import { useParams } from "react-router-dom";
+import { scheduleInterview ,fetchInterViewSchedule} from "@/redux/actions/companyActions";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 
 const ApplicantInterviewSchedule = () => {
-
-  
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [interviewDateTime, setInterviewDateTime] = useState<string>("");
-  const [testType, setTestType] = useState<string>("");
-  const [selectedEmployee, setSelectedEmployee] = useState<string>("");
+  const [formData, setFormData] = useState({
+    interviewDate: "",
+    interviewTime: "",
+    testType: "",
+    interviewName: "",
+  });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [scheduledInterviews, setScheduledInterviews] = useState<any>({});
+  console.log("🚀 ~ file: ApplicantDetialsInteriewSchedule.tsx:19 ~ ApplicantInterviewSchedule ~ scheduledInterviews:", scheduledInterviews)
+  const { jobId, applicantId } = useParams();
+  const dispatch = useDispatch<AppDispatch>();
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleScheduleInterview = (e: React.FormEvent) => {
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchInterViewSchedule(jobId, applicantId);
+        // console.log("🚀 ~ file: ApplicantDetialsInteriewSchedule.tsx:30 ~ fetchData ~ response:", response?.data[0]?.applicants.schedule)
+        setScheduledInterviews(response?.data[0]?.applicants?.schedule);
+      } catch (error) {
+        console.error('Error fetching interview schedule:', error);
+      }
+    };
+  
+    fetchData(); // Call the async function immediately
+  }, [dispatch , loading]); 
+  
+
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+
+
+
+
+  const handleScheduleInterview = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    // Form validation
+    const errors: { [key: string]: string } = {};
+    if (!formData.testType) {
+      errors.testType = "Test Type is required";
+    }
+    if (!formData.interviewName) {
+      errors.interviewName = "Interview Name is required";
+    }
+    if (!formData.interviewDate || !formData.interviewTime) {
+      errors.interviewDateTime = "Interview Date and Time are required";
+    }
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      setLoading(false);
+      return;
+    }
+
     // Handle scheduling logic here
-    // This is a placeholder, you can replace it with your actual logic
-    console.log('Scheduling interview...');
-    console.log('Test Type:', testType);
-    console.log('Interview Date and Time:', interviewDateTime);
+    console.log("Scheduling interview...");
+    console.log("Interview Name:", formData.interviewName);
+    console.log("Test Type:", formData.testType);
+    console.log("Interview Date:", formData.interviewDate);
+    console.log("Interview Time:", formData.interviewTime);
+
+    let obj = {
+      jobId: jobId,
+      applicantId: applicantId,
+      date: formData.interviewDate,
+      time: formData.interviewTime,
+      InterviewType: formData.testType,
+      InterviewName: formData.interviewName,
+    };
+
+    const response = await dispatch(scheduleInterview(obj));
+      // response?.payload?.data[0]?.applicants
+    
+    // setScheduledInterviews(response?.payload?.data[0]?.applicants);
+
     setIsModalOpen(false);
+    // Reset form data
+    setFormData({
+      interviewDate: "",
+      interviewTime: "",
+      testType: "",
+      interviewName: "",
+    });
+    setLoading(false);
   };
 
   return (
     <div>
       <div className="grid grid-cols-2 mt-4">
         <div>
-          <h1 className="text-gray-800 ms-3 text-sm font-semibold">Interview List</h1>
+          <h1 className="text-gray-800 ms-3 text-sm font-semibold">
+            Interview List
+          </h1>
         </div>
         <div>
-          <h1 onClick={() => setIsModalOpen(true)} className="font-semibold hover:cursor-pointer text-sm text-lightgreen">+ Add Schedule Interview</h1>
+          <h1
+            onClick={() => setIsModalOpen(true)}
+            className="font-semibold hover:cursor-pointer text-sm text-lightgreen"
+          >{
+            scheduledInterviews ? '+ Edit Scheduled Interview' : '+ Add Schedule Interview'
+          }
+  
+          </h1>
         </div>
       </div>
-      <div className="border mt-5 flex justify-between flex-wrap">
-        <div className='ms-3 mt-4 flex gap-x-3'>
-          <img src={LOGO} alt="" className='w-12 h-12 rounded-full border' />
-          <div className='mt-2'>
-            <h1 className='text-sm text-blue-gray-800 font-semibold'>Interview</h1>
-            <h1 className='text-xs text-gray-600'></h1>
-          </div>
+      {/* Scheduled Interviews */}
+      {scheduledInterviews && (    
+    <div className="border mt-5 flex justify-between flex-wrap">
+        <div className="ms-3 mt-4 flex gap-x-3">
+            {/* <img src={LOGO} alt="" className='w-12 h-12 rounded-full border' /> */}
+            <div className="mt-2">
+                <div>
+                    <h1 className="text-sm text-black font-semibold">
+                        {scheduledInterviews?.InterviewType}
+                        {scheduledInterviews?.InterviewName}
+                    </h1>
+                    <h1 className="text-xs text-gray-600">
+                        {scheduledInterviews?.date ? format(parseISO(scheduledInterviews?.date), 'yyyy-MM-dd') : ''} - {scheduledInterviews?.time}
+                    </h1>
+                </div>
+            </div>
         </div>
-        <div className='mt-5 md:me-40'>
-          <h1 className='text-sm font-semibold text-gray-800'>10 AM - 03/04/2023 </h1>
-          <h1 className='text-xs'>RoomId . 432211 <span>company name : Ticker </span> </h1>
-        </div>
-      </div>
+    </div>
+)}
+
+
+      {/* Modal for scheduling interview */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div>
+        <div className="p-6">
           <form onSubmit={handleScheduleInterview}>
-            <div>
-              <label htmlFor="" className='text-gray-600 text-sm font-semibold'>Test Type</label>
-              <input required name="testType" className="border rounded-md py-2 px-2 mt-2 w-full outline-none" placeholder='Enter Test Type' value={testType} onChange={(e) => setTestType(e.target.value)} />
+            <div className="mb-4">
+              <label
+                htmlFor="testType"
+                className="text-gray-600 text-sm font-semibold"
+              >
+                Test Type
+              </label>
+              <input
+                required
+                type="text"
+                id="testType"
+                name="testType"
+                className={`border rounded-md py-2 px-3 mt-2 w-full outline-none ${
+                  errors.testType && "border-red-500"
+                }`}
+                placeholder="Enter Test Type"
+                value={formData.testType}
+                onChange={handleInputChange}
+              />
+              {errors.testType && (
+                <p className="text-red-500 text-xs mt-1">{errors.testType}</p>
+              )}
             </div>
-            <div className='mt-4'>
-              <label htmlFor="" className='text-gray-600 text-sm font-semibold'>Select Date and Time</label>
-              <input required type="datetime-local" className='border rounded-md py-2 px-2 w-full outline-none' value={interviewDateTime} onChange={(e) => setInterviewDateTime(e.target.value)} min={new Date().toISOString().split("Z")[0]} />
+            <div className="mb-4">
+              <label
+                htmlFor="interviewName"
+                className="text-gray-600 text-sm font-semibold"
+              >
+                Interview Name
+              </label>
+              <input
+                required
+                type="text"
+                id="interviewName"
+                name="interviewName"
+                className={`border rounded-md py-2 px-3 mt-2 w-full outline-none ${
+                  errors.interviewName && "border-red-500"
+                }`}
+                placeholder="Enter Interview Name with Employee Name "
+                value={formData.interviewName}
+                onChange={handleInputChange}
+              />
+              {errors.interviewName && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.interviewName}
+                </p>
+              )}
             </div>
-            <div className='mt-4 flex justify-center'>
-              <button type="submit" className='bg-lightgreen text-white font-semibold text-center px-3 py-2 rounded-md'>Schedule</button>
+            <div className="mb-4">
+              <label
+                htmlFor="interviewDate"
+                className="text-gray-600 text-sm font-semibold"
+              >
+                Select Date
+              </label>
+              <input
+                required
+                type="date"
+                id="interviewDate"
+                name="interviewDate"
+                className={`border rounded-md py-2 px-3 mt-2 w-full outline-none ${
+                  errors.interviewDateTime && "border-red-500"
+                }`}
+                value={formData.interviewDate}
+                onChange={handleInputChange}
+                min={new Date().toISOString().split("T")[0]}
+              />
+              {errors.interviewDateTime && (
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.interviewDateTime}
+                </p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="interviewTime"
+                className="text-gray-600 text-sm font-semibold"
+              >
+                Select Time
+              </label>
+              <input
+                required
+                type="time"
+                id="interviewTime"
+                name="interviewTime"
+                className={`border rounded-md py-2 px-3 mt-2 w-full outline-none ${
+                  errors.interviewDateTime && "border-red-500"
+                }`}
+                value={formData.interviewTime}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="flex justify-center mt-4">
+              <button
+                type="submit"
+                className="bg-lightgreen text-white hover:bg-blue-600 hover:scale-110 bg-blue-400 font-semibold text-center px-4 py-2 rounded-md"
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "Schedule"}
+              </button>
             </div>
           </form>
         </div>

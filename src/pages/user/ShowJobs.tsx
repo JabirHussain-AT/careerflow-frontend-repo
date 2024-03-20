@@ -46,7 +46,7 @@ const ShowJobs: React.FC = () => {
   return (
     <div>
       <NavBar />
-      <div className="w-full bg-green-200 h-auto">
+      <div className="w-full bg-green-200 h-auto ">
         {/* Search bar */}
         <SearchBar onSearch={handleSearch} />
 

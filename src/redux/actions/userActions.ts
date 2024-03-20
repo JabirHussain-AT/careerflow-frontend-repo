@@ -38,14 +38,13 @@ export const userLogin = createAsyncThunk(
     }
   }
 );
+
+
 export const isUserExist = createAsyncThunk(
   "user/isUserExist",
   async (userCredentials: any, { rejectWithValue }) => {
     try {
-      console.log(
-        "<<<<<<<<>>>>>>>>>>>>>>>>>>>==========================================================",
-        userCredentials
-      );
+  
       const { data } = await axios.post(
         `${AuthBaseUrl}/exists`,
         userCredentials,
@@ -58,6 +57,9 @@ export const isUserExist = createAsyncThunk(
     }
   }
 );
+
+
+
 
 export const fetchJob = async (jobId: any) => {
   try {
@@ -140,6 +142,9 @@ export const submitViewProfileUpdations = createAsyncThunk(
   }
 );
 
+
+
+
 export const fetchJobsMain = createAsyncThunk(
   "user/fetchJobsMain ",
   async (jobDocs: any, { rejectWithValue }) => {
@@ -204,6 +209,58 @@ export const getUserApplications = createAsyncThunk(
       console.log("It reached here ");
       const { data } = await axios.get(
         `${AuthCompanyBaseUrl}/getUserApplications/${userId}`,
+        config
+      );
+      return data;
+    } catch (err: any) {
+      const axiosError = err as AxiosError<ApiError>;
+      return handleError(axiosError, rejectWithValue);
+    }
+  }
+);
+
+
+
+export const getPrefferedJobs = createAsyncThunk(
+  "user/getPrefferedJobs",
+  async ({ prefferedJobs, currentPage }: { prefferedJobs: any, currentPage: number }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `${AuthCompanyBaseUrl}/getPrefferedJobs/${prefferedJobs}/${currentPage}`,
+        config
+      );
+      return data;
+    } catch (err: any) {
+      const axiosError = err as AxiosError<ApiError>;
+      return handleError(axiosError, rejectWithValue);
+    }
+  }
+);
+
+
+export const chatUsersDetials = createAsyncThunk(
+  "user/chatUsersDetials",
+  async ( userIdContainer : any , { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(
+        `${AuthBaseUrl}/get-chatUserDetials`,userIdContainer,
+        config
+      );
+      return data;
+    } catch (err: any) {
+      const axiosError = err as AxiosError<ApiError>;
+      return handleError(axiosError, rejectWithValue);
+    }
+  }
+);
+
+export const saveTheJob = createAsyncThunk(
+  "user/saveThejob",
+  async ( { userId , jobId } :{ userId : string , jobId : string}, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(
+        `${AuthBaseUrl}/save-the-job/${userId}/${jobId}`,
+        {},
         config
       );
       return data;

@@ -25,6 +25,22 @@ export const approveCompanyAccount = createAsyncThunk('compnay/approveStatus' , 
   }
 })
 
+export const userBlockStatus = createAsyncThunk(
+  "user/userBlockStatus",
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.patch(
+        `${AuthBaseAdminUrl}/change-user-Block-status/${userId}`,
+        config
+      );
+      return data;
+    } catch (err: any) {
+      const axiosError = err as AxiosError<ApiError>;
+      return handleError(axiosError, rejectWithValue);
+    }
+  }
+);
+
 
 export const fetchUsers = async () => {
   try {
@@ -34,6 +50,7 @@ export const fetchUsers = async () => {
     console.log(err,'err in the fetchUsers catch')
   }
 };
+
 
 
 
@@ -50,8 +67,17 @@ export const fetchCategories = async () => {
 
 export const addCategories = createAsyncThunk('compnay/addCategories' , async ( category : ICategory ,{rejectWithValue})=>{
   try{
-       
        const {data} = await axios.post(`${AuthCompanyBaseUrl}/add-Category`, category ,config)
+       return data 
+  }catch(err : any){
+   const axiosError = err as AxiosError<ApiError>;
+       return handleError(axiosError, rejectWithValue);
+  }
+} )
+
+export const deleteCategory = createAsyncThunk('company/deleteCategory' , async ( category : string ,{rejectWithValue})=>{
+  try{
+       const {data} = await axios.get(`${AuthCompanyBaseUrl}/delete-Category/${category}`,config)
        return data 
   }catch(err : any){
    const axiosError = err as AxiosError<ApiError>;

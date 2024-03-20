@@ -4,7 +4,7 @@ import {
   FaHome,
   FaUser,
   FaCog,
-  FaSave,
+  FaSave ,
   FaUserTie,
   FaCalendarAlt,
 } from "react-icons/fa";
@@ -39,7 +39,7 @@ const ProfileSideBar = () => {
             className={({ isActive }) => {
               return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
                 isActive
-                  ? "bg-white flex w-30 text-black w-30 font-bold h-20 mx-2 my-2"
+                  ? "bg-white flex w-30 text-black font-bold h-20 mx-2 my-2"
                   : ""
               }`;
             }}
@@ -49,50 +49,64 @@ const ProfileSideBar = () => {
               <p className="hover:text-blue-500">Profile</p>
             </div>
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to={"/profile/dashboard"}
             className={({ isActive }) => {
               return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
                 isActive
-                  ? "bg-white flex w-30 text-black font-bold h-20 mx-2 my-2"
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
                   : ""
               }`;
             }}
           >
             <FaHome className="w-5" />
-            <p className="hover:text-blue-5">Dashboard</p>
-          </NavLink>
+            <p className="hover:text-blue-500">Dashboard</p>
+          </NavLink> */}
 
-          {/* my applications  */}
+          {/* My applications */}
           <NavLink
             to={"/profile/my-applications"}
             className={({ isActive }) => {
               return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
                 isActive
-                  ? "bg-white flex w-30 text-black font-bold h-20 mx-2 my-2"
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
                   : ""
               } `;
             }}
           >
             <FaUserTie className="h-5 w-5" />
-            My Applications
+            <p className="hover:text-blue-500">My Applications</p>
+          </NavLink>
+          <NavLink
+            to={"/profile/my-interviews"}
+            className={({ isActive }) => {
+              return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
+                isActive
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
+                  : ""
+              } `;
+            }}
+          >
+            <FaCalendarAlt className="h-5 w-5" />
+            <p className="hover:text-blue-500">Interviews</p>
+          </NavLink>
+          <NavLink
+            to={"/profile/saved-jobs"}
+            className={({ isActive }) => {
+              return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
+                isActive
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
+                  : ""
+              } `;
+            }}
+          >
+            <FaSave className="h-5 w-5" />
+            <p className="hover:text-blue-500">Saved Jobs</p>
           </NavLink>
           <li className="flex items-center hover:bg-gray-700 p-2 rounded gap-2 h-full">
             <FaCog className="h-5 w-5" />
-            <a href="/settings" className="hover:text-blue-500" gap-2>
+            <a href="/settings" className="hover:text-blue-500">
               Settings
-            </a>
-          </li>
-          <li className="flex items-center hover:bg-gray-700 p-2 rounded gap-2 h-full">
-            <FaSave className="h-5 w-5" />
-            <a href="/saved-jobs" className="hover:text-blue-500 gap-2">
-              Saved Jobs
-            </a>
-          </li>
-          <li className="flex items-center hover:bg-gray-700 p-2 rounded gap-2 h-full">
-            <FaCalendarAlt className="h-5 w-5" />
-            <a href="/interviews" className="hover:text-blue-500">
-              Interviews
             </a>
           </li>
         </ul>

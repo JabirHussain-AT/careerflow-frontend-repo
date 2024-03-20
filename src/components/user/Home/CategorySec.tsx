@@ -1,13 +1,20 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import designLogo from "../../../assets/design.png";
 
 const CategorySec: React.FC = () => {
+  const navigate = useNavigate()
+
+  // useEffect(()=>{
+    
+  // },[])
+
   return (
     <>
       <div className="h-auto w-full bg-white">
-        <div className="flex justify-between py-5 px-4  bg-white">
+        <div className="flex justify-between py-5 px-4  bg-white" >
           <div className="">
             <h3 className="font-bold font-sans text-3xl">
               Explore By <span className="text-blue-500"> Category </span>{" "}
@@ -22,7 +29,7 @@ const CategorySec: React.FC = () => {
         </div>
         {/* It category section */}
         <div className="w-full bg-white ">
-          <div className="w-40 rounded h-32 ml-8 border hover:bg-blue-500 group  border-black">
+          <div onClick={()=>navigate('/showjobs/?category=Engineering')}  className="w-40 rounded cursor-pointer h-32 ml-8 border hover:bg-blue-500 group  border-black">
             <img className="h-12 p-1" src={designLogo} alt="" />
             <h4 className=" font-bold px-2">Engineering </h4>
             <p className="text-gray-500 font-serif py-3 px-2 text-sm group-hover:text-white">
