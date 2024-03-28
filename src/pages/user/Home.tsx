@@ -3,7 +3,7 @@ import NavBar from "../../components/user/Home/NavBar";
 import Banner from "../../components/user/Home/Banner";
 import CategorySec from "../../components/user/Home/CategorySec";
 import FeaturedJobSec from "../../components/user/Home/FeaturedJobSec";
-import TopCompanies from "../../components/user/Home/TopCompanies";
+// import TopCompanies from "../../components/user/Home/TopCompanies";
 import Footer from "@/components/common/Footer";
 
 const Home: FC = () => {
@@ -13,7 +13,7 @@ const Home: FC = () => {
       <Banner />
       <FeaturedJobSec />
       <CategorySec />
-      <TopCompanies />
+      {/* <TopCompanies /> */}
       <Footer />
     </>
   );

@@ -1,11 +1,9 @@
-import React , {useState} from "react";
+import React   from "react";
 import CompanyJobsTable from "@/components/company/Jobs/CompanyJobsTable";
-import {BsPlus} from 'react-icons/bs'
+import { BsPlus } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
-const CompanyJobs : React.FC = () => {
-  
-  
+const CompanyJobs: React.FC = () => {
   const navigate = useNavigate();
   return (
     <div>
@@ -18,7 +16,7 @@ const CompanyJobs : React.FC = () => {
           <span className=" font-mono text-sm "> Add Jobs </span>
         </button>
       </div>
-      < CompanyJobsTable  />
+      <CompanyJobsTable />
     </div>
   );
 };

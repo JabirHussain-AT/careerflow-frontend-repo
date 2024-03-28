@@ -1,4 +1,5 @@
-import React from 'react';
+import React  from 'react';
+import { useNavigate } from 'react-router-dom'
 import { formatDate } from 'date-fns';
 
 interface RecentJobsProps {
@@ -6,7 +7,8 @@ interface RecentJobsProps {
 }
 
 const RecentJobs: React.FC<RecentJobsProps> = ({ jobsData }) => {
-  // Reverse the order of jobsData and take the first 6 elements
+
+  const navigate = useNavigate()
   const recentJobs = jobsData.slice(0, 6).reverse();
 
   return (
@@ -19,7 +21,7 @@ const RecentJobs: React.FC<RecentJobsProps> = ({ jobsData }) => {
             <p className="text-gray-600 mb-4">Expiry: {formatDate(new Date(job.jobExpiry), 'dd-MM-yyyy')}</p>
             <div className="flex items-center justify-between">
               <p className="text-gray-600">Applicants: {job.applicants.length}</p>
-              <button className="text-blue-500 hover:underline focus:outline-none">
+              <button onClick={() => navigate('/company/jobs')}  className="text-blue-500 hover:underline focus:outline-none">
                 View Details
               </button>
             </div>

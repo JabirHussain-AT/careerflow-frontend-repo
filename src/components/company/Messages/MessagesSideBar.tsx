@@ -3,7 +3,7 @@ import { IoIosAdd } from "react-icons/io";
 import { getUnreadMessageCount } from "@/redux/actions/chatActions";
 import { useSocket } from "@/contexts/socketContext";
 import { useDispatch } from "react-redux";
-import { updateUnreadMessageCount} from '@/redux/actions/chatActions'
+import { updateUnreadMessageCount } from "@/redux/actions/chatActions";
 import { AppDispatch } from "@/redux/store";
 
 interface Applicant {
@@ -29,9 +29,8 @@ const MessagesSideBarUser: React.FC<MessagesSideBarProps> = ({
   selectedApplicant,
   onLoadMore,
 }) => {
-
   const { messages } = useSocket();
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   const [applicantsWithUnreadMessages, setApplicantsWithUnreadMessages] =
     useState<Applicant[]>([]);
 
@@ -54,29 +53,24 @@ const MessagesSideBarUser: React.FC<MessagesSideBarProps> = ({
 
         setApplicantsWithUnreadMessages(updatedApplicants);
         applicants = updatedApplicants;
-        console.log(
-          "🚀 ~ file: MessagesSideBar.tsx:49 ~ fetchUnreadMessagesCount ~ applicants:",
-          applicants
-        );
+        console.log(messages);
       } catch (error) {
         console.error("Error fetching unread messages counts:", error);
       }
     };
 
     fetchUnreadMessagesCount();
-  }, [applicants , dispatch ]);
+  }, [applicants, dispatch]);
 
-
-
-  const markMessagesAsRead = async (applicantId : any ) => {
+  const markMessagesAsRead = async (applicantId: any) => {
     try {
       await dispatch(updateUnreadMessageCount(applicantId));
-      setApplicantsWithUnreadMessages(prevApplicants => {
-        return prevApplicants.map(applicant => {
+      setApplicantsWithUnreadMessages((prevApplicants) => {
+        return prevApplicants.map((applicant) => {
           if (applicant._id === applicantId) {
             return {
               ...applicant,
-              unreadMessages: 0 // Assuming setting unreadMessages to 0 marks messages as read
+              unreadMessages: 0, // Assuming setting unreadMessages to 0 marks messages as read
             };
           }
           return applicant;
@@ -86,13 +80,10 @@ const MessagesSideBarUser: React.FC<MessagesSideBarProps> = ({
       console.error("Error marking messages as read:", error);
     }
   };
-  
-  
-
 
   return (
     <>
-      <div className="w-4/12 h-screen flex justify-center">
+      <div className="w-4/12 mt-2 h-screen flex justify-center">
         {/* side bar showing recent messages */}
         <div className="bg-white h-auto overflow border-2 w-4/5 rounded-xl">
           {/* head section */}

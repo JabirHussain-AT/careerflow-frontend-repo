@@ -34,7 +34,7 @@ const ViewApplicantDetialSideBar: React.FC = () => {
   useEffect(() => {
     const fetchingFunction = async () => {
       try {
-        const jobData = await fetchJob(jobId);
+        const jobData = await fetchJob(jobId!);
         setApplicantData(()=>{
             return jobData.data?.applicants?.find((application : any )=>{
                     const data =  application.applicantId === applicantId ? application : null
@@ -42,7 +42,7 @@ const ViewApplicantDetialSideBar: React.FC = () => {
                     return  data
             })
         })
-        const userData = await getUser(applicantId);
+        const userData = await getUser(applicantId!);
 
         setJobData(jobData.data);
         setUserData(userData.data);
@@ -76,12 +76,11 @@ const ViewApplicantDetialSideBar: React.FC = () => {
   const handleCreateRoom : Function = async  () =>{
 
       const dataToSend = {
-        roomCreater  :user?._id  ,
-        roomJoiner : applicantId
+        roomCreater  :user?._id!  ,
+        roomJoiner : applicantId!
       }
       const response = await dispatch(createNewChatRoom(dataToSend))
       const chatRoomId = response?.payload?.data?._id
-      console.log(chatRoomId,'-0-------p')
       if(chatRoomId) navigate(`/company/messages`)
   }
 

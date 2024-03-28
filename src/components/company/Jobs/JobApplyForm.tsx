@@ -25,7 +25,8 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
   handleSubmit,
   handleModalClose,
 }) => {
-  const { user, error } = useSelector((state: IUserSelector) => state.user);
+  console.log("🚀 ~ file: JobApplyForm.tsx:28 ~ userData:", userData)
+  const { user } = useSelector((state: IUserSelector) => state.user);
 
   return (
     <Formik

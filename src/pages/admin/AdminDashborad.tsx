@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { logout } from "../../redux/reducers/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { IoMdBusiness } from "react-icons/io";
 import { FaUsers } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import { MdOutlinePendingActions } from "react-icons/md";
-import { IUserSelector } from "@/interface/IUserSlice";
 import AdminDashCards from "@/components/admin/Dashboard/AdminDashCards";
-import ReactApexChart from "react-apexcharts";
 import {
-  fetchComJobs,
   fetchJobs,
-  getTotalJobsAndApplicants,
 } from "@/redux/actions/companyActions";
 import {
   LineChart,
@@ -26,15 +22,14 @@ import {
 import { fetchUsers } from "@/redux/actions/adminActions";
 import { IUserDoc } from "@/interface/IUserDoc";
 import {
-  ICompany,
-  MoreInfoModalProps,
+  ICompany 
 } from "@/interface/ICompanyApprovelModal";
 
 const AdminDashboard: React.FC = () => {
   const dispatch = useDispatch();
   const [usersCount, setUsersCount] = useState<number>(0);
   const [users, setUsers] = useState([]);
-  const [jobs, setJobs] = useState([]);
+  const [_, setJobs] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [jobsCount, setJobsCount] = useState<number>(0);
   const [companyCount, setCompaniesCount] = useState<number>(0);
@@ -55,7 +50,7 @@ const AdminDashboard: React.FC = () => {
 
       // Filter users
       const filteredUsers = data?.data?.filter(
-        (user: IUserDoc | any) => user?.role === "user"
+        (user: IUserDoc) => user?.role === "user"
       );
       setUsersCount(filteredUsers?.length);
       setUsers(filteredUsers);
@@ -72,7 +67,7 @@ const AdminDashboard: React.FC = () => {
         (company: ICompany) => company?.approved === false
       );
       setPendingApprovels(pendingApprovelsCount?.length);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err, " error in useEffect of AdminDashboard");
     }
   };
@@ -83,7 +78,7 @@ const AdminDashboard: React.FC = () => {
       const totalJobs = await fetchJobs();
       setJobsCount(totalJobs?.data?.length);
       setJobs(totalJobs?.data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err, " error in fetching totalJobs of AdminDashboard");
     }
   };
@@ -93,6 +88,7 @@ const AdminDashboard: React.FC = () => {
     console.log("Logging out...");
     dispatch(logout());
   };
+  console.log("🚀 ~ file: AdminDashborad.tsx:88 ~ handleLogout ~ handleLogout:", handleLogout)
 
   // Prepare data for the line chart showing companies registered in each month
   const prepareCompanyData = () => {

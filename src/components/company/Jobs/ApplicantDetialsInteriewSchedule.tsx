@@ -1,11 +1,16 @@
-import { useState , useEffect } from "react";
-import LOGO from "../../../assets/googleIcon.png";
-import { format,parseISO } from 'date-fns'
+import { useState, useEffect } from "react";
+// import LOGO from "../../../assets/googleIcon.png";
+import { format, parseISO } from "date-fns";
 import Modal from "../../common/ModalBox";
 import { useParams } from "react-router-dom";
-import { scheduleInterview ,fetchInterViewSchedule} from "@/redux/actions/companyActions";
+import {
+  scheduleInterview,
+  fetchInterViewSchedule,
+  removeSchedule,
+} from "@/redux/actions/companyActions";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
+import AlertBox from "@/components/common/AlertBox";
 
 const ApplicantInterviewSchedule = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -17,39 +22,40 @@ const ApplicantInterviewSchedule = () => {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [scheduledInterviews, setScheduledInterviews] = useState<any>({});
-  console.log("🚀 ~ file: ApplicantDetialsInteriewSchedule.tsx:19 ~ ApplicantInterviewSchedule ~ scheduledInterviews:", scheduledInterviews)
   const { jobId, applicantId } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetchInterViewSchedule(jobId, applicantId);
+        const response = await fetchInterViewSchedule(jobId!, applicantId!);
         // console.log("🚀 ~ file: ApplicantDetialsInteriewSchedule.tsx:30 ~ fetchData ~ response:", response?.data[0]?.applicants.schedule)
         setScheduledInterviews(response?.data[0]?.applicants?.schedule);
       } catch (error) {
-        console.error('Error fetching interview schedule:', error);
+        console.error("Error fetching interview schedule:", error);
       }
     };
-  
-    fetchData(); // Call the async function immediately
-  }, [dispatch , loading]); 
-  
 
+    fetchData(); // Call the async function immediately
+  }, [dispatch, loading]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-
-
-
+  const handleCancelSchedule = async () => {
+    setLoading(true);
+    await removeSchedule({
+      jobId: jobId!,
+      applicantId: applicantId!,
+    });
+    setLoading(false);
+  };
 
   const handleScheduleInterview = async (e: React.FormEvent) => {
+
     e.preventDefault();
     setLoading(true);
     // Form validation
@@ -69,13 +75,6 @@ const ApplicantInterviewSchedule = () => {
       return;
     }
 
-    // Handle scheduling logic here
-    console.log("Scheduling interview...");
-    console.log("Interview Name:", formData.interviewName);
-    console.log("Test Type:", formData.testType);
-    console.log("Interview Date:", formData.interviewDate);
-    console.log("Interview Time:", formData.interviewTime);
-
     let obj = {
       jobId: jobId,
       applicantId: applicantId,
@@ -85,10 +84,7 @@ const ApplicantInterviewSchedule = () => {
       InterviewName: formData.interviewName,
     };
 
-    const response = await dispatch(scheduleInterview(obj));
-      // response?.payload?.data[0]?.applicants
-    
-    // setScheduledInterviews(response?.payload?.data[0]?.applicants);
+     await dispatch(scheduleInterview(obj));
 
     setIsModalOpen(false);
     // Reset form data
@@ -113,33 +109,52 @@ const ApplicantInterviewSchedule = () => {
           <h1
             onClick={() => setIsModalOpen(true)}
             className="font-semibold hover:cursor-pointer text-sm text-lightgreen"
-          >{
-            scheduledInterviews ? '+ Edit Scheduled Interview' : '+ Add Schedule Interview'
-          }
-  
+          >
+            {scheduledInterviews
+              ? "+ Edit Scheduled Interview"
+              : "+ Add Schedule Interview"}
           </h1>
         </div>
       </div>
       {/* Scheduled Interviews */}
-      {scheduledInterviews && (    
-    <div className="border mt-5 flex justify-between flex-wrap">
-        <div className="ms-3 mt-4 flex gap-x-3">
+      {scheduledInterviews && (
+        <div className="border mt-5 flex justify-between flex-wrap">
+          <div className="ms-3 mt-4 flex gap-x-3">
             {/* <img src={LOGO} alt="" className='w-12 h-12 rounded-full border' /> */}
             <div className="mt-2">
+              <div className="flex justify-between w-full">
                 <div>
-                    <h1 className="text-sm text-black font-semibold">
-                        {scheduledInterviews?.InterviewType}
-                        {scheduledInterviews?.InterviewName}
-                    </h1>
-                    <h1 className="text-xs text-gray-600">
-                        {scheduledInterviews?.date ? format(parseISO(scheduledInterviews?.date), 'yyyy-MM-dd') : ''} - {scheduledInterviews?.time}
-                    </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-)}
+                  <h1 className="text-sm text-black font-semibold">
+                    {scheduledInterviews?.InterviewType}
+                    {scheduledInterviews?.InterviewName}
+                  </h1>
+                  <h1 className="text-xs text-gray-600">
+                    {scheduledInterviews?.date
+                      ? format(
+                          parseISO(scheduledInterviews?.date),
+                          "yyyy-MM-dd"
+                        )
+                      : ""}{" "}
+                    - {scheduledInterviews?.time}
+                  </h1>
 
+                  <div>
+                    <AlertBox
+                      button={
+                        <button className="text-xs text-red-500 bg-red-100 px-2 rounded-md mt-7 mb-2 hover:bg-red-300 hover:text-red-700 ">
+                          Cancel Interview
+                        </button>
+                      }
+                      ques={"Are you sure to Cancel this Interveiw ?"}
+                      onConfirm={() => handleCancelSchedule()}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal for scheduling interview */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

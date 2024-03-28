@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
-  FaHome,
   FaUser,
   FaCog,
-  FaSave ,
+  FaSave,
   FaUserTie,
   FaCalendarAlt,
 } from "react-icons/fa";
@@ -103,12 +102,19 @@ const ProfileSideBar = () => {
             <FaSave className="h-5 w-5" />
             <p className="hover:text-blue-500">Saved Jobs</p>
           </NavLink>
-          <li className="flex items-center hover:bg-gray-700 p-2 rounded gap-2 h-full">
+          <NavLink
+            to={"/profile/Settings"}
+            className={({ isActive }) => {
+              return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
+                isActive
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
+                  : ""
+              } `;
+            }}
+          >
             <FaCog className="h-5 w-5" />
-            <a href="/settings" className="hover:text-blue-500">
-              Settings
-            </a>
-          </li>
+            <p className="hover:text-blue-500"> Settings</p>
+          </NavLink>
         </ul>
       </div>
     </div>

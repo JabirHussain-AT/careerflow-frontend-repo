@@ -1,45 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { chatCompanyDetials } from '@/redux/actions/companyActions';
-import { fetchChatUsers } from '@/redux/actions/chatActions';
-import MessagesSideBarUsers from '@/components/company/Messages/MessageSideBarUsers';
-import MessageChatSectionUser from '@/components/company/Messages/MessageChatSectionUser';
-import { useDispatch, useSelector } from 'react-redux';
-import { IUserSelector } from '@/interface/IUserSlice';
-import { AppDispatch } from '@/redux/store';
-import NavBar from '@/components/user/Home/NavBar';
+import React, { useState, useEffect } from "react";
+import { chatCompanyDetials } from "@/redux/actions/companyActions";
+import { fetchChatUsers } from "@/redux/actions/chatActions";
+import MessagesSideBarUsers from "@/components/company/Messages/MessageSideBarUsers";
+import MessageChatSectionUser from "@/components/company/Messages/MessageChatSectionUser";
+import { useDispatch, useSelector } from "react-redux";
+import { IUserSelector } from "@/interface/IUserSlice";
+import { AppDispatch } from "@/redux/store";
+import NavBar from "@/components/user/Home/NavBar";
 
 const MessageHome: React.FC = () => {
-  const [applicants, setApplicants] = useState<any>([]);
+  const [applicants, setApplicants] = useState([]);
   const { user } = useSelector((state: IUserSelector) => state.user);
   const dispatch = useDispatch<AppDispatch>();
-  const [selectedApplicant, setSelectedApplicant] = useState()
+  const [selectedApplicant, setSelectedApplicant] = useState();
   const [limit, setLimit] = useState(15);
 
   useEffect(() => {
-    
     const fetchApplicants = async () => {
       try {
-        const response = await dispatch(fetchChatUsers({companyId :user?._id , limit : limit }));
+        const response = await dispatch(
+          fetchChatUsers({ companyId: user?._id, limit: limit })
+        );
         if (response?.payload?.data && response?.payload?.data?.length > 0) {
-          let data = [response?.payload?.data , 'user']
-       
-          const companyDetials  = await dispatch(chatCompanyDetials(data));
+          let data = [response?.payload?.data, "user"];
+
+          const companyDetials = await dispatch(chatCompanyDetials(data));
           setApplicants(companyDetials.payload.data);
         }
       } catch (error) {
-        console.error('Error fetching applicants:', error);
+        console.error("Error fetching applicants:", error);
       }
     };
 
     fetchApplicants();
-
-  
   }, [dispatch, user]);
 
   const handleApplicantSelect = (applicant: any) => {
     setSelectedApplicant(applicant);
   };
-
 
   const handleLoadMore = () => {
     // Increase the limit by 15 when "Load More" is clicked
@@ -48,7 +46,7 @@ const MessageHome: React.FC = () => {
 
   return (
     <div className="bg-green-200 w-full overflow-hidden min-h-screen mb-5">
-      < NavBar />
+      <NavBar />
       <div className="w-full flex flex-wrap rounded-lg border">
         <MessagesSideBarUsers
           applicants={applicants}

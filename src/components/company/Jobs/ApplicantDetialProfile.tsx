@@ -10,7 +10,7 @@ const ApplicantDetialProfile = () => {
   const { jobId, applicantId } = useParams();
   const { Job } = useSelector((state: any) => state.Job);
   const { user } = useSelector((state: IUserSelector) => state.user);
-  const [job, setJob] = useState<any | null>(null);
+  const [ setJob] = useState<any | null>(null);
   const [applicantData, setApplicantData] = useState<any>(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const ApplicantDetialProfile = () => {
         setJob(foundJob);
 
         if (foundJob) {
-          const applicantDataFetch = await getUser(applicantId);
+          const applicantDataFetch = await getUser(applicantId!);
           setApplicantData(applicantDataFetch.data);
         }
       } catch (error) {

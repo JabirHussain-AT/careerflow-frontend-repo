@@ -11,7 +11,7 @@ const validationSchema = Yup.object({
   skills: Yup.array().of(Yup.string().required('Skill is required')),
   salary: Yup.string()
     .required('Salary is required')
-    .test('valid-salary', 'Invalid salary range eg : min - max', function (value : any) : any {
+    .test('valid-salary', 'Invalid salary range eg : min - max', function (value : string )  {
 
       const salaryRange = value.split('-').map(Number);
       if (salaryRange.length === 2 && !isNaN(salaryRange[0]) && !isNaN(salaryRange[1])) {

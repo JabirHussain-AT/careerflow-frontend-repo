@@ -27,9 +27,6 @@ interface CompanyJobsTableProps {
 }
 
 const CompanyJobsTable: React.FC<CompanyJobsTableProps> = ({
-  Ijobs,
-  onViewApplicants,
-  onMoreDetails,
   onEditJob,
 }) => {
   const { user } = useSelector((state: IUserSelector) => state.user);

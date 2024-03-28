@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../../../components/user/Login/NavBar";
 import Img1 from "../../../assets/company1.png";
 import CompanyModal from "../../../components/company/Home/CompanyModal";
 import { IUserSelector } from "../../../interface/IUserSlice";
@@ -9,18 +8,17 @@ import { useNavigate } from "react-router-dom";
 const CompanyForm: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useSelector((state: IUserSelector) => state.user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(user?.role && user?.stage === 'completed' ) {
-      navigate('/company/dashboard')
-    } 
-  },[])
-  
+  useEffect(() => {
+    if (user?.role && user?.stage === "completed") {
+      navigate("/company/dashboard");
+    }
+  }, []);
+
   const handleContinueClick = () => {
     setIsModalOpen(true);
   };
-
 
   return (
     <>

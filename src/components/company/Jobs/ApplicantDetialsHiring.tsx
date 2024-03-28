@@ -1,23 +1,23 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import { fetchJob, getUser } from "@/redux/actions/userActions";
+import { fetchJob } from "@/redux/actions/userActions";
 import { useSelector } from "react-redux";
 
 const ApplicantDetialsHiring = () => {
-  const { Job, error } = useSelector((state: any) => state.Job);
+  const { Job } = useSelector((state: any) => state.Job);
   const { jobId, applicantId } = useParams();
-  const [jobData, setJob] = useState();
+  const [_, setJob] = useState();
   const [appliedData, setAppliedData] = useState<any>();
-  const [applicant, setApplicant] = useState();
+  // const [applicant, setApplicant] = useState();
   
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetchJob(jobId);
+        const res = await fetchJob(jobId!);
         setJob(res?.data);
         const foundApplicant = res?.data.applicants.find((application: any) => application.applicantId === applicantId);
-        console.log('Found Applicant:', foundApplicant);
+        // console.log('Found Applicant:', foundApplicant);
         setAppliedData(() => (foundApplicant || {}));
       } catch (error) {
         console.error("Error fetching company jobs:", error);

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { useNavigate } from 'react-router-dom'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaPlus, FaTrash } from "react-icons/fa";
@@ -17,7 +16,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
 
 interface CompanyJobsFormProps {
-  Values: {
+  Values?: {
     jobType: string | null | undefined;
     category?: string | null | undefined;
     jobTitle: string | null;
@@ -40,8 +39,7 @@ const CompanyEditForm: React.FC<CompanyJobsFormProps> = ({ Values , onClose , on
 
 
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate()
-  const { user, error, loading } = useSelector(
+  const { user } = useSelector(
     (state: IUserSelector) => state.user
   );
   const [selectedJobType, setSelectedJobType] = useState<string>("");
@@ -93,7 +91,7 @@ const CompanyEditForm: React.FC<CompanyJobsFormProps> = ({ Values , onClose , on
   };
 
   const handleAddSkills = (
-    value: any,
+    value : any,
     setFieldError: Function,
     setFieldValue: Function
   ) => {
@@ -110,6 +108,9 @@ const CompanyEditForm: React.FC<CompanyJobsFormProps> = ({ Values , onClose , on
       setRequirmentErrorSkills(true);
     }
     setRequirmentErrorSkills(false);
+    if(value && setFieldError){
+      console.info(value,'---',setFieldError)
+    }
   };
 
   const handleSkillInputChange = (value: any) => {
@@ -128,6 +129,7 @@ const CompanyEditForm: React.FC<CompanyJobsFormProps> = ({ Values , onClose , on
     setFieldError: Function,
     setFieldValue: Function
   ) => {
+
     if (requirements.includes(requirementsInput.trim())) {
       setDuplicationError(true);
       return;
@@ -141,6 +143,9 @@ const CompanyEditForm: React.FC<CompanyJobsFormProps> = ({ Values , onClose , on
       setRequirmentError(false);
     }
     setRequirmentError(true);
+    if(value && setFieldError){
+      console.info(value,'---',setFieldError)
+    }
   };
 
   const handleInputChange = (value: any) => {
@@ -170,9 +175,7 @@ const CompanyEditForm: React.FC<CompanyJobsFormProps> = ({ Values , onClose , on
       const res = await dispatch(updatingJob(values));
       if (res.payload.success === true) {
         
-        // console.log("------------");
-        // console.log("success the updating job front end");
-        // console.log("------------");
+
         toast.success("Job updating successfully!");
         setTimeout(() => {
           // window.location.reload();

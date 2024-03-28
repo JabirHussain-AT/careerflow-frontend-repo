@@ -3,14 +3,14 @@ import { FaArrowAltCircleRight } from "react-icons/fa";
 import AlertBox from "@/components/common/AlertBox";
 import { fetchUsers, userBlockStatus } from "../../redux/actions/adminActions";
 import { IUserDoc } from "@/interface/IUserDoc";
-import MoreInfoModalUsers from "@/components/admin/compnayUsers/MoreInfoModalUsers";
+// import MoreInfoModalUsers from "@/components/admin/compnayUsers/MoreInfoModalUsers";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 
-const AdminUsers = () => {
+const AdminUsers: React.FC = () => {
   const [users, setUsers] = useState<IUserDoc[]>([]);
   const [filter, setFilter] = useState("user"); // Set default filter value
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [_, setIsOpen] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -19,15 +19,17 @@ const AdminUsers = () => {
       .then((data: { success: string; message: string; data: IUserDoc[] }) => {
         setUsers(data.data);
       })
-      .catch((err: any) => {
+      .catch((err: unknown) => {
         console.error(err, "error from fetching companies");
       });
   }, []);
 
   const makeChange = (userId: string, isBlocked: boolean) => {
     // Update users state with new isBlocked value
-    setUsers(prevUsers =>
-      prevUsers.map(user => (user._id === userId ? { ...user, isBlocked } : user))
+    setUsers((prevUsers) =>
+      prevUsers.map((user) =>
+        user._id === userId ? { ...user, isBlocked } : user
+      )
     );
   };
 
@@ -38,8 +40,9 @@ const AdminUsers = () => {
   const handleModalClose = () => {
     setIsOpen(false);
   };
+  console.log(handleModalClose);
 
-  const handleBlock = async (userId : string) => {
+  const handleBlock = async (userId: string) => {
     // Optimistically update isBlocked to false
     makeChange(userId, true);
     try {
@@ -52,7 +55,7 @@ const AdminUsers = () => {
     }
   };
 
-  const handleUnblock = async (userId : string | undefined) => {
+  const handleUnblock = async (userId: string | undefined) => {
     // Optimistically update isBlocked to true
     makeChange(userId!, false);
     try {
@@ -65,12 +68,12 @@ const AdminUsers = () => {
     }
   };
 
-  const filteredUsers = users.filter(user => {
+  const filteredUsers = users.filter((user) => {
     // Filter users based on selected role
     if (filter === "user") {
       return user.role === filter;
     } else if (filter === "company") {
-      return user.role === filter && user.stage === 'completed';
+      return user.role === filter && user.stage === "completed";
     } else if (filter === "admin") {
       return user.role === filter;
     } else {

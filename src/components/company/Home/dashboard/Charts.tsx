@@ -8,8 +8,6 @@ import {
   Line,
   BarChart,
   Bar,
-  AreaChart,
-  Area,
 } from "recharts";
 
 interface ChartDataItem {

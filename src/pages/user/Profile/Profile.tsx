@@ -1,32 +1,31 @@
 import NavBar from "@/components/user/Home/NavBar";
 import { Outlet } from "react-router-dom";
-import MiniDash from "../../../components/user/Profile/MiniDash";
-import React, { useState , useEffect } from "react";
-import { FaLocationArrow, FaEdit } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { FaLocationArrow } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { MdWork, MdEmail, MdOutlinePhoneAndroid } from "react-icons/md";
 import { BiCalendar } from "react-icons/bi";
-import ProfileSideBar from "@/components/user/Profile/ProfileSideBar";
-import { submitUserProfilePic , fetchUser } from "@/redux/actions/userActions";
+import { submitUserProfilePic, fetchUser } from "@/redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { IUserSelector } from "@/interface/IUserSlice";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import ModalBox from "@/components/common/ModalBox";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { submitBasicDetials } from "@/redux/actions/userActions";
+import MiniDash from "../../../components/user/Profile/MiniDash";
+import DatePicker from "react-datepicker";
+import ModalBox from "@/components/common/ModalBox";
+import ProfileSideBar from "@/components/user/Profile/ProfileSideBar";
+import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
 
 const Profile: React.FC = () => {
-  const [profilePic, setProfilePic] = useState("");
+  const [_, setProfilePic] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [location, setLocation] = useState("Not Available");
-  const [jobTitle, setJobTitle] = useState("Not Available");
-  const dispatch = useDispatch<AppDispatch>() 
+  // const [_, setLocation] = useState("Not Available");
+  // const [jobTitle, setJobTitle] = useState("Not Available");
+  const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: IUserSelector) => state.user);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +33,7 @@ const Profile: React.FC = () => {
         setIsLoading(true);
         const response = await dispatch(fetchUser(user?._id));
         // console.log("User data fetched:", response);
-        const userData = response.payload.data ;
+        const userData = response.payload.data;
         setFormData({
           phoneNumber: userData?.phoneNumber || "",
           dob: userData?.dob || "",
@@ -42,29 +41,28 @@ const Profile: React.FC = () => {
           position: userData?.position || "",
           _id: userData?._id || "",
         });
-        
       } catch (error) {
-        console.error("Error fetching user data:", error );
-      } finally { 
+        console.error("Error fetching user data:", error);
+      } finally {
         setIsLoading(false);
       }
     };
 
-    fetchData(); // 
-  }, [dispatch, user?._id , toast , ]);
+    fetchData(); //
+  }, [dispatch, user?._id, toast]);
 
   const handleProfilePicChange = async (e: any) => {
     setIsLoading(true);
-  
+
     const file = e.target.files[0];
-  
+
     if (file) {
       try {
         const imageUrl = file;
         const formData = new FormData();
         formData.append("file", imageUrl);
         formData.append("upload_preset", "wx0iwu8u");
-  
+
         const cloudinaryResponse = await fetch(
           "https://api.cloudinary.com/v1_1/dato7wx0r/upload",
           {
@@ -72,38 +70,38 @@ const Profile: React.FC = () => {
             body: formData,
           }
         );
-  
+
         const cloudinaryData = await cloudinaryResponse.json();
-  
+
         setProfilePic(cloudinaryData.url);
-  
+
         let dataTosend = {
           userId: user._id,
           profilePic: cloudinaryData.url,
         };
         // Update the Redux store with the new profile picture
         const data = await dispatch(submitUserProfilePic(dataTosend));
-  
+        console.log("🚀 ~ file: Profile.tsx:84 ~ handleProfilePicChange ~ data:", data)
+
         // Manually fetch the user data after the successful upload
         const userData = await dispatch(fetchUser(user?._id));
-  
+
         console.log("User data fetched:", userData);
-  
+
         toast.success("Profile picture updated successfully");
-      } catch (error: any) {
-        console.error("Error uploading file:", error.message);
+      } catch (error : any ) {
+        console.log("Error uploading file:", error.message);
         toast.error("Error updating profile picture");
       }
     }
-  
+
     setIsLoading(false);
   };
-  
 
   const handleEditBasicDetails = () => {
     setIsModalOpen(true);
   };
-
+  console.log(handleEditBasicDetails)
   const handleClose = () => {
     setIsModalOpen(false);
   };
@@ -169,7 +167,7 @@ const Profile: React.FC = () => {
     <div>
       <NavBar />
       {isLoading && (
-        <div className="loading-overlay z-50" >
+        <div className="loading-overlay z-50">
           <div className="loading-spinner"></div>
         </div>
       )}
@@ -184,7 +182,7 @@ const Profile: React.FC = () => {
                 >
                   <img
                     src={
-                      user?.profilePic  ||
+                      user?.profilePic ||
                       "https://www.kasandbox.org/programming-images/avatars/old-spice-man-blue.png"
                     }
                     className="rounded-full w-auto md:w-auto md:h-32 mx-12 border-black border"
@@ -207,10 +205,11 @@ const Profile: React.FC = () => {
               <div className="flex flex-col gap-2">
                 <div>
                   <h1 className="font-bold font-sans text-2xl">
-                {  user?.userName  || 'N/A'}
+                    {user?.userName || "N/A"}
                   </h1>
                   <p className="text-xs md:text-sm text-gray-600">
-                    Profile Last Updated on { new Date(user?.updatedAt).toLocaleDateString() || 'N/A'}
+                    Profile Last Updated on{" "}
+                    {new Date(user?.updatedAt).toLocaleDateString() || "N/A"}
                   </p>
                 </div>
                 <div className="w-full h-[0.2px] bg-black"></div>
@@ -219,26 +218,26 @@ const Profile: React.FC = () => {
                 <div className="w-full flex flex-col border-e-[1px] border-black text-sans text-gray-500 text-sm">
                   <div className="flex items-center justify-start gap-4 mb-2">
                     <FaLocationArrow />
-                    {user?.location || 'Not Available '}
+                    {user?.location || "Not Available "}
                   </div>
                   <div className="flex items-center justify-start gap-4 mb-2">
                     <MdWork />
-                    {  user?.position || 'Not Available '}
+                    {user?.position || "Not Available "}
                   </div>
                   <div className="flex items-center justify-start gap-4 mb-2">
                     <MdEmail />
-                     { user?.email }
+                    {user?.email}
                   </div>
                 </div>
                 <div className="w-1/2 mt-1">
                   <div className="w-full flex flex-col h-10 border-black text-sans text-gray-500 text-sm">
                     <div className="flex w-40 items-center justify-start gap-4 mb-2 ms-5">
                       <MdOutlinePhoneAndroid className="text-sm" />
-                     { user?.phoneNumber }
+                      {user?.phoneNumber}
                     </div>
                     <div className="flex w-40 items-center justify-start gap-4 mb-2 ms-5">
                       <BiCalendar className="text-xs md:text-sm" />
-                      { new Date(user?.dob).toLocaleDateString() || 'N/A' } -DOB
+                      {new Date(user?.dob).toLocaleDateString() || "N/A"} -DOB
                     </div>
                     <div className="flex w-40 items-center justify-start gap-4 mb-2 ms-5">
                       <div
@@ -263,11 +262,11 @@ const Profile: React.FC = () => {
       </div>
       <div className="w-full h-auto  ">
         <div className="h-auto m-3">
-          <ProfileSideBar  />
+          <ProfileSideBar />
         </div>
         <div className="flex justify-center rounded-xl items-start h-full w-full">
           <div className="w-11/12 h-full  rounded-l shadow-lg bg-white ">
-            <Outlet  />
+            <Outlet />
           </div>
         </div>
       </div>

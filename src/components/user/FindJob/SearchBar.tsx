@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BsSearch, BsSliders } from 'react-icons/bs';
+import { BsSearch } from 'react-icons/bs';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;

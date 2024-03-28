@@ -8,9 +8,10 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import MoreInfoModal from "@/components/admin/companyApprovel/MoreInfoModal";
 import AlertBox from "@/components/common/AlertBox";
+// import { ICompany } from "@/interface/ICompanyApprovelModal";
 
-const AdminApprovel = () => {
-  const [companies, setCompanies] = useState([{}]);
+const AdminApprovel : React.FC  = () => {
+  const [companies, setCompanies] = useState<{_id : string , status : string }[]>([]);
   const [filter, setFilter] = useState("all");
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCompany, setSelectedCompany] = useState(null);
@@ -29,7 +30,7 @@ const AdminApprovel = () => {
 
   const makeChange = (id: string, status: string) => {
     setCompanies((prev) => {
-      return prev.map((company: any) => {
+      return prev.map(( company : any ) => {
         if (company._id === id) {
           return { ...company, status: status };
         }
@@ -68,7 +69,7 @@ const AdminApprovel = () => {
     }
   };
 
-  const handleMoreInfoClick = (company: any) => {
+  const handleMoreInfoClick = (company: any ) => {
     setSelectedCompany(company);
     setModalVisible(true);
   };
@@ -76,7 +77,7 @@ const AdminApprovel = () => {
   const closeModal = () => {
     setModalVisible(false);
   };
-
+ console.log(closeModal)
 
   const filteredCompanies: any = companies.filter((company: any) => {
     if (filter === "all") {
@@ -123,8 +124,8 @@ const AdminApprovel = () => {
             </tr>
           </thead>
           <tbody className="text-center">
-            {filteredCompanies.map((company: any, index: any) => (
-              <tr key={company.id} className="bg-white border-b">
+            {filteredCompanies.map((company : { _id : string , userName: string  ,email : string , websiteLink : string , status : string | boolean }, index: number ) => (
+              <tr key={company._id} className="bg-white border-b">
                 <td className="py-2 px-4">{index + 1}</td>
                 <td className="py-2 px-5">{company.userName}</td>
                 <td className="py-2 px-4">

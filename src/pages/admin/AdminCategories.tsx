@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { addCategories, fetchCategories ,deleteCategory } from '@/redux/actions/adminActions';
-import { AppDispatch } from '@/redux/store';
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  addCategories,
+  fetchCategories,
+  deleteCategory,
+} from "@/redux/actions/adminActions";
+import { AppDispatch } from "@/redux/store";
 
 const AdminCategories: React.FC = () => {
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<
+    { category: string; _id: string }[]
+  >([]);
   const [adding, setAdding] = useState<boolean>(false);
-  const [newCategory, setNewCategory] = useState('');
+  const [newCategory, setNewCategory] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -20,22 +26,22 @@ const AdminCategories: React.FC = () => {
       const data = await fetchCategories();
       setCategories(data.data);
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error("Error fetching categories:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleAddCategory = async () => {
-    if (newCategory.trim() !== '') {
+    if (newCategory.trim() !== "") {
       try {
         setAdding(true);
         await dispatch(addCategories({ category: newCategory }));
-   
-        setNewCategory('');
+
+        setNewCategory("");
         fetchCategoriesData();
       } catch (error) {
-        console.error('Error adding category:', error);
+        console.error("Error adding category:", error);
       } finally {
         setAdding(false);
       }
@@ -47,7 +53,7 @@ const AdminCategories: React.FC = () => {
       await dispatch(deleteCategory(categoryId));
       fetchCategoriesData();
     } catch (error) {
-      console.error('Error deleting category:', error);
+      console.error("Error deleting category:", error);
     }
   };
 
@@ -71,11 +77,11 @@ const AdminCategories: React.FC = () => {
           <button
             onClick={handleAddCategory}
             className={`bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded ${
-              adding ? 'opacity-50 cursor-not-allowed' : ''
+              adding ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={adding}
           >
-            {adding ? 'Adding...' : 'Add'}
+            {adding ? "Adding..." : "Add"}
           </button>
         </div>
 
@@ -88,7 +94,10 @@ const AdminCategories: React.FC = () => {
             <div>
               {categories.length > 0 ? (
                 categories.map((category, index) => (
-                  <div key={index} className="flex justify-between items-center mb-2">
+                  <div
+                    key={index}
+                    className="flex justify-between items-center mb-2"
+                  >
                     <span>{category.category}</span>
                     <button
                       onClick={() => handleDeleteCategory(category._id)}

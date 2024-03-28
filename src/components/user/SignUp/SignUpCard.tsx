@@ -11,7 +11,7 @@ import {
   SignUpFormValues,
   UserValues,
 } from "../../helper/interfaces";
-import { isUserExist, userSignUp } from "../../../redux/actions/userActions";
+import { isUserExistEmail, userSignUp } from "../../../redux/actions/userActions";
 import { IUserSelector } from "../../../interface/IUserSlice";
 import { jwtDecode } from "jwt-decode";
 import { useLocation, useNavigate, Link } from "react-router-dom";
@@ -30,7 +30,7 @@ const SignUpCard: React.FC<{
   const [userValues, setUserValues] = useState<any>({});
   const [stepFirst, setStepFirst] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [dialogInputValue, setDialogInputValue] = useState("");
+  const [_, setDialogInputValue] = useState("");
   const [userTempData, setUserTempData] = useState<SignUpFormValues>({
     userName: "",
     email: "",
@@ -50,7 +50,8 @@ const SignUpCard: React.FC<{
 
     validationSchema: signUpValidationSchema,
     onSubmit: async (values) => {
-      let userData;
+      let userData = {};
+      console.log("🚀 ~ file: SignUpCard.tsx:54 ~ onSubmit: ~ userData:", userData)
       let userExist;
       const pathLocater = location.pathname.includes("/company");
 
@@ -59,7 +60,7 @@ const SignUpCard: React.FC<{
         setStepFirst(!stepFirst);
       } else {
         let temp = { email: values.email };
-        userExist = await dispatch(isUserExist(temp));
+        userExist = await dispatch(isUserExistEmail(temp));
       }
       if (userExist?.payload?.sucess) {
         userData = await dispatch(companySignUp(values));
@@ -109,14 +110,15 @@ const SignUpCard: React.FC<{
         };
 
         const pathLocater = location.pathname.includes("/company");
-        let userData;
+        let userData = {};
+        console.log("🚀 ~ file: SignUpCard.tsx:113 ~ googleSignIn ~ userData:", userData)
 
         if (!pathLocater) {
           userData = dispatch(userSignUp(userValues));
         } else {
           let temp = { email: userValues.email };
 
-          let userExist = await dispatch(isUserExist(temp));
+          let userExist = await dispatch(isUserExistEmail(temp));
           if (userExist?.payload?.sucess) {
             setIsOpen(true);
             // userValues.userName =  dialogInputValue;

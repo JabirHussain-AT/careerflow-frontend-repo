@@ -3,8 +3,6 @@ import { NavLink, Outlet } from "react-router-dom";
 import {
   FaHome,
   FaBuilding,
-  FaUser,
-  FaPaypal,
   FaSignOutAlt,
   FaCapsules
 } from "react-icons/fa";

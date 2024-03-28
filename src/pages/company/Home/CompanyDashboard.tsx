@@ -1,25 +1,15 @@
-import React, { useState , useEffect} from "react";
-import NavBar from "../../../components/user/Login/NavBar";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/reducers/user/userSlice";
 import { IUserSelector } from "@/interface/IUserSlice";
 import CompanyModal from "@/components/company/Home/CompanyModal";
-import CompanySidebar from "@/components/company/Sidebar/CompanySidebar";
 import CompanyDash from "@/components/company/Home/dashboard/CompanyDash";
 
 const Dashboard: React.FC = () => {
   const { user } = useSelector((state: IUserSelector) => state.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const navigate  = useNavigate()
   const dispatch = useDispatch()
-
-  // useEffect(()=>{
-  //   if( (user?.stage === 'completed' && user?.status !== 'approved' ) ){
-  //     navigate('/company/updateForm')
-  //   }
-  // } , [])
 
   const handleContinueClick = () => {
     setIsModalOpen(true);

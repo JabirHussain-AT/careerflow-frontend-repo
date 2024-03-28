@@ -5,9 +5,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import { parseISO, format, differenceInSeconds } from "date-fns";
+import { IJob } from "@/interface/IJob";
 
 const MyInterviews : React.FC  = () => {
-  const [jobInterviews, setJobInterViews] = useState<any[]>([]);
+  const [jobInterviews, setJobInterViews] = useState<IJob[]>([]);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate()
 

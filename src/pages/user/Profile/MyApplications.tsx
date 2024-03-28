@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { IUserSelector } from "@/interface/IUserSlice";
 import { AppDispatch } from "@/redux/store";
 import { getUserApplications } from "@/redux/actions/userActions"; // Import your action
+import { IJob } from "@/interface/IJob";
 
 const MyApplications: React.FC = () => {
-  const [jobApplications, setJobApplications] = useState<any>([]);
+  const [jobApplications, setJobApplications] = useState<IJob[]>([]);
 
   const { user } = useSelector((state: IUserSelector) => state.user);
   const dispatch = useDispatch<AppDispatch>();
@@ -48,9 +49,9 @@ const MyApplications: React.FC = () => {
   return (
     <div className="m-5 flex justify-center items-center">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {jobApplications?.map((application: any) => (
+        {jobApplications?.map((application: IJob) => (
           <div
-            key={application.id}
+            key={application._id}
             className="bg-white border border-gray-300 p-6 rounded-md shadow-md transition-transform transform hover:scale-105"
           >
             <div className="flex items-center gap-4  justify-between mb-6">

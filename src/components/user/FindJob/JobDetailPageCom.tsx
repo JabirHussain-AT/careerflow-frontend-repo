@@ -21,7 +21,7 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
   const { user } = useSelector((state: IUserSelector) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(false); 
+  const [_, setIsLoading] = useState(false); 
 
   useEffect(() => {
     const fetchData = async () => {

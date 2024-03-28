@@ -1,5 +1,6 @@
 import LOGO from "../../assets/CareerFlow-Logo.png"
-const Footer = () => {
+import React from 'react'
+const Footer  : React.FC = () => {
     return (
         <div className="bg-gray-900 h-auto w-full text-gray-400 shadow-lg">
             <div className="md:flex ms-14 md:ms-32 pt-10">

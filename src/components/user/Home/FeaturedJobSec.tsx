@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GoogleIcon from "../../../assets/googleIcon.png";
 
 const FeaturedJobSec: React.FC = () => {
-  const { user, error } = useSelector((state: IUserSelector) => state.user);
+  const { user } = useSelector((state: IUserSelector) => state.user);
   const [preferredJobs, setPreferredJobs] = useState<any[]>([]); // Change the type if needed
   const [visibleJobs, setVisibleJobs] = useState<number>(4);
   const dispatch = useDispatch<AppDispatch>();

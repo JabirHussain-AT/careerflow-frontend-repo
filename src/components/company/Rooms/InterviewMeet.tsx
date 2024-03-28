@@ -1,4 +1,4 @@
-import React , {useEffect  } from "react";
+import React  from "react";
 import { useParams } from "react-router-dom";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { removeSchedule } from "@/redux/actions/companyActions";
@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const InterviewMeet: React.FC = () => {
 
-   useEffect(()=>{
-    window.location.reload()
-   }) 
    
   const { roomId, jobId, applicantId } = useParams();
   const navigate = useNavigate();
@@ -38,10 +35,7 @@ const InterviewMeet: React.FC = () => {
           jobId: jobId!,
           applicantId: applicantId!,
         });
-        console.log(
-          "🚀 ~ file: InterviewMeet.tsx:25 ~ onReturnToHomeScreenClicked: ~ response:",
-          response
-        );
+  
         if (response?.success === true) {
           navigate(
             `/company/jobApplicant/viewProfile/${jobId}/${applicantId}/profile`

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import Skills from "@/components/user/Profile/Skills";
 import Experience from "@/components/user/Profile/Experiance";
 import Education from "@/components/user/Profile/Education";
 import AboutMe from "@/components/user/Profile/AboutMe";
 import SocialMediaLinks from "@/components/user/Profile/SocialMediaLinks";
-import { IUserSelector, UserState } from "@/interface/IUserSlice";
+import { IUserSelector } from "@/interface/IUserSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { submitViewProfileUpdations } from "@/redux/actions/userActions";
 import { toast } from "react-toastify";
@@ -15,8 +15,10 @@ import PreferredJobs from "@/components/user/Profile/PrefferedJobs";
 const ViewProfile: React.FC = () => {
   const [resumeVisible, setResumeVisible] = useState<boolean>(false);
   const [resume, setResume] = useState<File | null>(null);
+  console.log("🚀 ~ file: ViewProfile.tsx:18 ~ resume:", resume)
   const [resumeUrl, setResumeUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  console.log("🚀 ~ file: ViewProfile.tsx:20 ~ resumeUrl:", resumeUrl)
+  const [loading, _] = useState<boolean>(false);
   const [showResume, setShowResume] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { user } = useSelector((state: IUserSelector) => state.user);
@@ -54,7 +56,7 @@ const ViewProfile: React.FC = () => {
         dispatch(submitViewProfileUpdations(dataToSubmit));
         toast.dismiss(); // Dismiss the loading toast
         setResumeVisible(true);
-      } catch (error: any) {
+      } catch (error : any ) {
         console.error("Error uploading resume:", error.message);
         toast.error("Error uploading resume");
       }
@@ -64,6 +66,7 @@ const ViewProfile: React.FC = () => {
   const openResume = () => {
     setResumeVisible(true);
   };
+  console.log("🚀 ~ file: ViewProfile.tsx:69 ~ openResume ~ openResume:", openResume)
 
   const toggleEditing = () => {
     setIsEditing(!isEditing);

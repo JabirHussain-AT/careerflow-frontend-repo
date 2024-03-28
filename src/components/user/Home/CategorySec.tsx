@@ -13,7 +13,7 @@ const CategorySec: React.FC = () => {
 
   return (
     <>
-      <div className="h-auto w-full bg-white">
+      <div className="h-auto mb-5 w-full bg-white">
         <div className="flex justify-between py-5 px-4  bg-white" >
           <div className="">
             <h3 className="font-bold font-sans text-3xl">

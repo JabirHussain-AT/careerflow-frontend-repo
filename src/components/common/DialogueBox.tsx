@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const DialogueBox = ({ isOpen, onClose, onSubmit }: { isOpen: boolean; onClose: any; onSubmit: any }) => {
   const [inputValue, setInputValue] = useState('');

@@ -16,7 +16,6 @@ const CompanySchedules: React.FC = () => {
     const fetchData = async () => {
       try {
         const data = await fetchComJobs(user?._id);
-        console.log("Fetched data:", data);
 
         // Filter data based on the presence of schedule and interviewType
         const filteredData = data?.data.filter((job: IJob) => {
@@ -27,8 +26,6 @@ const CompanySchedules: React.FC = () => {
           }
           return false;
         });
-
-        console.log("Filtered data:", filteredData);
 
         // Separate meetings into today's and pending meetings
         const today = new Date();
@@ -48,7 +45,7 @@ const CompanySchedules: React.FC = () => {
               const meeting = {
                 id: job._id,
                 applicantName: applicant.applicantName,
-                applicantId : applicant.applicantId ,
+                applicantId: applicant.applicantId,
                 Date: parseISO(applicant.schedule.date),
                 Time: applicant?.schedule.time,
                 roomId: applicant?.schedule.InterviewRoom,
@@ -132,12 +129,16 @@ const CompanySchedules: React.FC = () => {
                     <strong className="font-semibold text-sm">Time :</strong>{" "}
                     {meeting.Time}
                   </div>
-                  
                 </div>
                 <div className="flex justify-center">
-                  <button  onClick={() =>
-                      navigate(`/company/interview-meet/${meeting.roomId}/${meeting?.id}/${meeting?.applicantId}`)
-                    } className="px-10 py-1 text-sm rounded-xl bg-blue-500 text-white hover:bg-blue-800">
+                  <button
+                    onClick={() =>
+                      navigate(
+                        `/company/interview-meet/${meeting.roomId}/${meeting?.id}/${meeting?.applicantId}`
+                      )
+                    }
+                    className="px-10 py-1 text-sm rounded-xl bg-blue-500 text-white hover:bg-blue-800"
+                  >
                     Host Interview
                   </button>
                 </div>
@@ -192,10 +193,7 @@ const CompanySchedules: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <button
-                   
-                    className="px-10 py-1 text-sm rounded-xl bg-blue-500 text-white hover:bg-blue-800 disabled:"
-                  >
+                  <button className="px-10 py-1 text-sm rounded-xl bg-blue-500 text-white hover:bg-blue-800 disabled:">
                     Join Later
                   </button>
                 </div>

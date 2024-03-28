@@ -4,6 +4,7 @@ import { CiSaveDown2 } from "react-icons/ci";
 
 const MiniDash: React.FC = () => {
   const noApplications = 0;
+  console.log("🚀 ~ file: MiniDash.tsx:7 ~ noApplications:", noApplications)
   const noInterviewsScheduled = 0;
 
   return (

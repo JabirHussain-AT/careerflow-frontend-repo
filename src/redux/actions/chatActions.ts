@@ -4,10 +4,12 @@ import { SaveChatMessagesPayload } from "@/components/helper/interfaces";
 import { ChatSecUrl } from "../../config/constants";
 import { ApiError, config, handleError } from "../../config/configuration";
 
+
+
 //for creating a chat room with the user
 export const createNewChatRoom = createAsyncThunk(
   "chat/createChatRoom",
-  async (chatRoomData: any, { rejectWithValue }) => {
+  async  ( chatRoomData : {roomCreater : string , roomJoiner : string } , { rejectWithValue }) => {
     try {
       const { data } = await axios.post(
         `${ChatSecUrl}/room/creat-chat-room`,
@@ -15,7 +17,7 @@ export const createNewChatRoom = createAsyncThunk(
         config
       );
       return data;
-    } catch (err: any) {
+    } catch (err: unknown) {
       const axiosError = err as AxiosError<ApiError>;
       return handleError(axiosError, rejectWithValue);
     }
@@ -34,64 +36,77 @@ export const saveChatMessages = createAsyncThunk(
         config
       );
       return data;
-    } catch (err: any) {
+    } catch (err: unknown) {
       const axiosError = err as AxiosError<ApiError>;
       return handleError(axiosError, rejectWithValue);
     }
   }
-  
 );
+
 
 export const fetchChatUsers = createAsyncThunk(
   "chat/fetchChatUsers",
-  async ({companyId , limit } : { companyId : string , limit : number | string }, { rejectWithValue }) => {
+  async (
+    { companyId, limit }: { companyId: string; limit: number | string },
+    { rejectWithValue }
+  ) => {
     try {
       const { data } = await axios.get(
         `${ChatSecUrl}/room/fetch-chat-users/${companyId}/${limit}`,
         config
       );
       return data;
-    } catch (err: any) {
+    } catch (err) {
       const axiosError = err as AxiosError<ApiError>;
       return handleError(axiosError, rejectWithValue);
     }
   }
 );
+
+
 export const fetchChatUserChat = createAsyncThunk(
   "chat/fetchChatUserChat",
-  async ({senderId , recieverId}:{senderId : string , recieverId : string}, { rejectWithValue }) => {
+  async (
+    { senderId, recieverId }: { senderId: string; recieverId: string },
+    { rejectWithValue }
+  ) => {
     try {
       const { data } = await axios.get(
         `${ChatSecUrl}/message/fetch-chat-userChat/${senderId}/${recieverId}`,
         config
       );
       return data;
-    } catch (err: any) {
+    } catch (err) {
       const axiosError = err as AxiosError<ApiError>;
       return handleError(axiosError, rejectWithValue);
     }
   }
 );
 
-export const getUnreadMessageCount = async (applicantIds : any)=>{
+
+export const getUnreadMessageCount = async (applicantIds: string[]) => {
   try {
-    const { data } = await axios.post(`${ChatSecUrl}/message/unread-messages-count`, applicantIds ,config);
+    const { data } = await axios.post(
+      `${ChatSecUrl}/message/unread-messages-count`,
+      applicantIds,
+      config
+    );
     return data;
-  } catch (err: any) {
-    console.log(err,'==> error get unread message ')
+  } catch (err) {
+    console.log(err, "==> error get unread message ");
   }
-}
+};
 
 export const updateUnreadMessageCount = createAsyncThunk(
   "chat/updateUnreadMessageCount",
-  async (applicantId : string, { rejectWithValue }) => {
+  async (applicantId: string, { rejectWithValue }) => {
     try {
       const { data } = await axios.get(
         `${ChatSecUrl}/message/update-unread-messages/${applicantId}`,
         config
       );
       return data;
-    } catch (err: any) {
+    } catch (err) {
       const axiosError = err as AxiosError<ApiError>;
       return handleError(axiosError, rejectWithValue);
     }

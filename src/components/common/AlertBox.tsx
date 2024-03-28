@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import  { ReactNode, useState } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,13 +10,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-interface AlertBoxProps {
-  button: ReactNode;
-  ques: string;
-  onConfirm: (reason: string) => void;
-  onCancel: () => void;
-}
 
 
 

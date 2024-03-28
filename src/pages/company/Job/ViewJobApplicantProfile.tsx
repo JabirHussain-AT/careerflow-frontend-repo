@@ -1,5 +1,5 @@
 
-import React, { useState , useEffect } from "react"; 
+import React, { useState  } from "react"; 
 import {useParams } from 'react-router-dom'
 import ViewApplicantDetialSideBar from "@/components/company/Jobs/ViewApplicantDetialSideBar";
 import ApplicantDetialsSection from "@/components/company/Jobs/ApplicantDetialsSection";

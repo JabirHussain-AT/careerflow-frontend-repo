@@ -8,6 +8,7 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
 }) => {
   const totalJobs = filteredData.length;
   const navigate = useNavigate();
+  console.log(userId)
 
   return (
     <div className="mx-5 my-5 rounded-2xl">

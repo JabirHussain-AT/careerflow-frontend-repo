@@ -1,7 +1,6 @@
 // MessageHome.tsx
 
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
 import { chatUsersDetials } from "@/redux/actions/userActions";
 import { fetchChatUsers } from "@/redux/actions/chatActions";
 import MessagesSideBar from "@/components/company/Messages/MessagesSideBar";
@@ -11,7 +10,7 @@ import { IUserSelector } from "@/interface/IUserSlice";
 import { AppDispatch } from "@/redux/store";
 
 const MessageHome: React.FC = () => {
-  const [applicants, setApplicants] = useState<any>([]);
+  const [applicants, setApplicants] = useState([]);
   const { user } = useSelector((state: IUserSelector) => state.user);
   const [limit, setLimit] = useState(15);
   const dispatch = useDispatch<AppDispatch>();
@@ -37,10 +36,6 @@ const MessageHome: React.FC = () => {
   }, [dispatch, user, limit]);
 
   const handleApplicantSelect = (applicantId: any) => {
-    console.log(
-      "🚀 ~ file: MessageHome.tsx:40 ~ handleApplicantSelect ~ applicantId:",
-      applicantId
-    );
     setSelectedApplicant(applicantId);
   };
 
@@ -74,7 +69,7 @@ const MessageHome: React.FC = () => {
                 className="h-32 mx-auto mb-6"
               />
               <p className="text-sm text-gray-500">
-                Explore and connect with your  in real-time.
+                Explore and connect with your in real-time.
               </p>
             </div>
           </div>

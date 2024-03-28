@@ -12,6 +12,7 @@ export interface IJob{
                 userName : string ,
                 logo : string ,
                 address ?: string ,
+                email?:string
         }
         requirements?: any[];
         skills?: string[];
@@ -21,5 +22,6 @@ export interface IJob{
         jobExpiry?: any | undefined;
         vacancy: string | number | null;
         noOfApplications?: number | null;
+        countdown?: string | number
         _id?: string;
 }

@@ -8,14 +8,14 @@ const ApplicantDetialsResume : React.FC  = () => {
   const { jobId , applicantId  } = useParams()
   const [ job , setJob  ] = useState()
   const [ appliedData , setAppliedData  ] = useState<any>()
-  const [ applicant , setApplicant ] = useState ()
+  const [ _ , setApplicant ] = useState ()
 
 
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetchJob(jobId);
+        const res = await fetchJob(jobId!);
         setJob(res.data);
         setAppliedData(()=>{
           return res?.data?.applicants.find((applicants : any)=>{
@@ -24,7 +24,7 @@ const ApplicantDetialsResume : React.FC  = () => {
         })
 
         if (job) {
-          const applicantDataFetch = await getUser(applicantId);
+          const applicantDataFetch = await getUser(applicantId!);
           setApplicant(applicantDataFetch.data);
         }
       } catch (error) {
