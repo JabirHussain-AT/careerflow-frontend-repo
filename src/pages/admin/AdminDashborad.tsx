@@ -94,7 +94,7 @@ const AdminDashboard: React.FC = () => {
   const prepareCompanyData = () => {
     const monthsData: { [key: string]: number } = {};
 
-   if(companies && companies.length > 0){
+   if((companies !==undefined)){
 
 
     companies.forEach((company: ICompany) => {
