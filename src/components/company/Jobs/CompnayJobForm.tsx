@@ -43,16 +43,16 @@ const CompanyJobsForm: React.FC = () => {
     useEffect(()=>{
       const fetchCategoriesFun = async ( ) =>  {
         const result = await fetchCategories()
-        console.log("🚀 ~ file: CompnayJobForm.tsx:46 ~ fetchCategoriesFun ~ result:", result)
         let temp : string[] = []
         const updatedResult = result?.data.filter((data : ICategory)=>{
-          console.log(updatedResult)
           let category = data?.category
           temp.push(category)
           return category
         })
-       
-        setAllCategories(updatedResult)
+        console.log("🚀 ~ file: CompnayJobForm.tsx:52 ~ updatedResult ~ updatedResult:", updatedResult)
+        
+        console.log("🚀 ~ file: CompnayJobForm.tsx:47 ~ fetchCategoriesFun ~ temp:", temp)
+        setAllCategories(temp)
     }
     fetchCategoriesFun()
     },[])
