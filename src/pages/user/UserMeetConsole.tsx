@@ -1,4 +1,4 @@
-import React , { useEffect } from 'react' 
+import React  from 'react' 
 import { useNavigate, useParams } from 'react-router-dom'
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt'
 import NavBar from '@/components/user/Home/NavBar'
@@ -6,10 +6,6 @@ import { useSelector } from 'react-redux'
 import { IUserSelector } from '@/interface/IUserSlice'
 
 const UserMeetConsole : React.FC = () => {
-    
-    useEffect(()=>{
-        window.location.reload()
-       }) 
     
     const { user } = useSelector((state: IUserSelector) => state.user);
     const { roomId } = useParams()
