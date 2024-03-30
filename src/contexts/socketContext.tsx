@@ -17,10 +17,12 @@ const SocketContext = createContext<SocketContextType | undefined>(undefined);
 export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const [socket, setSocket] = useState<any | null>(null);
   const [messages, setMessages] = useState<any[]>([]); // State to store messages
-
+  
   useEffect(() => {
     // const newSocket = io("http://localhost:3005");
     const newSocket = io("https://web.careerflow.shop/");
+    
+    console.log("🚀 ~ file: socketContext.tsx:19 ~ socket:", socket)
     setSocket(newSocket);
 
     newSocket.on("new-message", (message: any) => {
