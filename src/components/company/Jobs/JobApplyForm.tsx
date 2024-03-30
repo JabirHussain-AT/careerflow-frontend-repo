@@ -25,7 +25,6 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
   handleSubmit,
   handleModalClose,
 }) => {
-  console.log("🚀 ~ file: JobApplyForm.tsx:28 ~ userData:", userData)
   const { user } = useSelector((state: IUserSelector) => state.user);
 
   return (
