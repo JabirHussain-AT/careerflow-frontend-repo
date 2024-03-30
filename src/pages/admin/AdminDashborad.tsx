@@ -94,7 +94,9 @@ const AdminDashboard: React.FC = () => {
   const prepareCompanyData = () => {
     const monthsData: { [key: string]: number } = {};
 
-    // Count the number of companies registered in each month
+   if((companies !==undefined)){
+
+
     companies.forEach((company: ICompany) => {
       const registrationDate = new Date(company.createdAt);
       let monthName = '';
@@ -114,6 +116,7 @@ const AdminDashboard: React.FC = () => {
         monthsData[monthName] = 1;
       }
     });
+  }
 
     // Format data for the line chart
     const lineChartData = Object.keys(monthsData).map((monthName) => ({

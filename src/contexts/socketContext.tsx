@@ -19,7 +19,8 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   const [messages, setMessages] = useState<any[]>([]); // State to store messages
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3005");
+    // const newSocket = io("http://localhost:3005");
+    const newSocket = io("https://careerflow.shop/api/connect");
     setSocket(newSocket);
 
     newSocket.on("new-message", (message: any) => {

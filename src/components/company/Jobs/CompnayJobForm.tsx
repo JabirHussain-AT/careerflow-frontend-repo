@@ -52,7 +52,7 @@ const CompanyJobsForm: React.FC = () => {
           return category
         })
        
-        setAllCategories(temp)
+        setAllCategories(updatedResult)
     }
     fetchCategoriesFun()
     },[])
