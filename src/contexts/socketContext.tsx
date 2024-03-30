@@ -22,10 +22,10 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
     // const newSocket = io("http://localhost:3005");
     const newSocket = io("https://careerflow.shop/");
     
-    console.log("🚀 ~ file: socketContext.tsx:19 ~ socket:", newSocket)
     setSocket(newSocket);
-
+    
     newSocket.on("new-message", (message: any) => {
+      console.log("🚀 ~ file: socketContext.tsx:19 ----its from new socket~ socket:", newSocket)
       toast.info("New Message Received", {
         position: "top-left",
         autoClose: 3000,
