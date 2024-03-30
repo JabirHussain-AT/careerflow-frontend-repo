@@ -20,7 +20,7 @@ export const SocketProvider: React.FC<SocketContextProps> = ({ children }) => {
   
   useEffect(() => {
     // const newSocket = io("http://localhost:3005");
-    const newSocket = io("https://web.careerflow.shop/");
+    const newSocket = io("https://careerflow.shop/");
     
     console.log("🚀 ~ file: socketContext.tsx:19 ~ socket:", socket)
     setSocket(newSocket);
