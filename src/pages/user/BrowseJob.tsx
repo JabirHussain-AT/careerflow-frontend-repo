@@ -229,7 +229,7 @@ const BrowseJob: React.FC = () => {
           getSalaryRangeLabel={getSalaryRangeLabel}
           clearFilters={clearFilters}
         />
-        <div className="w-3/5">
+        <div className="w-4/5 md:w-3/5">
           {/* Content of the main section */}
           <AllJobs filteredData={filteredData} userId={user?._id} />
         </div>
