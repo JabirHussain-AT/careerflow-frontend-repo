@@ -4,9 +4,13 @@ import { IJob } from "../../../interface/IJob";
 import { format, parseISO } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { IUserSelector } from "@/interface/IUserSlice";
-import { createJobApply , fetchUser , saveTheJob } from "@/redux/actions/userActions";
+import {
+  createJobApply,
+  fetchUser,
+  saveTheJob,
+} from "@/redux/actions/userActions";
 import { AppDispatch } from "@/redux/store";
-import { Bounce, toast } from 'react-toastify'
+import { Bounce, toast } from "react-toastify";
 import NavBar from "@/components/user/Home/NavBar";
 import Footer from "@/components/common/Footer";
 import ModalBox from "@/components/common/ModalBox";
@@ -17,11 +21,10 @@ interface JobDetailPageProps {
 }
 
 const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
-
   const { user } = useSelector((state: IUserSelector) => state.user);
   const dispatch = useDispatch<AppDispatch>();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const [_, setIsLoading] = useState(false); 
+  const [_, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +39,7 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
       }
     };
 
-    fetchData(); 
+    fetchData();
   }, [dispatch, user?._id]);
 
   const formattedCreatedAt = format(
@@ -46,21 +49,21 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
 
   const formattedJobExpiry = format(parseISO(job.jobExpiry), "MMMM d, yyyy");
 
-
   const handleModalClose = () => {
     setModalOpen(!isModalOpen);
   };
-  
 
   const handleModal = () => {
     setModalOpen(true);
   };
 
-  const saveTheJobFun = async ( jobId : string  ) => {
-    const userId  : string = user?._id
-    const response = await dispatch( saveTheJob( { userId : userId , jobId : jobId } ) )
-    if(response?.payload?.success && response?.payload?.success ===true ){
-      toast(response?.payload?.message , {
+  const saveTheJobFun = async (jobId: string) => {
+    const userId: string = user?._id;
+    const response = await dispatch(
+      saveTheJob({ userId: userId, jobId: jobId })
+    );
+    if (response?.payload?.success && response?.payload?.success === true) {
+      toast(response?.payload?.message, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -70,12 +73,35 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
         progress: undefined,
         theme: "light",
         transition: Bounce,
-        });
-     }
-  }
-
+      });
+    }
+  };
 
   const handleSubmit = async (values: any) => {
+    
+    const userSkills = user?.skills || [];
+    const jobSkills = job.skills || [];
+
+    // Check if there's at least one skill that matches between job and user
+    const hasMatchingSkill = jobSkills.some((skill) =>
+      userSkills.includes(skill)
+    );
+
+    if (!hasMatchingSkill) {
+      // If no matching skill found, show a message to the user and return
+      toast.error("You do not meet the required skills for this job.", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
 
     let dataToSend = {
       applicantId: user?._id,
@@ -85,11 +111,10 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
       resume: values?.resume,
       jobId: job?._id,
     };
-   const response =  await dispatch(createJobApply(dataToSend));
-   if(response?.payload?.success && response?.payload?.success ===true ){
-    toast('Job Applied Successfully ')
-   }
-
+    const response = await dispatch(createJobApply(dataToSend));
+    if (response?.payload?.success && response?.payload?.success === true) {
+      toast("Job Applied Successfully ");
+    }
   };
 
   return (
@@ -121,21 +146,29 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
           </div>
           <div className="w-full md:w-1/2 h-8 mr-10 flex justify-end mt-4  md:mt-0">
             <div className="p-2 bg-gray-300 rounded">
-            <BsSave2 className="bg-gray-300  cursor-pointer " onClick={() => saveTheJobFun(job._id!)} />
+              <BsSave2
+                className="bg-gray-300  cursor-pointer "
+                onClick={() => saveTheJobFun(job._id!)}
+              />
             </div>
             <div className="flex me-3">
-                {job.applicants.some((applicant :any ) => applicant.applicantId === user?._id) ? (
-                      <button className="px-6 md:px-10 ml-2    text-white text-sm md:text-base font-sans rounded bg-gray-400 hover:bg-gray-200 cursor-not-allowed" disabled>
-                        Applied
-                      </button>
-                    ) : (
-              <button
-                onClick={() => handleModal()}
-                className="bg-blue-500 px-6 md:px-10 ml-2 text-white text-sm md:text-base font-sans rounded"
-              >
-                Apply Now
-              </button>
-                    )}
+              {job.applicants.some(
+                (applicant: any) => applicant.applicantId === user?._id
+              ) ? (
+                <button
+                  className="px-6 md:px-10 ml-2    text-white text-sm md:text-base font-sans rounded bg-gray-400 hover:bg-gray-200 cursor-not-allowed"
+                  disabled
+                >
+                  Applied
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleModal()}
+                  className="bg-blue-500 px-6 md:px-10 ml-2 text-white text-sm md:text-base font-sans rounded"
+                >
+                  Apply Now
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -153,7 +186,7 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
             <div className="bg-white shadow-sm  rounded-lg flex flex-col justify-around items-baseline w-full md:w-4/5 h-3/4">
               <div className="ml-8 my-4 flex items-center gap-4 pt-4">
                 <h2 className="font-semibold font-sans text-sm md:text-center">
-                  Salary : 
+                  Salary :
                 </h2>
                 <p className="text-green-600 font-sanots text-sm md:text-center">
                   {job.fromSalary} - {job.toSalary}
