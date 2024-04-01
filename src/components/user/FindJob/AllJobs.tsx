@@ -11,7 +11,7 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
   console.log(userId)
 
   return (
-    <div className="md:mx-5 my-5 rounded-2xl">
+    <div className=" my-5 rounded-2xl md:mx-5">
       <div className="w-full h-screen overflow-auto p-5">
         <div className="mb-8">
           <h1 className="font-bold text-xl font-sans mb-2 text-indigo-800">
@@ -56,7 +56,7 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
                   </div>
                 </div>
                 <div className=" lg:w-3/12 flex items-center justify-end">
-                  <div className="md:flex md:flex-col md:items-center mx-auto mt-3">
+                  <div className=" mx-auto mt-3 md:flex md:flex-col md:items-center ">
                     {/* {job.applicants.some((applicant :any ) => applicant.applicantId === userId) ? (
                       <button className="px-4 py-2 mt-2 bg-gray-400 text-white rounded-md cursor-not-allowed" disabled>
                         Applied
@@ -64,7 +64,7 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
                     ) : ( */}
                       <button
                         onClick={() => navigate(`/job/${job._id}`)}
-                        className="md:px-4 px-8 py-1 md:py-2 mt-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+                        className=" px-8 py-1 md:px-4  md:py-2 mt-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
                       >
                         View Job
                       </button>
