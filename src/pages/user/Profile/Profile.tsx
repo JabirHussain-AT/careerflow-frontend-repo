@@ -204,10 +204,10 @@ const Profile: React.FC = () => {
             <div className="ms-5 px-2 mt-2  md:ms-10 md:m-4 md:w-5/6">
               <div className="flex flex-col gap-2">
                 <div>
-                  <h1 className="font-semibold pl-2 md:pl-0 md:font-bold font-sans text-xl md:text-2xl">
+                  <h1 className="font-semibold pl-5 md:pl-0 md:font-bold font-sans text-xl md:text-2xl">
                     {user?.userName || "N/A"}
                   </h1>
-                  <p className="text-xs  pl-2 md:pl-0 md:text-sm text-gray-600">
+                  <p className="text-xs  pl-5 md:pl-0 md:text-sm text-gray-600">
                     Profile Last Updated on{" "}
                     {new Date(user?.updatedAt).toLocaleDateString() || "N/A"}
                   </p>
