@@ -213,7 +213,7 @@ const BrowseJob: React.FC = () => {
       <SearchBar onSearch={handleSearch} />
       <BannerFindJob />
       <div className="w-11/12  ml-8"></div>
-      <div className="flex-1 m-3 bg-white shadow-lg mx-20 rounded bg-white-700 flex justify-center">
+      <div className="flex-1 m-3 bg-white shadow-lg md:mx-20 rounded bg-white-700 flex justify-center">
         {/* Use the FilterSidebar component here */}
         <FilterSidebar
           employmentTypes={employmentTypes}
