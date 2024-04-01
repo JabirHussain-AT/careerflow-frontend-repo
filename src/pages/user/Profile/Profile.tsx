@@ -171,9 +171,9 @@ const Profile: React.FC = () => {
           <div className="loading-spinner"></div>
         </div>
       )}
-      <div className="h-full w-full bg-green-200 ">
+      <div className="h-full w-full bg-green-200 overflow-x-hidden ">
         <div className="flex justify-center items-center">
-          <div className="w-full ms-10 md:ms-0 h-full md:w-11/12 bg-white  flex-col md:flex-row shadow-lg md:h-48 m-5 rounded-lg flex justify-between items-center">
+          <div className="w-full md:ms-0 h-full md:w-11/12 bg-white  flex-col md:flex-row shadow-lg md:h-48 m-5 rounded-lg flex justify-between items-center">
             <div className="flex justify-center md:flex-row md:w-3/12 w-full items-center">
               <div className="md:w-2/6 flex ms-12  justify-center items-center">
                 <label
@@ -201,13 +201,13 @@ const Profile: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="m-4 md:ms-10 md:m-4 md:w-5/6">
+            <div className="ms-2 px-2 mt-2  md:ms-10 md:m-4 md:w-5/6">
               <div className="flex flex-col gap-2">
                 <div>
-                  <h1 className="font-bold font-sans text-2xl">
+                  <h1 className="font-semibold pl-2 md:pl-0 md:font-bold font-sans text-xl md:text-2xl">
                     {user?.userName || "N/A"}
                   </h1>
-                  <p className="text-xs md:text-sm text-gray-600">
+                  <p className="text-xs  pl-2 md:pl-0 md:text-sm text-gray-600">
                     Profile Last Updated on{" "}
                     {new Date(user?.updatedAt).toLocaleDateString() || "N/A"}
                   </p>
@@ -245,7 +245,7 @@ const Profile: React.FC = () => {
                         className="flex items-center bg-gray-500 hover:bg-gray-700  rounded-md gap-2"
                       >
                         <FiEdit className="text-white ms-2" />
-                        <div className="font-mono font-semibold text-white px-2 py-1 rounded-md">
+                        <div className="font-mono font-semibold text-xs text-white px-1 py-1 rounded-md">
                           Update Details
                         </div>
                       </div>
@@ -254,7 +254,7 @@ const Profile: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-orange-200 h-40 rounded w-10/12 my-2 mx-2 mr-5 flex justify-start">
+            <div className="bg-orange-200 h-40 mt-2 rounded w-10/12 my-2 mx-2 mr-5 flex justify-start">
               <MiniDash />
             </div>
           </div>
