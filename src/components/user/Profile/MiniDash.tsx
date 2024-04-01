@@ -61,14 +61,14 @@ const MiniDash: React.FC = () => {
     <div className="bg-gradient-to-b from-gray-200 to-orange-100 text-white p-5 w-full rounded-lg gap-2  md:gap-0  flex items-center justify-between">
       {" "}
       {/* No Applications */}
-      <div className="bg-blue-600 h-24 md:w-32 w-36  p-4 rounded shadow-md text-start">
+      <div className="bg-blue-600 h-24 md:w-32 w-36  p-2  md:p-4 rounded shadow-md text-start">
         <FaTasks className="text-2xl" />
         <span className="font-bold text-xs ">
           Applications : {noApplication}{" "}
         </span>
       </div>
       {/* No Interviews Scheduled */}
-      <div className="bg-green-600 h-24 md:w-32 w-36 p-4 rounded shadow-md text-start">
+      <div className="bg-green-600 h-24 md:w-32 w-44 p-4 rounded shadow-md text-start">
         <FaCalendarAlt className="text-2xl" />
         <span className="text-xs font-bold  mb-2">
           Interviews Scheduled: {Interviews}

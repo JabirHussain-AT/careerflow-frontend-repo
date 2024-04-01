@@ -254,7 +254,7 @@ const Profile: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="bg-orange-200 h-40 mt-2 rounded w-10/12 my-2 mx-2 mr-5 flex justify-start">
+            <div className="bg-orange-200 h-40 mt-2 rounded w-10/12 my-2 mx-2 md:mr-5 flex justify-start">
               <MiniDash />
             </div>
           </div>
