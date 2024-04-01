@@ -54,7 +54,7 @@ const NavBar: React.FC = () => {
             aria-expanded={showDropdown ? "true" : "false"}
           >
             {/* Menu */}
-            < CgMenuRightAlt />
+            < CgMenuRightAlt className="font-bold" />
           </button>
         </div>
       </div>
