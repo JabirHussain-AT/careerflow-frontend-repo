@@ -201,7 +201,7 @@ const Profile: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="ms-2 px-2 mt-2  md:ms-10 md:m-4 md:w-5/6">
+            <div className="ms-5 px-2 mt-2  md:ms-10 md:m-4 md:w-5/6">
               <div className="flex flex-col gap-2">
                 <div>
                   <h1 className="font-semibold pl-2 md:pl-0 md:font-bold font-sans text-xl md:text-2xl">
