@@ -11,7 +11,7 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
   console.log(userId)
 
   return (
-    <div className="mx-5 my-5 rounded-2xl">
+    <div className="md:mx-5 my-5 rounded-2xl">
       <div className="w-full h-screen overflow-auto p-5">
         <div className="mb-8">
           <h1 className="font-bold text-xl font-sans mb-2 text-indigo-800">
@@ -27,7 +27,7 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
             {filteredData.map((job) => (
               <div
                 key={job._id}
-                className="w-full lg:w-11/12 border rounded-md p-5 lg:flex lg:justify-between mb-5 shadow-md"
+                className="w-full  lg:w-11/12 border rounded-md p-5 lg:flex lg:justify-between mb-5 shadow-md"
               >
                 <div className="lg:w-3/12 flex items-center mb-4 lg:mb-0">
                   <img
@@ -39,14 +39,14 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
                     alt="logo"
                   />
                 </div>
-                <div className="lg:w-6/12 lg:pl-4 h-16">
+                <div className="lg:w-6/12 lg:pl-4 md:h-16 h-auto">
                   <h1 className="font-bold text-md font-sans mb-2 text-indigo-800">
                     {job.jobTitle}
                   </h1>
                   <div className="flex text-gray-500 text-sm flex-wrap gap-4">
                     <h1 className="">{job.companyId && job.companyId.userName}</h1>
                   </div>
-                  <div className="flex flex-wrap gap-4 mt-2">
+                  <div className="flex flex-wrap gap-2 py-5 md:gap-4 mt-2">
                     <p className="font-sans text-center text-xs py-0.5 bg-green-500 text-white rounded px-2 font-semibold">
                       {job.jobType}
                     </p>
@@ -55,8 +55,8 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
                     </p>
                   </div>
                 </div>
-                <div className="lg:w-3/12 flex items-center justify-end">
-                  <div className="flex flex-col items-center">
+                <div className=" lg:w-3/12 flex items-center justify-end">
+                  <div className="md:flex md:flex-col md:items-center mx-auto mt-3">
                     {/* {job.applicants.some((applicant :any ) => applicant.applicantId === userId) ? (
                       <button className="px-4 py-2 mt-2 bg-gray-400 text-white rounded-md cursor-not-allowed" disabled>
                         Applied
@@ -64,7 +64,7 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
                     ) : ( */}
                       <button
                         onClick={() => navigate(`/job/${job._id}`)}
-                        className="px-4 py-2 mt-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+                        className="md:px-4 px-8 py-1 md:py-2 mt-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
                       >
                         View Job
                       </button>

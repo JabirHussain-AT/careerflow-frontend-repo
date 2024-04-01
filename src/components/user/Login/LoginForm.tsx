@@ -12,12 +12,10 @@ import { IUserSelector } from "../../../interface/IUserSlice";
 
 import { jwtDecode } from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
-import { CustomJwtPayload , userDataByGoogle } from "../../helper/interfaces";
+import { CustomJwtPayload, userDataByGoogle } from "../../helper/interfaces";
 
 const LoginForm: React.FC<LoginFormProps> = ({ textToshow, submitLink }) => {
-  const {  error } = useSelector(
-    (state: IUserSelector) => state.user
-  );
+  const { error } = useSelector((state: IUserSelector) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const formik = useFormik({
@@ -32,29 +30,27 @@ const LoginForm: React.FC<LoginFormProps> = ({ textToshow, submitLink }) => {
     },
   });
 
-  const googleLogin = async (response: string | any, status: boolean)=> {
+  const googleLogin = async (response: string | any, status: boolean) => {
     if (status) {
       try {
-        let credentials : CustomJwtPayload = jwtDecode(response.credential);
-  
+        let credentials: CustomJwtPayload = jwtDecode(response.credential);
+
         let userValues: userDataByGoogle = {
           email: credentials?.email,
-          password : '%^%^&%&' ,
-          googleAuth : true
+          password: "%^%^&%&",
+          googleAuth: true,
         };
-  
+
         const userData = await dispatch(userLogin(userValues));
 
-        if(userData){
-         navigate('/')
+        if (userData) {
+          navigate("/");
         }
-         
       } catch (error) {
-        console.error('Error processing Google Log In:', error);
+        console.error("Error processing Google Log In:", error);
       }
     }
   };
-  
 
   const handleFormSubmit = async (values: FormData, submitLink: string) => {
     const data = await dispatch(userLogin(values));
@@ -83,8 +79,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ textToshow, submitLink }) => {
                 {error}
               </div>
             )}
-            <div className="text-center mt-0 mb-5">
-              <h1 className="text-3xl font-bold mb-2">
+            <div className="text-center mt-0 mb-5 ml-6">
+              <h1 className="text-3xl font-bold mb-2  ">
                 Welcome to Career<span className="text-blue-500">Flow</span>
               </h1>
             </div>
@@ -104,14 +100,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ textToshow, submitLink }) => {
                 />
               </div>
 
-              <div className="my-4 flex items-center  justify-center border-t border-neutral-300">
-                <p className="mx-4 mb-0 text-center font-semibold text-gray-500 dark:text-white">
+              <div className="my-4 ms-5 flex items-center  justify-center border-t border-neutral-300">
+                <p className="mx-4 mt-3 mb-0 text-center font-semibold text-gray-500 dark:text-white">
                   OR
                 </p>
               </div>
 
               {/* Email input */}
-              <div className="mb-4">
+              <div className="mb-4 ms-8 md:mb-4 ">
                 <label
                   htmlFor="email"
                   className="block text-xs font-semibold text-gray-500 mb-1"
@@ -126,7 +122,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ textToshow, submitLink }) => {
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`border border-gray-300 rounded p-2 w-full ${
+                  className={`border border-gray-300  rounded p-2 w-full ${
                     formik.touched.email &&
                     formik.errors.email &&
                     "border-red-500"
@@ -140,7 +136,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ textToshow, submitLink }) => {
               </div>
 
               {/* Password input */}
-              <div className="mb-4">
+              <div className="ms-8 md:mb-4">
                 <label
                   htmlFor="password"
                   className="block text-xs font-semibold text-gray-500 mb-1"
@@ -168,12 +164,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ textToshow, submitLink }) => {
                 )}
               </div>
 
-              <div onClick={()=> navigate('/reset/password')} className="mb-4 flex items-center justify-between font-serif  hover:underline  text-blue-500 hover:text-blue-600">            
-                  Forgot password?
+              <div
+                onClick={() => navigate("/reset/password")}
+                className="mb-4 flex items-center justify-between font-serif  hover:underline  text-blue-500 hover:text-blue-600"
+              >
+                Forgot password?
               </div>
 
               <button
-                className="w-full bg-blue-600 py-2 text-sm font-medium text-white rounded transition duration-300 ease-in-out transform hover:bg-blue-700"
+                className="ms-5  w-full  bg-blue-600 py-2 text-sm font-medium text-white rounded transition duration-300 ease-in-out transform hover:bg-blue-700"
                 type="submit"
               >
                 Login

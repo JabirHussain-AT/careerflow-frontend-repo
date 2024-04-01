@@ -23,7 +23,7 @@ const Banner: React.FC = () => {
           <br />
           full-time, part-time, contract, and internships.
         </h6>
-        <div>
+        <div className="flex">
           <input
             placeholder=" Seach Job Title . . . "
             className="bg-white px-2 py-1 h-8 rounded-md group w-64"
