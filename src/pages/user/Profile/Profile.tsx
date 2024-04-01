@@ -214,7 +214,7 @@ const Profile: React.FC = () => {
                 </div>
                 <div className="w-full h-[0.2px] bg-black"></div>
               </div>
-              <div className="w-4/5 mt-1 flex ml-5 justify-around gap-3">
+              <div className="w-4/5 mt-1 flex ml-8 md:ml-0 justify-around gap-3">
                 <div className="w-full flex flex-col border-e-[1px] border-black text-sans text-gray-500 text-sm">
                   <div className="flex items-center justify-start gap-4 mb-2">
                     <FaLocationArrow />
