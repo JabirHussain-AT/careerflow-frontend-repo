@@ -3,6 +3,7 @@ import Logo from "../../../assets/CareerFlow-Logo.png";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../../redux/reducers/user/userSlice";
+import { CgMenuRightAlt } from "react-icons/cg";
 
 const NavBar: React.FC = () => {
   const dispatch = useDispatch();
@@ -52,7 +53,8 @@ const NavBar: React.FC = () => {
             aria-haspopup="true"
             aria-expanded={showDropdown ? "true" : "false"}
           >
-            Menu
+            {/* Menu */}
+            < CgMenuRightAlt />
           </button>
         </div>
       </div>
