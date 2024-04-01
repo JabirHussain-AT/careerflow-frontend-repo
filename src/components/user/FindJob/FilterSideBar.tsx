@@ -46,7 +46,7 @@ const FilterSideBar: React.FC<FilterSidebarProps> = ({
   },[])
 
   return (
-    <div className="w-1/3 bg-white m border-e-4 rounded-sm md:p-5 flex flex-col">
+    <div className="w-1/3 bg-white m border-e-4 rounded-sm p-2 md:p-5 flex flex-col">
       <div className="mb-4">
         <div className="flex items-center gap-3 mb-3">
           <h1
