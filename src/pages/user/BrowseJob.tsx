@@ -208,7 +208,7 @@ const BrowseJob: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex justify-center bg-green-200 flex-col">
+    <div className="h-full flex justify-center bg-green-200 flex-col overflow-x-hidden">
       <NavBar />
       <SearchBar onSearch={handleSearch} />
       <BannerFindJob />

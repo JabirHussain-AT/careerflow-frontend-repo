@@ -178,7 +178,7 @@ const FilterSideBar: React.FC<FilterSidebarProps> = ({
               </span>
             </div>
             <div className="mt-2">
-              <span className="text-sm font-semibold text-gray-700">
+              <span className="text-xs md:text-sm font-semibold text-gray-700">
                 Selected Range:
               </span>
               <span className="ml-2 text-blue-500 text-sm font-mono">
