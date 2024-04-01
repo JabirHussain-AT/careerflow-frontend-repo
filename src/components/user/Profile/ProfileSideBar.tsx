@@ -38,7 +38,7 @@ const ProfileSideBar = () => {
             className={({ isActive }) => {
               return `items-center flex py-4 hover:bg-gray-700 p-2 rounded md:h-full ${
                 isActive
-                  ? "bg-white flex w-30 text-blue-500 font-bold h-14  mx-2 my-2"
+                  ? "bg-white flex w-30 text-black font-bold h-14  mx-2 my-2"
                   : ""
               }`;
             }}
@@ -68,7 +68,7 @@ const ProfileSideBar = () => {
             className={({ isActive }) => {
               return `items-center flex  py-4 hover:bg-gray-700 p-2 rounded h-full ${
                 isActive
-                  ? "bg-white flex  text-blue-500font-bold h-20 mx-2 my-2"
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
                   : ""
               } `;
             }}
@@ -81,7 +81,7 @@ const ProfileSideBar = () => {
             className={({ isActive }) => {
               return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
                 isActive
-                  ? "bg-white flex  text-blue-500 font-bold h-20 mx-2 my-2"
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
                   : ""
               } `;
             }}
@@ -94,7 +94,7 @@ const ProfileSideBar = () => {
             className={({ isActive }) => {
               return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
                 isActive
-                  ? "bg-white flex t text-blue-500 font-bold h-20 mx-2 my-2"
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
                   : ""
               } `;
             }}
@@ -107,7 +107,7 @@ const ProfileSideBar = () => {
             className={({ isActive }) => {
               return `items-center flex py-4 hover:bg-gray-700 p-2 rounded h-full ${
                 isActive
-                  ? "bg-white flex  text-blue-500 font-bold h-20 mx-2 my-2"
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
                   : ""
               } `;
             }}
