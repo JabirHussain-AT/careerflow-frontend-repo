@@ -67,7 +67,6 @@ const AllJobs: React.FC<{ filteredData: IJob[]; userId: string }> = ({
                         className="md:px-4 px-8 py-1 md:py-2 mt-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
                       >
                         View Job
-                        
                       </button>
                     {/* )} */}
                     <p className="text-gray-500 text-sm mt-2">
