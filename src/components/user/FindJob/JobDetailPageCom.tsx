@@ -95,12 +95,12 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
   return (
     <>
       <NavBar />
-      <div className="bg-green-200 pb-10 w-full h-auto">
+      <div className="bg-green-200 pb-10 w-full h-auto overflow-x-hidden ">
         <h1 className="text-2xl underline p-6 font-sans font-bold">
           Job <span className="text-blue-500"> Info </span>
         </h1>
         <div className="flex flex-col md:flex-row ml-5">
-          <div className="w-full md:w-1/2 gap-6 flex items-center h-auto">
+          <div className="w-11/12 md:w-1/2 gap-6 flex items-center h-auto">
             <img className="w-10" src={job.companyId.logo} alt="logo" />
             <div className="flex flex-col">
               <div>
@@ -123,9 +123,9 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
             <div className="p-2 bg-gray-300 rounded">
             <BsSave2 className="bg-gray-300  cursor-pointer " onClick={() => saveTheJobFun(job._id!)} />
             </div>
-            <div className="flex">
+            <div className="flex me-3">
                 {job.applicants.some((applicant :any ) => applicant.applicantId === user?._id) ? (
-                      <button className="px-6 md:px-10 ml-2 text-white text-sm md:text-base font-sans rounded bg-gray-600 hover:bg-gray-200 cursor-not-allowed" disabled>
+                      <button className="px-6 md:px-10 ml-2    text-white text-sm md:text-base font-sans rounded bg-gray-400 hover:bg-gray-200 cursor-not-allowed" disabled>
                         Applied
                       </button>
                     ) : (
@@ -145,7 +145,7 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
             <h1 className="m-5 font-mono font-semibold text-lg md:text-xl">
               Job <span className="text-blue-700">Description</span>{" "}
             </h1>
-            <div className="w-full mx-5 h-auto">
+            <div className="w-11/12 mx-5 h-auto">
               <p>{job.jobDescription}</p>
             </div>
           </div>
@@ -177,7 +177,7 @@ const JobDetailPageCom: React.FC<JobDetailPageProps> = ({ job }) => {
               <h1 className="pt-4 px-5 font-semibold font-mono text-lg md:text-xl">
                 Requirements:
               </h1>
-              <div className="w-full mx-5">
+              <div className="w-11/12 mx-5">
                 <ul className="ml-6 list-disc">
                   {job.requirements &&
                     job.requirements.map((requirement, index) => (
