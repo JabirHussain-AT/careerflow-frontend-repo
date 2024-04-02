@@ -216,30 +216,30 @@ const Profile: React.FC = () => {
               </div>
               <div className="w-4/5 mt-1 flex ml-8 md:ml-0 justify-around gap-3">
                 <div className="w-full flex flex-col border-e-[1px] border-black text-sans text-gray-500 text-sm">
-                  <div className="flex items-center justify-start gap-4 mb-2">
+                  <div className="flex items-center justify-start gap-1 md:gap-4 mb-2">
                     <FaLocationArrow />
                     {user?.location || "Not Available "}
                   </div>
-                  <div className="flex items-center justify-start gap-4 mb-2">
+                  <div className="flex items-center justify-start gap-1 md:gap-4 mb-2">
                     <MdWork />
                     {user?.position || "Not Available "}
                   </div>
-                  <div className="flex items-center justify-start gap-4 mb-2">
+                  <div className="flex items-center justify-start gap-1 md:gap-4 mb-2">
                     <MdEmail />
                     {user?.email}
                   </div>
                 </div>
                 <div className="w-1/2 mt-1">
                   <div className="w-full flex flex-col h-10 border-black text-sans text-gray-500 text-sm">
-                    <div className="flex w-40 items-center justify-start gap-4 mb-2 ms-5">
+                    <div className="flex w-40 items-center justify-start gap-1 md:gap-4 mb-2 ms-5">
                       <MdOutlinePhoneAndroid className="text-sm" />
                       {user?.phoneNumber}
                     </div>
-                    <div className="flex w-40 items-center justify-start gap-4 mb-2 ms-5">
+                    <div className="flex w-40 items-center justify-start gap-1 md:gap-4 mb-2 ms-5">
                       <BiCalendar className="text-xs md:text-sm" />
                       {new Date(user?.dob).toLocaleDateString() || "N/A"} -DOB
                     </div>
-                    <div className="flex w-40 items-center justify-start gap-4 mb-2 ms-5">
+                    <div className="flex w-40 items-center justify-start gap-1 md:gap-4 mb-2 ms-5">
                       <div
                         onClick={() => setIsModalOpen(true)}
                         className="flex items-center bg-gray-500 hover:bg-gray-700  rounded-md gap-2"
