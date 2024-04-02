@@ -112,13 +112,13 @@ const NavBar: React.FC = () => {
         </div>
         <div className="flex items-center mt-4 sm:mt-0">
           <h5
-            className="px-5 py-3 font-bold text-blue-700 cursor-pointer font-mono text-base sm:text-sm hover:bg-gray-200 hover:scale-90 rounded"
+            className="px-5 md:py-3 py-1  font-bold text-blue-700 cursor-pointer font-mono  text-xs md:text-sm hover:bg-gray-200 hover:scale-90 rounded"
             onClick={handleLogout}
           >
             Logout
           </h5>
           <button
-            className="bg-blue-700 text-white py-2 px-5 rounded-md hover:bg-blue-500 font-mono text-base sm:text-sm hover:scale-75 duration-300"
+            className="bg-blue-700 text-white md:py-2 py-1 px-5 rounded-md hover:bg-blue-500 font-mono text-xs md:text-sm hover:scale-75 duration-300"
             onClick={() => navigate("/profile/view")}
           >
             Profile

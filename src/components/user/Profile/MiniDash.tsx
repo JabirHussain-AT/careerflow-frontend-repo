@@ -46,7 +46,7 @@ const MiniDash: React.FC = () => {
         const savedJobs = result?.data.filter((job: IJob) => {
           return userData?.payload?.data?.savedJobs?.includes(job?._id);
         });
-        setSavedJobs(savedJobs.length || 0 );
+        setSavedJobs(savedJobs.length || 0);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
