@@ -85,7 +85,7 @@ const ProfileSideBar = () => {
             }}
           >
             <FaCalendarAlt className="h-5 w-5" />
-            <p className="hover:text-blue-500">Interviews</p>
+            <p className="hover:text-blue-500 px-4">Interviews</p>
           </NavLink>
           <NavLink
             to={"/profile/saved-jobs"}
