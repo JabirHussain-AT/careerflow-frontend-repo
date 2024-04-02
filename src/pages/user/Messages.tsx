@@ -61,7 +61,7 @@ const MessageHome: React.FC = () => {
     <div className="bg-green-200 w-full overflow-hidden min-h-screen mb-5">
       <NavBar />
       <div className="w-full flex flex-wrap rounded-lg border">
-        {!isMobileView && (
+        {isMobileView && (
           <MessagesSideBarUsers
             applicants={applicants}
             onSelect={handleApplicantSelect}
@@ -72,7 +72,7 @@ const MessageHome: React.FC = () => {
         {selectedApplicant && (
           <MessageChatSectionUser applicant={selectedApplicant} />
         )}
-        {!selectedApplicant && isMobileView && (
+        {!selectedApplicant && !isMobileView && (
           <div className="flex items-center bg-green-50 justify-center min-h-screen">
             <div className="w-full bg-green-100 p-8 rounded-lg shadow-lg text-center">
               <h2 className="text-3xl font-bold mb-4">Welcome to the Chat</h2>
