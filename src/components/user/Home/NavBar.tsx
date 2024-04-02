@@ -118,7 +118,7 @@ const NavBar: React.FC = () => {
             Logout
           </h5>
           <button
-            className="bg-blue-700 text-white md:py-2 py-1 px-5 rounded-md hover:bg-blue-500 font-mono text-xs md:text-sm hover:scale-75 duration-300"
+            className="bg-blue-700 text-white md:py-2 md:mb-0 mb-1 py-1 px-5 rounded-md hover:bg-blue-500 font-mono text-xs md:text-sm hover:scale-75 duration-300"
             onClick={() => navigate("/profile/view")}
           >
             Profile
