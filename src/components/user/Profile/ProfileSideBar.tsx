@@ -36,17 +36,15 @@ const ProfileSideBar = () => {
           <NavLink
             to={"/profile/view"}
             className={({ isActive }) => {
-              return `items-center flex py-4 hover:bg-gray-700 p-2 rounded md:h-full ${
+              return `items-center flex  py-4 hover:bg-gray-700 p-2 rounded h-full ${
                 isActive
-                  ? "bg-white flex w-30 text-black font-bold h-14  mx-2 my-2"
+                  ? "bg-white flex text-black font-bold h-20 mx-2 my-2"
                   : ""
-              }`;
+              } `;
             }}
           >
-            <div className="py-6 flex">
               <FaUser className="mr-3 h-5 text-md" />
-              <p className="hover:text-blue-500">Profile</p>
-            </div>
+              <p className="hover:text-blue-500 px-4">Profile</p>
           </NavLink>
           {/* <NavLink
             to={"/profile/dashboard"}
@@ -87,7 +85,7 @@ const ProfileSideBar = () => {
             }}
           >
             <FaCalendarAlt className="h-5 w-5" />
-            <p className="hover:text-blue-500 px-4">Interviews</p>
+            <p className="hover:text-blue-500">Interviews</p>
           </NavLink>
           <NavLink
             to={"/profile/saved-jobs"}
