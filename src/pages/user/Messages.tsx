@@ -14,6 +14,7 @@ const MessageHome: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [selectedApplicant, setSelectedApplicant] = useState();
   const [limit, setLimit] = useState(15);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const fetchApplicants = async () => {
@@ -35,14 +36,27 @@ const MessageHome: React.FC = () => {
     fetchApplicants();
   }, [dispatch, user]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // Change the breakpoint as needed
+    };
+
+    handleResize(); // Call initially to set the correct initial state
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleApplicantSelect = (applicant: any) => {
     setSelectedApplicant(applicant);
   };
 
-  const handleLoadMore = () => {
-    // Increase the limit by 15 when "Load More" is clicked
-    setLimit((prevLimit) => prevLimit + 15);
+  const handleBackButtonClick = () => {
+    setSelectedApplicant(null);
   };
+
+  const chatSection = selectedApplicant && (
+    <MessageChatSectionUser applicant={selectedApplicant} />
+  );
 
   return (
     <div className="bg-green-200 w-full overflow-hidden min-h-screen mb-5">
@@ -54,9 +68,7 @@ const MessageHome: React.FC = () => {
           selectedApplicant={selectedApplicant}
           onLoadMore={handleLoadMore}
         />
-        {selectedApplicant && (
-          <MessageChatSectionUser applicant={selectedApplicant} />
-        )}
+        {!isMobile && chatSection}
         {!selectedApplicant && (
           <div className="flex items-center bg-green-50 justify-center min-h-screen">
             <div className="w-7/12 bg-green-100 p-8 rounded-lg shadow-lg text-center">
@@ -73,6 +85,17 @@ const MessageHome: React.FC = () => {
                 Explore and connect with your Companies in real-time.
               </p>
             </div>
+          </div>
+        )}
+        {isMobile && selectedApplicant && (
+          <div className="w-full">
+            {chatSection}
+            <button
+              onClick={handleBackButtonClick}
+              className="bg-green-500 text-white font-semibold px-4 py-2 mt-4 ml-4 rounded-lg"
+            >
+              Back
+            </button>
           </div>
         )}
       </div>
