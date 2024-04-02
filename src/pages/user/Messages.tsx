@@ -14,19 +14,6 @@ const MessageHome: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [selectedApplicant, setSelectedApplicant] = useState();
   const [limit, setLimit] = useState(15);
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobileView(window.innerWidth < 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     const fetchApplicants = async () => {
@@ -61,23 +48,21 @@ const MessageHome: React.FC = () => {
     <div className="bg-green-200 w-full overflow-hidden min-h-screen mb-5">
       <NavBar />
       <div className="w-full flex flex-wrap rounded-lg border">
-        {isMobileView && (
-          <MessagesSideBarUsers
-            applicants={applicants}
-            onSelect={handleApplicantSelect}
-            selectedApplicant={selectedApplicant}
-            onLoadMore={handleLoadMore}
-          />
-        )}
+        <MessagesSideBarUsers
+          applicants={applicants}
+          onSelect={handleApplicantSelect}
+          selectedApplicant={selectedApplicant}
+          onLoadMore={handleLoadMore}
+        />
         {selectedApplicant && (
           <MessageChatSectionUser applicant={selectedApplicant} />
         )}
-        {!selectedApplicant && !isMobileView && (
+        {!selectedApplicant && (
           <div className="flex items-center bg-green-50 justify-center min-h-screen">
-            <div className="w-full bg-green-100 p-8 rounded-lg shadow-lg text-center">
+            <div className="w-7/12 bg-green-100 p-8 rounded-lg shadow-lg text-center">
               <h2 className="text-3xl font-bold mb-4">Welcome to the Chat</h2>
               <p className="text-lg text-gray-700 mb-6">
-                Select a company from the list on the left to start chatting.
+                Select an company from the list on the left to start chatting.
               </p>
               <img
                 src="https://th.bing.com/th?id=OIP.7CsPF5A-mdlp57l5Vr4nmQHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"
