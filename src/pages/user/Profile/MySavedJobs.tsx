@@ -104,7 +104,7 @@ const MySavedJobs: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="lg:w-3/12 flex items-center justify-end">
+                  <div className="lg:w-3/12 flex md:items-center md:justify-end justify-end md:mt-1 mt-10">
                     {
                       <TooltipProvider>
                         <Tooltip>
@@ -129,7 +129,7 @@ const MySavedJobs: React.FC = () => {
                     <div className="flex flex-col items-center">
                       <button
                         onClick={() => navigate(`/job/${job._id}`)}
-                        className="px-4 py-2 mt-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
+                        className="md:px-4 px-16 py-2 mt-2 bg-blue-700 text-white rounded-md hover:bg-blue-800"
                       >
                         View Job
                       </button>
