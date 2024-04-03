@@ -24,6 +24,7 @@ const ApplicantDetialProfile = () => {
           const applicantDataFetch = await getUser(applicantId!);
           setApplicantData(applicantDataFetch.data);
         }
+          console.log("🚀 ~ file: ApplicantDetialProfile.tsx:27 ~ fetchData ~ applicantDataFetch.data:", applicantDataFetch.data)
       } catch (error) {
         console.error("Error fetching company jobs:", error);
       }
