@@ -12,6 +12,7 @@ const ApplicantDetialProfile = () => {
   const { user } = useSelector((state: IUserSelector) => state.user);
   const [ setJob] = useState<any | null>(null);
   const [applicantData, setApplicantData] = useState<any>(null);
+  console.log("🚀 ~ file: ApplicantDetialProfile.tsx:15 ~ ApplicantDetialProfile ~ applicantData:", applicantData)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +24,6 @@ const ApplicantDetialProfile = () => {
         if (foundJob) {
           const applicantDataFetch = await getUser(applicantId!);
           setApplicantData(applicantDataFetch.data);
-          console.log("🚀 ~ file: ApplicantDetialProfile.tsx:27 ~ fetchData ~ applicantDataFetch.data:", applicantDataFetch.data)
         }
       } catch (error) {
         console.error("Error fetching company jobs:", error);
