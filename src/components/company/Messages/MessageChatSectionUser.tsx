@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { format } from "date-fns";
 // import EmojiPicker from "emoji-picker-react";
 // import { MdOutlineEmojiEmotions } from "react-icons/md";
+import { BsArrowLeftCircleFill } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import { useSocket } from "@/contexts/socketContext";
 import {
@@ -19,10 +20,12 @@ interface MessageChatSectionProps {
     _id: string;
     userName: string;
   };
+  setSelectedApplicant?: any;
 }
 
 const MessageChatSectionUser: React.FC<MessageChatSectionProps> = ({
   applicant,
+  setSelectedApplicant,
 }) => {
   const { socket } = useSocket();
   const dispatch = useDispatch<AppDispatch>();
@@ -95,7 +98,7 @@ const MessageChatSectionUser: React.FC<MessageChatSectionProps> = ({
 
     if (socket) {
       socket.off("new-message").on("new-message", (message: any) => {
-        console.log(message)
+        console.log(message);
         fetchDataAndUpdateMessages();
       });
 
@@ -122,7 +125,7 @@ const MessageChatSectionUser: React.FC<MessageChatSectionProps> = ({
       senderId: user?._id,
       sentByUser: true,
     };
-    console.log(sentMessage)
+    console.log(sentMessage);
     let temp = {
       content: inputMessage,
       senderId: user?._id,
@@ -130,7 +133,7 @@ const MessageChatSectionUser: React.FC<MessageChatSectionProps> = ({
       latestMessage: inputMessage,
     };
 
-     await dispatch(saveChatMessages(temp));
+    await dispatch(saveChatMessages(temp));
 
     // Fetch updated chat data after sending the message
     const updatedChatData = await dispatch(
@@ -153,9 +156,15 @@ const MessageChatSectionUser: React.FC<MessageChatSectionProps> = ({
   };
 
   return (
-    <div className="relative mt-2  max-h-[520px] bg-green-100 w-7/12 rounded-lg overflow-hidden border shadow-lg">
+    <div className="relative md:mt-2   bg-green-100 w-full md:w-7/12 rounded-lg overflow-hidden border shadow-lg">
       <div className="w-full py-1 shadow-sm flex gap-3 bg-red-50">
         {/* Online status, name, and profile pic */}
+        <div className="md:hidden flex items-center pl-2">
+          <BsArrowLeftCircleFill
+            className="text-xl"
+            onClick={() => setSelectedApplicant(null)}
+          />
+        </div>
         <img
           className="h-10 rounded-full p-1 mt-2 "
           src={`${applicant?.logo}`}
@@ -255,7 +264,7 @@ const MessageChatSectionUser: React.FC<MessageChatSectionProps> = ({
             />
             <button
               onClick={sendMessage}
-              className="w-1/12 bg-blue-500 text-white flex justify-center px-2 py-2 rounded-lg ml-2"
+              className="w-auto md:w-1/12 bg-blue-500 text-white flex justify-center px-2 py-2 rounded-lg ml-2"
             >
               <IoIosSend />
             </button>
