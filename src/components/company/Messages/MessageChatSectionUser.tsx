@@ -156,7 +156,7 @@ const MessageChatSectionUser: React.FC<MessageChatSectionProps> = ({
   };
 
   return (
-    <div className="relative md:mt-2   bg-green-100 w-full md:w-7/12 rounded-lg overflow-hidden border shadow-lg">
+    <div className="relative md:mt-2 max-h-[calc(100vh-5vh)]  md:max-h-[100vh-10vh] bg-green-100 w-full md:w-7/12 rounded-lg overflow-hidden border shadow-lg">
       <div className="w-full py-1 shadow-sm flex gap-3 bg-red-50">
         {/* Online status, name, and profile pic */}
         <div className="md:hidden flex items-center pl-2">

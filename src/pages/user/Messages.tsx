@@ -58,7 +58,7 @@ const MessageHome: React.FC = () => {
   };
 
   return (
-    <div className="bg-green-200 w-full overflow-hidden min-h-screen mb-5">
+    <div className="bg-green-200 w-full overflow-hidden min-h-[100vh-2vh] mb-5">
       <NavBar />
       <div className="w-full flex flex-wrap rounded-lg border">
         {!isMobile ? (
