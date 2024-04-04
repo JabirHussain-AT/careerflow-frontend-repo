@@ -156,7 +156,7 @@ const MessageChatSection: React.FC<MessageChatSectionProps> = ({
   };
 
   return (
-    <div className="relative md:mt-2 max-h-[calc(100vh - 5vh)] px-2 pt-1 md:max-h-[100vh] bg-green-100 w-full md:w-7/12 rounded-lg overflow-hidden border shadow-lg">
+    <div className="relative md:mt-2 max-h-[calc(100vh-5vh)] px-2 pt-1 md:max-h-[100vh] bg-green-100 w-full md:w-7/12 rounded-lg overflow-hidden border shadow-lg">
       {applicant && applicant._id ? (
         <>
           <div className="w-full h-12 flex bg-red-50">
