@@ -154,6 +154,7 @@ const MessageChatSectionUser: React.FC<MessageChatSectionProps> = ({
 
     setInputMessage("");
   };
+  
 
   return (
     <div className="relative md:mt-2 max-h-[calc(100vh-5vh)]  md:max-h-[100vh-10vh] bg-green-100 w-full md:w-7/12 rounded-lg overflow-hidden border shadow-lg">
