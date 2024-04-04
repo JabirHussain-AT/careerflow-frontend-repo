@@ -31,7 +31,7 @@ const ApplicantDetialProfile = () => {
     };
 
     fetchData();
-  }, []);
+  }, [Job]);
 
   return (
     <div className="mt-4">
