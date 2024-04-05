@@ -36,7 +36,7 @@ const FeaturedJobSec: React.FC = () => {
   return (
     <div className="min-h-auto bg-white" >
       <div className="flex justify-between items-center py-5 px-4 bg-white" >
-        <h3 className="font-bold font-sans text-3xl">
+        <h3 className="font-bold font-sans text-xl md:text-3xl">
           Suggested  <span className="text-blue-500"> Jobs </span>
         </h3>
         <div className="text-blue-600 font-medium">
