@@ -217,15 +217,15 @@ const Profile: React.FC = () => {
               <div className="w-4/5 mt-1 flex ml-8 md:ml-0 justify-around gap-3">
                 <div className="w-full flex flex-col border-e-[1px] border-black text-sans text-gray-500 text-sm">
                   <div className="flex items-center justify-start gap-1 md:gap-4 mb-2">
-                    <FaLocationArrow />
+                    <FaLocationArrow className=" hidden md:visible" />
                     {user?.location || "Not Available "}
                   </div>
                   <div className="flex items-center justify-start gap-1 md:gap-4 mb-2">
-                    <MdWork />
+                    <MdWork  className=" hidden md:visible" />
                     {user?.position || "Not Available "}
                   </div>
                   <div className="flex items-center justify-start gap-1 md:gap-4 mb-2">
-                    <MdEmail />
+                    <MdEmail  className=" hidden md:visible" />
                     {user?.email}
                   </div>
                 </div>
