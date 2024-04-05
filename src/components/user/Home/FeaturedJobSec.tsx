@@ -11,7 +11,6 @@ import GoogleIcon from "../../../assets/googleIcon.png";
 const FeaturedJobSec: React.FC = () => {
   const { user } = useSelector((state: IUserSelector) => state.user);
   const [preferredJobs, setPreferredJobs] = useState<any[]>([]); // Change the type if needed
-  console.log("🚀 ~ file: FeaturedJobSec.tsx:14 ~ preferredJobs:", preferredJobs)
   const [visibleJobs, setVisibleJobs] = useState<number>(4);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate()
