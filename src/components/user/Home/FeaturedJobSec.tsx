@@ -4,7 +4,7 @@ import { getPrefferedJobs } from '../../../redux/actions/userActions';
 import { IUserSelector } from "@/interface/IUserSlice";
 import { AppDispatch } from "@/redux/store";
 import { useNavigate } from 'react-router-dom'
-import { faArrowRight, faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GoogleIcon from "../../../assets/googleIcon.png";
 
