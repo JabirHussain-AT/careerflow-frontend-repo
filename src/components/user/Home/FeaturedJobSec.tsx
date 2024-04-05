@@ -4,9 +4,9 @@ import { getPrefferedJobs } from '../../../redux/actions/userActions';
 import { IUserSelector } from "@/interface/IUserSlice";
 import { AppDispatch } from "@/redux/store";
 import { useNavigate } from 'react-router-dom'
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import GoogleIcon from "../../../assets/googleIcon.png";
+// import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const FeaturedJobSec: React.FC = () => {
   const { user } = useSelector((state: IUserSelector) => state.user);
