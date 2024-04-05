@@ -62,7 +62,7 @@ const FeaturedJobSec: React.FC = () => {
                 {/* Company Details */}
                 <div className="flex items-center mt-2">
                   <div className="h-6 w-6 py-2">
-                    <img src={job?.companyId?.logo} alt="g-Icon" />
+                    <img src={job.companyId?.logo} alt="g-Icon" />
                   </div>
                   <div className="ml-2">
                     <p className="font-sans font-semibold text-xs">{job?.companyId?.userName}</p>
