@@ -10,19 +10,19 @@ const ApplicantDetialProfile = () => {
   const { jobId, applicantId } = useParams();
   const { Job } = useSelector((state: any) => state.Job);
   const { user } = useSelector((state: IUserSelector) => state.user);
-  const [ setJob] = useState<any | null>(null);
+  // const [ setJob] = useState<any | null>(null);
   const [applicantData, setApplicantData] = useState<any>(null);
-  console.log("🚀 ~ file: ApplicantDetialProfile.tsx:15 ~ ApplicantDetialProfile ~ applicantData:", applicantData)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetchComJobs(user._id);
         const foundJob = res.data.find((job: any) => jobId === job._id) || null;
-        setJob(foundJob);
+        // setJob(foundJob);
 
         if (foundJob) {
           const applicantDataFetch = await getUser(applicantId!);
+          console.log("🚀 ~ file: ApplicantDetialProfile.tsx:25 ~ fetchData ~ applicantDataFetch:", applicantDataFetch)
           setApplicantData(applicantDataFetch.data);
         }
       } catch (error) {
@@ -31,7 +31,7 @@ const ApplicantDetialProfile = () => {
     };
 
     fetchData();
-  }, [Job]);
+  },[Job]);
 
   return (
     <div className="mt-4">
