@@ -11,6 +11,7 @@ import GoogleIcon from "../../../assets/googleIcon.png";
 const FeaturedJobSec: React.FC = () => {
   const { user } = useSelector((state: IUserSelector) => state.user);
   const [preferredJobs, setPreferredJobs] = useState<any[]>([]); // Change the type if needed
+  console.log("🚀 ~ file: FeaturedJobSec.tsx:14 ~ preferredJobs:", preferredJobs)
   const [visibleJobs, setVisibleJobs] = useState<number>(4);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate()
@@ -36,7 +37,7 @@ const FeaturedJobSec: React.FC = () => {
   return (
     <div className="min-h-auto bg-white" >
       <div className="flex justify-between items-center py-5 px-4 bg-white" >
-        <h3 className="font-bold font-sans text-xl md:text-3xl">
+        <h3 className="font-bold font-sans text-3xl">
           Suggested  <span className="text-blue-500"> Jobs </span>
         </h3>
         <div className="text-blue-600 font-medium">
@@ -45,19 +46,19 @@ const FeaturedJobSec: React.FC = () => {
       </div>
 
       {preferredJobs?.length > 0 ? (
-        <div className="flex flex-wrap justify-start p-4">
+        <div className="flex flex-wrap justify-start gap-3 mx-3 ">
           {preferredJobs?.slice(0, visibleJobs).map((job, index) => (
-            <div key={index} onClick={()=>navigate(`/job/${job._id}`)} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
+            <div key={index} onClick={()=>navigate(`/job/${job._id}`)} className="w-full sm:w-1/2 md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 border rounded-md border-black hover:border-blue-400 hover:shadow-lg hover:scale-90 duration-500">
               <div className="h-full borde cursor-pointer  p-4">
                 {/* Job Details */}
                 <p className="font-semibold text-sm py-1 font-sans">{job.jobTitle}</p>
                 <div className="flex justify-start items-center">
                   <div className="flex items-center h-5 p-1 mb-1 rounded w-20 text-center">
                     <p className="text-green-500 bg-gray-300 px-1 font-semibold text-xs">
-                      INTERNSHIP
+                     {job.jobType}
                     </p>
                   </div>
-                  <p className="ml-2 text-xs text-gray-400">Salary: $20,000 - $25,000</p>
+                  <p className="ml-2 text-xs text-gray-400">Salary: Rs {job.fromSalary } - { job.toSalary}</p>
                 </div>
                 {/* Company Details */}
                 <div className="flex items-center mt-2">
@@ -65,14 +66,14 @@ const FeaturedJobSec: React.FC = () => {
                     <img src={GoogleIcon} alt="g-Icon" />
                   </div>
                   <div className="ml-2">
-                    <p className="font-sans">Google Inc.</p>
-                    <p className="text-sm text-gray-400">Dhaka, Bangladesh</p>
+                    <p className="font-sans font-semibold text-xs">{job?.companyId?.userName}</p>
+                    <p className="text-sm text-gray-400">{job?.companyId?.address}</p>
                   </div>
                 </div>
-                {/* Save Icon */}
+                {/* Save Icon
                 <div className="text-right mt-2">
                   <FontAwesomeIcon icon={faBookmark} className="text-gray-500 cursor-pointer" />
-                </div>
+                </div> */}
               </div>
             </div>
           ))}
