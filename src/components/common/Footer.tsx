@@ -30,7 +30,7 @@ const Footer  : React.FC = () => {
                 <div className="notifications  pt-10 mr-10 md:w-3/12">
                     <h1 className="text-white font-semibold">Get job notifications</h1>
                     <h1 className="pt-2">The latest job news, articles, sent to your inbox weekly</h1>
-                    <div className="mt-5 2xl mr-10  flex px-2 gap-3">
+                    <div className="mt-5 2xl  pb-5 flex px-2 gap-3">
                         <input type="text" placeholder="Email Address" className="py-2 md:h-10 md:ps-2 rounded-md" />
                         <button className="py-02 bg-blue-500  text-white px-4  md:mt-0 rounded-md">Subscribe</button>
                     </div>

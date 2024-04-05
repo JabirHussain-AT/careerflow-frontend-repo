@@ -39,9 +39,9 @@ const FeaturedJobSec: React.FC = () => {
         <h3 className="font-bold font-sans text-3xl">
           Suggested  <span className="text-blue-500"> Jobs </span>
         </h3>
-        <div className="text-blue-600 font-medium">
+        {/* <div className="text-blue-600 font-medium">
           View All <FontAwesomeIcon icon={faArrowRight} className="ml-2" />
-        </div>
+        </div> */}
       </div>
 
       {preferredJobs?.length > 0 ? (
@@ -62,7 +62,7 @@ const FeaturedJobSec: React.FC = () => {
                 {/* Company Details */}
                 <div className="flex items-center mt-2">
                   <div className="h-6 w-6 py-2">
-                    <img src={GoogleIcon} alt="g-Icon" />
+                    <img src={job?.companyId?.logo} alt="g-Icon" />
                   </div>
                   <div className="ml-2">
                     <p className="font-sans font-semibold text-xs">{job?.companyId?.userName}</p>
