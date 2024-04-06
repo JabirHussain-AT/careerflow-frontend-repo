@@ -22,7 +22,6 @@ const InterviewMeet: React.FC = () => {
     const zc = ZegoUIKitPrebuilt.create(kitToken);
     zc.joinRoom({
       container: element,
-      onLeaveRoom :zc.destroy ,
       sharedLinks: [
         {
           name: "Copy Link ",

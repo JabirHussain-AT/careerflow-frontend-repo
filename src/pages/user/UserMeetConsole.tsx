@@ -1,4 +1,4 @@
-import React  from 'react' 
+import React , { useEffect } from 'react' 
 import { useNavigate, useParams } from 'react-router-dom'
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt'
 import NavBar from '@/components/user/Home/NavBar'
@@ -15,9 +15,8 @@ const UserMeetConsole : React.FC = () => {
         const serverSecret = "9452af6a726e6150cd728db8129dc18d" ;
         const kitToken  = ZegoUIKitPrebuilt.generateKitTokenForTest(appID , serverSecret , roomId! , Date.now().toString(),`${user?.userName!}`)
         const zc = ZegoUIKitPrebuilt.create( kitToken )
-        zc.joinRoom({
+        zc.joinRoom({   
             container : element ,
-            onLeaveRoom :zc.destroy ,
             onReturnToHomeScreenClicked :  () => {
                 navigate('/profile/my-interviews')
                 },
@@ -27,6 +26,7 @@ const UserMeetConsole : React.FC = () => {
           }}
         )
     }
+
         return <>
         < NavBar />
         <div className='bg-green-100 flex justify-center h-screen rounded-lg p-5 '>
