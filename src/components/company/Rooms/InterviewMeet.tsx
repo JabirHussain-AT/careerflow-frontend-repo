@@ -1,15 +1,25 @@
-import React  from "react";
+import React, { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 import { removeSchedule } from "@/redux/actions/companyActions";
 import { useNavigate } from "react-router-dom";
 
 const InterviewMeet: React.FC = () => {
-
-   
   const { roomId, jobId, applicantId } = useParams();
   const navigate = useNavigate();
-  const meeting = async (element: any) => {
+  const meetingRef = useRef<any>(null);
+
+  useEffect(() => {
+    const clearMeeting = () => {
+      if (meetingRef.current) {
+        meetingRef.current.destroy();
+        meetingRef.current = null;
+      }
+    };
+    clearMeeting();
+
+    // Create a new meeting
+    const element = meetingRef.current;
     const appID = 1916087609;
     const serverSecret = "9452af6a726e6150cd728db8129dc18d";
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
@@ -24,7 +34,7 @@ const InterviewMeet: React.FC = () => {
       container: element,
       sharedLinks: [
         {
-          name: "Copy Link ",
+          name: "Copy Link",
           url: `http://web.careerflow.shop/company/interview-meet/${roomId}`,
           // url: `http://localhost:5173/company/interview-meet/${roomId}`,
         },
@@ -36,7 +46,7 @@ const InterviewMeet: React.FC = () => {
           jobId: jobId!,
           applicantId: applicantId!,
         });
-  
+
         if (response?.success === true) {
           navigate(
             `/company/jobApplicant/viewProfile/${jobId}/${applicantId}/profile`
@@ -46,12 +56,17 @@ const InterviewMeet: React.FC = () => {
       showInviteToCohostButton: true,
       scenario: {
         mode: ZegoUIKitPrebuilt.GroupCall,
-      }, 
+      },
     });
-  };
+
+    meetingRef.current = zc;
+
+    return clearMeeting;
+  }, [roomId, jobId, applicantId, navigate]);
+
   return (
     <div className="p-5 bg-gray-100 w-full h-screen">
-      <div className="" ref={meeting} />
+      <div className="w-10/12 h-5/6" ref={meetingRef} />
     </div>
   );
 };
