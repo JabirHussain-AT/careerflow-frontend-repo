@@ -22,10 +22,12 @@ const InterviewMeet: React.FC = () => {
     const zc = ZegoUIKitPrebuilt.create(kitToken);
     zc.joinRoom({
       container: element,
+      onLeaveRoom :zc.destroy ,
       sharedLinks: [
         {
           name: "Copy Link ",
-          url: `http://localhost:5173/company/interview-meet/${roomId}`,
+          url: `http://web.careerflow.shop/company/interview-meet/${roomId}`,
+          // url: `http://localhost:5173/company/interview-meet/${roomId}`,
         },
       ],
       showRemoveUserButton: true,
@@ -45,7 +47,7 @@ const InterviewMeet: React.FC = () => {
       showInviteToCohostButton: true,
       scenario: {
         mode: ZegoUIKitPrebuilt.GroupCall,
-      },
+      }, 
     });
   };
   return (

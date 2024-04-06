@@ -17,6 +17,7 @@ const UserMeetConsole : React.FC = () => {
         const zc = ZegoUIKitPrebuilt.create( kitToken )
         zc.joinRoom({
             container : element ,
+            onLeaveRoom :zc.destroy ,
             onReturnToHomeScreenClicked :  () => {
                 navigate('/profile/my-interviews')
                 },
