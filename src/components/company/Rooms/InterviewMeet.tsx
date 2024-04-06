@@ -50,8 +50,8 @@ const InterviewMeet: React.FC = () => {
     });
   };
   return (
-    <div className="p-5 bg-gray-100 m-10 h-screen">
-      <div className="w-10/12 h-5/6" ref={meeting} />
+    <div className="p-5 bg-gray-100 w-full h-screen">
+      <div className="" ref={meeting} />
     </div>
   );
 };

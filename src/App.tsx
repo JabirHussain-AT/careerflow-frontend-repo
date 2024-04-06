@@ -192,7 +192,12 @@ function App() {
                 <>{companyProtectedRoute({ element: <CompanySignup /> })}</>
               }
             />
-
+            <Route
+                path="/company/interview-meet/:roomId/:jobId/:applicantId"
+                element={
+                  <>{companyProtectedRoute({ element: <InterviewMeet /> })}</>
+                }
+              />
             <Route
               path="company"
               element={
@@ -227,12 +232,6 @@ function App() {
                 path="schedules"
                 element={
                   <>{companyProtectedRoute({ element: < CompanySchedules /> })}</>
-                }
-              />
-              <Route
-                path="interview-meet/:roomId/:jobId/:applicantId"
-                element={
-                  <>{companyProtectedRoute({ element: <InterviewMeet /> })}</>
                 }
               />
               <Route
@@ -285,8 +284,8 @@ function App() {
               path="/messages"
               element={<>{userProtectedRoute({ element: <Messages /> })}</>}
             />
-            <Route
-              path="/interview-meet/:roomId"
+               <Route
+              path="/user/interview-meet/:roomId"
               element={
                 <>{userProtectedRoute({ element: <UserMeetConsole /> })}</>
               }

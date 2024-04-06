@@ -29,7 +29,7 @@ const UserMeetConsole : React.FC = () => {
 
         return <>
         < NavBar />
-        <div className='bg-green-100 flex justify-center h-screen rounded-lg p-5 '>
+        <div className='bg-green-100 flex justify-center h-screen w-screen rounded-lg p-5 '>
             <div className='w-10/12 h-5/6' ref={meeting} />
         </div>
         </>
