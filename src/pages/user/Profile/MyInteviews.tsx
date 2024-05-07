@@ -70,7 +70,7 @@ const MyInterviews : React.FC  = () => {
   };
 
   const handleInterViewMeet = (roomId: string) => {
-    navigate(`/interview-meet/${roomId}`);
+    navigate(`/user/interview-meet/${roomId}`);
   };
   
 
