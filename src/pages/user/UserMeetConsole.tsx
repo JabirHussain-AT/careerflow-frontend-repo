@@ -14,7 +14,6 @@ const UserMeetConsole: React.FC = () => {
   useEffect(() => {
     const meeting = async (element: HTMLDivElement | null) => {
       if (!element) return;
-      console.log('-----------------------------------------------------------'111111111)
       const appID = 46877336;
       const serverSecret = "4ac3ffa5d4e7f2f54e4bb82b0c876db8";
       // const appID = 1916087609;
